@@ -4,16 +4,91 @@ from sqlalchemy.sql import text
 
 # Adds a demo user, you can add other users here if you want
 def seed_users():
+    admin = User(
+        first_name='Admin',
+        last_name='User',
+        username='admin',
+        email='admin@site.com',
+        password='adminpassword',
+        is_admin=True,
+        total_points=0,
+        status='active',
+        badge='Admin',
+        welcome_movie_id=None,
+        welcome_movie_note=None
+    )
     demo = User(
-        username='Demo', email='demo@aa.io', password='password')
+        first_name='Demo',
+        last_name='User',
+        username='Demo',
+        email='demo@aa.io',
+        password='password',
+        is_admin=False,
+        total_points=10,
+        status='active',
+        badge='Newbie',
+        welcome_movie_id=1,
+        welcome_movie_note='This is one of my favorite movies!'
+    )
     marnie = User(
-        username='marnie', email='marnie@aa.io', password='password')
+        first_name='Marnie',
+        last_name='Smith',
+        username='marnie',
+        email='marnie@aa.io',
+        password='password',
+        is_admin=False,
+        total_points=25,
+        status='active',
+        badge='Movie Enthusiast',
+        welcome_movie_id=None,
+        welcome_movie_note=None
+    )
     bobbie = User(
-        username='bobbie', email='bobbie@aa.io', password='password')
+        first_name='Bobbie',
+        last_name='Brown',
+        username='bobbie',
+        email='bobbie@aa.io',
+        password='password',
+        is_admin=False,
+        total_points=55,
+        status='active',
+        badge='Movie Monster',
+        welcome_movie_id=2,
+        welcome_movie_note='A must-watch for everyone!'
+    )
+    alex = User(
+        first_name='Alex',
+        last_name='Johnson',
+        username='alex',
+        email='alex@aa.io',
+        password='password',
+        is_admin=False,
+        total_points=0,
+        status='active',
+        badge='Newbie',
+        welcome_movie_id=None,
+        welcome_movie_note=None
+    )
+    chris = User(
+        first_name='Chris',
+        last_name='Evans',
+        username='chris',
+        email='chris@aa.io',
+        password='password',
+        is_admin=False,
+        total_points=15,
+        status='active',
+        badge='Newbie',
+        welcome_movie_id=None,
+        welcome_movie_note='Cinema is my life!'
+    )
 
+    db.session.add(admin)
     db.session.add(demo)
     db.session.add(marnie)
     db.session.add(bobbie)
+    db.session.add(alex)
+    db.session.add(chris)
     db.session.commit()
 
 
