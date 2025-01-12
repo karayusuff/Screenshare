@@ -25,22 +25,6 @@ def user(id):
     return user.to_dict()
 
 
-@user_routes.route('/<int:id>', methods=['PUT'])
-@login_required
-def update_user(id):
-    """
-    Updates a user's profile information
-    """
-    if current_user.id != id:
-        return {'errors': {'message': 'Forbidden'}}, 403
-    
-    data = request.get_json()
-    current_user.welcome_movie_id = data.get('welcome_movie_id', current_user.welcome_movie_id)
-    current_user.welcome_movie_note = data.get('welcome_movie_note', current_user.welcome_movie_note)
-    db.session.commit()
-    return current_user.to_dict()
-
-
 def add_points_and_update_badge(self, points):
     """
     Updates a user's total points and badge

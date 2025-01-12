@@ -4,11 +4,11 @@ from sqlalchemy.sql import text
 def seed_follows():
     seed_data = [
         Follow(
-            follower_id=1,
+            follower_id=3,
             following_id=2
         ),
         Follow(
-            follower_id=1,
+            follower_id=4,
             following_id=3
         ),
         Follow(
