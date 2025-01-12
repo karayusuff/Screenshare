@@ -22,18 +22,26 @@ def user(id):
     Query for a user by id and returns that user in a dictionary
     """
     user = User.query.get(id)
+
+    if not user:
+        return {"error": "User not found."}, 404
+
     return user.to_dict()
 
 
-def add_points_and_update_badge(self, points):
-    """
-    Updates a user's total points and badge
-    """
-    self.total_points += points
-    if self.total_points >= 50:
-        self.badge = "Movie Monster"
-    elif self.total_points >= 20:
-        self.badge = "Movie Enthusiast"
-    else:
-        self.badge = "Newbie"
+@user_routes.route('/<int:id>/status', methods=['PUT'])
+@login_required
+def update_user_status(id):
+    if not current_user.is_admin:
+        return {"error": "Unauthorized access."}, 403
+    
+    user = User.query.get(id)
+    
+    if not user:
+        return {"error": "User not found."}, 404
+    
+    data = request.get_json()
+    user.status = data.get('status', user.status)
     db.session.commit()
+    
+    return user.to_dict()
