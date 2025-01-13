@@ -54,7 +54,7 @@ def update_profile_movie():
 
 # Follow Endpoints
 
-@session_routes.route('/following', methods=['GET'])
+@session_routes.route('/following')
 @login_required
 def get_following():
     """
@@ -71,7 +71,7 @@ def get_following():
     } for user in following]), 200
 
 
-@session_routes.route('/followers', methods=['GET'])
+@session_routes.route('/followers')
 @login_required
 def get_followers():
     """
@@ -90,7 +90,7 @@ def get_followers():
 
 # List Endpoints
 
-@session_routes.route('/lists', methods=['GET'])
+@session_routes.route('/lists')
 @login_required
 def get_user_lists():
     """
@@ -106,7 +106,7 @@ def get_user_lists():
 
 # Review Endpoints
 
-@session_routes.route('/reviews', methods=['GET'])
+@session_routes.route('/reviews')
 @login_required
 def get_user_reviews():
     """
