@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from app.models import db, Movie
-from app.forms import MovieForm
+from app.models import db, Movie, Review
+from app.forms import MovieForm, ReviewForm
 
 movie_routes = Blueprint('movies', __name__)
 
@@ -97,3 +97,35 @@ def delete_movie(movie_id):
     db.session.delete(movie)
     db.session.commit()
     return {"message": "Movie deleted successfully."}, 200
+
+
+# Review Endpoints
+
+@movie_routes.route('/<int:movie_id>/reviews', methods=['POST'])
+@login_required
+def add_review(movie_id):
+    """
+    Adds review to a movie
+    """
+    user_id = current_user.id
+    movie = Movie.query.get(movie_id)
+    if not movie:
+        return {"error": "Movie not found."}, 404
+    
+    existing_review = Review.query.filter_by(user_id=user_id, movie_id=movie_id).first()
+    if existing_review:
+        return jsonify({"message": "User already has a review for this movie"}), 400
+    
+    form = ReviewForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        new_review = Review(
+            review_text = form.review_text.data,
+            rating = form.rating.data,
+            user_id = user_id,
+            movie_id = movie_id
+        )
+        db.session.add(new_review)
+        db.session.commit()
+        return jsonify(new_review.to_dict()), 201
+    return form.errors, 400
