@@ -2,7 +2,6 @@ from .db import db, environment, SCHEMA, add_prefix_for_prod
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from sqlalchemy.sql import func
-from .list import List
 
 
 class User(db.Model, UserMixin):
@@ -53,15 +52,17 @@ class User(db.Model, UserMixin):
         db.session.commit()
 
     def create_default_lists(self):
+        from app.models import List
+        
         default_lists = [
-            {"list_type": "Favourites"},
-            {"list_type": "Watchlist"},
-            {"list_type": "Watched"}
+            {"name": "Favourites", "list_type": "Default", "user_id": self.id},
+            {"name": "Watchlist", "list_type": "Default", "user_id": self.id},
+            {"name": "Watched", "list_type": "Default", "user_id": self.id}
         ]
-        for lst in default_lists:
-            new_list = List(user_id=self.id, list_type=lst["list_type"])
+        for default_list in default_lists:
+            new_list = List(**default_list)
             db.session.add(new_list)
-        db.session.commit()    
+        db.session.commit()
 
     def to_dict(self):
         return {
