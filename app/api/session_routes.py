@@ -81,10 +81,12 @@ def get_following():
     if not following:
       return jsonify({"message": "You are not following anyone yet."}), 200
     
-    return jsonify([{
-        'id': user.following.id,
-        'username': user.following.username
-    } for user in following]), 200
+    return jsonify({
+        "Following": [{
+            'id': user.following.id,
+            'username': user.following.username
+        } for user in following]
+    }), 200
 
 
 @session_routes.route('/followers')
@@ -98,10 +100,12 @@ def get_followers():
     if not followers:
       return jsonify({"message": "You don't have a follower yet."}), 200
 
-    return jsonify([{
-        'id': user.follower.id,
-        'username': user.follower.username
-    } for user in followers]), 200
+    return jsonify({
+        "Followers": [{
+            'id': user.follower.id,
+            'username': user.follower.username
+        } for user in followers]
+    }), 200
 
 
 # List Endpoints

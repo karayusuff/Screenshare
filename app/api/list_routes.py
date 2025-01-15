@@ -110,7 +110,7 @@ def add_movie_to_list(list_id, movie_id):
     new_list_movie = ListMovie(list_id=list_id, movie_id=movie_id)
     db.session.add(new_list_movie)
     db.session.commit()
-    return jsonify({"message": f"{movie.title} is added to {list.name} successfully."}), 200
+    return jsonify({"message": f"\"{movie.title}\" is added to \"{list.name}\" successfully."}), 200
 
 
 @list_routes.route('/<int:list_id>/movies/<int:movie_id>', methods=['DELETE'])
@@ -133,4 +133,4 @@ def remove_movie_from_list(list_id, movie_id):
     movie = Movie.query.get(movie_id)
     db.session.delete(existing_movie)
     db.session.commit()
-    return jsonify({"message": f"{movie.title} is removed from {list.name} successfully."}), 200
+    return jsonify({"message": f"\"{movie.title}\" is removed from \"{list.name}\" successfully."}), 200
