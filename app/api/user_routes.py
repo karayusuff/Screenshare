@@ -45,3 +45,20 @@ def update_user_status(id):
     db.session.commit()
     
     return user.to_dict()
+
+
+@user_routes.route('/<int:user_id>', methods=['DELETE'])
+@login_required
+def delete_user_account(user_id):
+    """
+    Deletes a user's account (admin only)
+    """
+    user_to_delete = User.query.get(user_id)
+    if not user_to_delete:
+        return jsonify({"error": "User not found."}), 404
+    
+    if not current_user.is_admin:
+        return jsonify({"error": "Unauthorized"}), 403
+    db.session.delete(user_to_delete)
+    db.session.commit()
+    return jsonify({"message": f"{user_to_delete.username}'s account successfully deleted."}), 200

@@ -5,15 +5,18 @@ def seed_lists():
     seed_data = [
         List(
             user_id=1,
-            list_type="Favourites"
+            name="Favourites",
+            list_type="Default"
         ),
         List(
             user_id=2,
-            list_type="Watchlist"
+            name="Watchlist",
+            list_type="Default"
         ),
         List(
             user_id=3,
-            list_type="Watched"
+            name="Watched",
+            list_type="Default"
         ),
         List(
             user_id=1,

@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
-from flask_login import current_user, login_required
+from flask_login import current_user, login_required, logout_user
 from app.models import db, Follow, List, Review
+from app.forms import ListForm
 
 session_routes = Blueprint('session', __name__)
 
@@ -50,6 +51,21 @@ def update_profile_movie():
 
     db.session.commit()
     return current_user.to_dict(), 200
+
+
+@session_routes.route('/', methods=['DELETE'])
+@login_required
+def delete_account():
+    """
+    Deletes current user account and logs out
+    """
+    if current_user.is_admin:
+        return jsonify({"error": "Admin account cannot be deleted."}), 401
+
+    db.session.delete(current_user)
+    db.session.commit()
+    logout_user()
+    return jsonify({"message": "Your account has been deleted."})
 
 
 # Follow Endpoints
@@ -102,6 +118,31 @@ def get_user_lists():
       return jsonify({"message": "You don't have a list yet."}), 200
     
     return jsonify([list.to_dict() for list in lists]), 200
+
+
+@session_routes.route('/lists', methods=['POST'])
+@login_required
+def create_list():
+    """
+    Create a new custom list for the current user.
+    """
+    form = ListForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        if form.name.data in ["Favourites", "Watchlist", "Watched"]:
+            return jsonify({"error": "Cannot create a list with default names"}), 400
+
+        new_list = List(
+            name=form.name.data,
+            list_type="Custom",
+            user_id=current_user.id
+        )
+        db.session.add(new_list)
+        db.session.commit()
+        return jsonify(new_list.to_dict()), 201
+
+    return form.errors, 400
+
 
 
 # Review Endpoints
