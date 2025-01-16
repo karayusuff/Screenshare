@@ -30,19 +30,28 @@ def user(id):
 @user_routes.route('/<int:id>/status', methods=['PUT'])
 @login_required
 def update_user_status(id):
+    """
+    Updates a user's account status
+    """
     if not current_user.is_admin:
-        return {"error": "Unauthorized access."}, 403
+        return {"error": "Unauthorized."}, 403
     
     user = User.query.get(id)
     
     if not user:
-        return {"error": "User not found."}, 404
+        return jsonify({"error": "User not found."}), 404
     
     data = request.get_json()
-    user.status = data.get('status', user.status)
+    new_status = data.get('status', user.status)
+
+    valid_statuses = ['active', 'restricted', 'deactivated']
+    if new_status not in valid_statuses:
+        return jsonify({"error": "Invalid status."}), 400
+    
+    user.status = new_status
     db.session.commit()
     
-    return user.to_dict()
+    return user.to_dict(), 200
 
 
 @user_routes.route('/<int:user_id>', methods=['DELETE'])
@@ -51,12 +60,14 @@ def delete_user_account(user_id):
     """
     Deletes a user's account (admin only)
     """
-    user_to_delete = User.query.get(user_id)
-    if not user_to_delete:
+    user = User.query.get(user_id)
+    if not user:
         return jsonify({"error": "User not found."}), 404
     
     if not current_user.is_admin:
         return jsonify({"error": "Unauthorized"}), 403
-    db.session.delete(user_to_delete)
+    
+    db.session.delete(user)
     db.session.commit()
-    return jsonify({"message": f"{user_to_delete.username}'s account successfully deleted."}), 200
+    
+    return jsonify({"message": f"{user.username}'s account successfully deleted."}), 200
