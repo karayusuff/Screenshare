@@ -20,9 +20,14 @@ def username_exists(form, field):
         raise ValidationError('Username is already in use.')
 
 
+def is_not_alpha(form, field):
+    if not field.data.isalpha():
+        raise ValidationError(f'{field.label.text} must contain only letters.')
+
+
 class SignUpForm(FlaskForm):
-    first_name = StringField('First Name', validators=[DataRequired()])
-    last_name = StringField('Last Name', validators=[DataRequired()])
+    first_name = StringField('First Name', validators=[DataRequired(), is_not_alpha])
+    last_name = StringField('Last Name', validators=[DataRequired(), is_not_alpha])
     username = StringField('Username', validators=[DataRequired(), username_exists])
     email = StringField('Email', validators=[DataRequired(), Email(), user_exists])
     password = PasswordField('Password', validators=[DataRequired()])
