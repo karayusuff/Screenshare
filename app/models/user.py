@@ -16,6 +16,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(40), nullable=False, unique=True)
     email = db.Column(db.String(100), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    profile_pic_url = db.Column(db.String(500), nullable=True)
     is_admin = db.Column(db.Boolean, default=False, nullable=False)
     status = db.Column(db.String(20), default='active', nullable=False)
     total_points = db.Column(db.Integer, default=0, nullable=False)
@@ -71,6 +72,7 @@ class User(db.Model, UserMixin):
             'last_name': self.last_name,
             'username': self.username,
             'email': self.email,
+            'profile_pic_url': self.profile_pic_url,
             'is_admin': self.is_admin,
             'status': self.status,
             'total_points': self.total_points,
