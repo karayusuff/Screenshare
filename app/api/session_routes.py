@@ -15,7 +15,7 @@ def update_profile():
     Update the profile information of the current user.
     """
     data = request.get_json()
-    valid_fields = ['first_name', 'last_name', 'username', 'email', 'password']
+    valid_fields = ['first_name', 'last_name', 'username', 'email', 'password', 'profile_pic_url']
 
     for field in data.keys():
         if field not in valid_fields:
@@ -25,6 +25,7 @@ def update_profile():
     current_user.last_name = data.get('last_name', current_user.last_name)
     current_user.username = data.get('username', current_user.username)
     current_user.email = data.get('email', current_user.email)
+    current_user.profile_pic_url = data.get('profile_pic_url', current_user.profile_pic_url)
 
     if 'password' in data and data['password']:
         current_user.password = data['password']
@@ -81,10 +82,12 @@ def get_following():
     if not following:
       return jsonify({"message": "You are not following anyone yet."}), 200
     
-    return jsonify([{
-        'id': user.following.id,
-        'username': user.following.username
-    } for user in following]), 200
+    return jsonify({
+        "Following": [{
+            'id': user.following.id,
+            'username': user.following.username
+        } for user in following]
+    }), 200
 
 
 @session_routes.route('/followers')
@@ -98,10 +101,12 @@ def get_followers():
     if not followers:
       return jsonify({"message": "You don't have a follower yet."}), 200
 
-    return jsonify([{
-        'id': user.follower.id,
-        'username': user.follower.username
-    } for user in followers]), 200
+    return jsonify({
+        "Followers": [{
+            'id': user.follower.id,
+            'username': user.follower.username
+        } for user in followers]
+    }), 200
 
 
 # List Endpoints

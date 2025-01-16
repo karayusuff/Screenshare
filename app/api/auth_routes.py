@@ -57,6 +57,7 @@ def sign_up():
             username=form.data['username'],
             email=form.data['email'],
             password=form.data['password'],
+            profile_pic_url=form.data['profile_pic_url'],
             is_admin=False,
             status='active',
             total_points=0,

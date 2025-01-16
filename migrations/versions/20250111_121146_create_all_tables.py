@@ -41,6 +41,7 @@ def upgrade():
     sa.Column('username', sa.String(length=40), nullable=False),
     sa.Column('email', sa.String(length=100), nullable=False),
     sa.Column('hashed_password', sa.String(length=255), nullable=False),
+    sa.Column('profile_pic_url', sa.String(length=500), nullable=True),
     sa.Column('is_admin', sa.Boolean(), nullable=False),
     sa.Column('status', sa.String(length=20), nullable=False),
     sa.Column('total_points', sa.Integer(), nullable=False),
