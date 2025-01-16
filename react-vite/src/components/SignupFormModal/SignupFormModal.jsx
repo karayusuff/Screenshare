@@ -6,8 +6,11 @@ import "./SignupForm.css";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [profilePicUrl, setProfilePicUrl] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -25,9 +28,12 @@ function SignupFormModal() {
 
     const serverResponse = await dispatch(
       thunkSignup({
+        first_name: firstName,
+        last_name: lastName,
         email,
         username,
-        password,
+        profile_pic_url: profilePicUrl,
+        password
       })
     );
 
@@ -37,12 +43,32 @@ function SignupFormModal() {
       closeModal();
     }
   };
-
+  
   return (
     <>
       <h1>Sign Up</h1>
       {errors.server && <p>{errors.server}</p>}
       <form onSubmit={handleSubmit}>
+        <label>
+          First Name
+          <input
+            type="text"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
+        </label>
+        {errors.first_name && <p>{errors.first_name}</p>}
+        <label>
+          Last Name
+          <input
+            type="text"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+        </label>
+        {errors.last_name && <p>{errors.last_name}</p>}
         <label>
           Email
           <input
@@ -63,6 +89,15 @@ function SignupFormModal() {
           />
         </label>
         {errors.username && <p>{errors.username}</p>}
+        <label>
+          Profile Picture URL
+          <input
+            type="text"
+            value={profilePicUrl}
+            onChange={(e) => setProfilePicUrl(e.target.value)}
+          />
+        </label>
+        {errors.profile_pic_url && <p>{errors.profile_pic_url}</p>}
         <label>
           Password
           <input
