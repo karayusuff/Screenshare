@@ -9,6 +9,10 @@ export default function LandingPage() {
 
   useEffect(() => {
     dispatch(thunkGetMovieOfTheDay());
+    const interval = setInterval(() => {
+      dispatch(thunkGetMovieOfTheDay());
+    }, 60000);
+    return () => clearInterval(interval);
   }, [dispatch]);
 
   if (!movieOfTheDay) return <h2>Loading...</h2>;
