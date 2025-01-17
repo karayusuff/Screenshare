@@ -1,6 +1,16 @@
 body {
-  font-family: 'Alike', serif;
-  background-color: #131112;
+  /* font-family: "Cinzel", serif; */
+  /* font-family: "Playfair Display", serif; */
+  /* font-family: "Playfair", serif; */
+  /* font-family: "Alike", serif; */
+  /* font-family: "Lora", serif; */
+  /* font-family: "Dancing Script", serif; */
+  /* font-family: "Josefin Sans", serif; */
+  /* font-family: "Gloock", serif; */
+  /* font-family: "Bebas Neue", serif; */
+  font-family: "Vidaloka", serif;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  background-color: #000000;
   padding: 0;
   margin: 0;
 }

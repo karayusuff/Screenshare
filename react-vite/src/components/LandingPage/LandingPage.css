@@ -1,0 +1,37 @@
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  color: #fff;
+}
+
+.landing-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.movie-details {
+  text-align: center;
+  max-width: 600px;
+}
+
+.movie-details img {
+  width: auto;
+  height: 400px;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.movie-details h2 {
+  font-size: 1.6rem;
+  margin-top: 15px;
+}
+
+.movie-details p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}

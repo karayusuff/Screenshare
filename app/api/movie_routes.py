@@ -2,6 +2,8 @@ from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from app.models import db, Movie, Review
 from app.forms import MovieForm, ReviewForm
+from datetime import datetime, timedelta, timezone
+from sqlalchemy.sql import func
 
 movie_routes = Blueprint('movies', __name__)
 
@@ -13,6 +15,24 @@ def get_all_movies():
     """
     movies = Movie.query.all()
     return jsonify([movie.to_dict() for movie in movies]), 200
+
+
+last_selected_time = None
+current_movie = None
+
+@movie_routes.route('/random')
+def get_random_movie():
+    """
+    Returns a random movie
+    """
+    global last_selected_time, current_movie
+    now = datetime.now(timezone.utc)
+    if not last_selected_time or now - last_selected_time > timedelta(minutes=1):
+        current_movie = Movie.query.order_by(func.random()).first()
+        last_selected_time = now
+    if not current_movie:
+        return jsonify({"error": "No movies found."}), 404
+    return current_movie.to_dict(), 200
 
 
 @movie_routes.route('/', methods=['POST'])
