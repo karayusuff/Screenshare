@@ -1,1 +1,6 @@
-/* TODO: Add sitewide styles */
+body {
+  font-family: 'Alike', serif;
+  background-color: #131112;
+  padding: 0;
+  margin: 0;
+}

@@ -54,7 +54,7 @@ def update_profile_movie():
     return current_user.to_dict(), 200
 
 
-@session_routes.route('/', methods=['DELETE'])
+@session_routes.route('/delete-account', methods=['DELETE'])
 @login_required
 def delete_account():
     """
