@@ -12,7 +12,8 @@ export const thunkGetMovieOfTheDay = () => async (dispatch) => {
       const data = await response.json();
       dispatch(setMovieOfTheDay(data));
     } else {
-      console.error("Failed to fetch Movie of the Day.");
+      const errorData = await response.json();
+      console.error(errorData.error)
     }
   } catch (error) {
     console.error("Error fetching Movie of the Day:", error);

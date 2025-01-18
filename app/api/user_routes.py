@@ -27,13 +27,22 @@ def user(id):
     return user.to_dict()
 
 
-@user_routes.route('/top-5')
+@user_routes.route('/top-users')
 def get_top_users():
     """
-    Returns the top 5 users with the most followers
+    Returns top 5 users with most followers
     """
-    top_users = User.query.outerjoin(Follow, Follow.following_id == User.id).group_by(User.id).order_by(db.func.count(Follow.id).desc()).limit(5).all()
-    return jsonify([user.to_dict() for user in top_users]), 200
+    users = User.query.outerjoin(Follow, Follow.following_id == User.id).group_by(User.id).order_by(db.func.count(Follow.id).desc()).limit(5).all()
+    return jsonify({"TopUsers": [user.to_dict() for user in users]}), 200
+
+
+@user_routes.route('/top-scorers')
+def get_top_scorers():
+    """
+    Returns top 5 users with most points
+    """
+    users = User.query.order_by(User.total_points.desc()).limit(5).all()
+    return jsonify({"TopScorers": [user.to_dict() for user in users]}), 200
 
 
 @user_routes.route('/<int:id>/status', methods=['PUT'])
@@ -80,3 +89,33 @@ def delete_user_account(user_id):
     db.session.commit()
     
     return jsonify({"message": f"{user.username}'s account successfully deleted."}), 200
+
+
+@user_routes.route('/<int:user_id>/followers')
+def get_user_followers(user_id):
+    """
+    Returns a spesific user's followers
+    """
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found."}), 404
+    
+    followers = Follow.query.filter_by(following_id=user_id).order_by(Follow.created_at.desc()).all()
+    if not followers:
+      return jsonify({"message": "You don't have a follower yet."}), 200
+
+    return jsonify({
+        "Followers": [{
+            'id': user.follower.id,
+            'username': user.follower.username
+        } for user in followers]
+    }), 200
+
+
+@user_routes.route('/<int:user_id>/followers-count')
+def get_user_followers_count(user_id):
+    """
+    Returns a spesific user's followers count
+    """
+    followers_count = Follow.query.filter_by(following_id=user_id).count()
+    return jsonify({"followers_count": followers_count}), 200

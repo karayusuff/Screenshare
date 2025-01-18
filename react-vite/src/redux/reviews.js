@@ -12,7 +12,8 @@ export const thunkGetReviewsByMovie = (movieId) => async (dispatch) => {
       const data = await response.json();
       dispatch(setReviews(data));
     } else {
-      console.error("Failed to fetch reviews.");
+      const errorData = await response.json();
+      console.error(errorData.error);
     }
   } catch (error) {
     console.error("Error fetching reviews:", error);

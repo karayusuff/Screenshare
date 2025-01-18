@@ -9,12 +9,16 @@ import sessionReducer from "./session";
 import moviesReducer from "./movies";
 import reviewsReducer from "./reviews";
 import listsReducer from "./lists";
+import usersReducer from "./users";
+import followsReducer from "./follows";
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   movies: moviesReducer,
   reviews: reviewsReducer,
-  lists: listsReducer
+  lists: listsReducer,
+  users: usersReducer,
+  follows: followsReducer
 });
 
 let enhancer;

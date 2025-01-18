@@ -12,7 +12,8 @@ export const thunkGetRecentLists = () => async (dispatch) => {
       const data = await response.json();
       dispatch(setRecentLists(data.Lists));
     } else {
-      console.error("Failed to fetch recent lists.");
+      const errorData = await response.json();
+      console.error(errorData.error);
     }
   } catch (error) {
     console.error("Error fetching recent lists:", error);
