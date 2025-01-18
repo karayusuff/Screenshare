@@ -4,6 +4,7 @@ from app.models import db, Movie, Review
 from app.forms import MovieForm, ReviewForm
 from datetime import datetime, timedelta, timezone
 from sqlalchemy.sql import func
+from sqlalchemy.orm import joinedload
 
 movie_routes = Blueprint('movies', __name__)
 
@@ -149,3 +150,13 @@ def add_review(movie_id):
         db.session.commit()
         return jsonify(new_review.to_dict()), 201
     return form.errors, 400
+
+
+@movie_routes.route('/<int:movie_id>/reviews')
+def get_reviews_by_movie(movie_id):
+    """
+    Returns all reviews for a movie
+    """
+    reviews = Review.query.options(joinedload(Review.user)).filter_by(movie_id=movie_id).order_by(Review.created_at.desc()).all()
+    
+    return jsonify([{**review.to_dict(), 'username': review.user.username} for review in reviews]), 200

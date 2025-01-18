@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required
 from app.models import db, List, ListMovie, Movie
 from app.forms import ListForm
+from sqlalchemy.orm import joinedload
 
 list_routes = Blueprint('lists', __name__)
 
@@ -13,6 +14,15 @@ def get_all_lists():
     """
     lists = List.query.order_by(List.created_at.desc()).all()
     return jsonify({"Lists": [list.to_dict() for list in lists]}), 200
+
+
+@list_routes.route('/recent')
+def get_recent_lists():
+    """
+    Returns recent 5 custom lists
+    """
+    lists = List.query.options(joinedload(List.user)).filter_by(list_type="Custom").order_by(List.created_at.desc()).limit(5).all()
+    return jsonify({"Lists": [{**list.to_dict(), "username": list.user.username} for list in lists]}), 200
 
 
 @list_routes.route('/<int:list_id>')

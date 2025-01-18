@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #2E2C2F;
+  background-color: #1c1c1c;
   padding: 8px 35px;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .nav-search-bar {
-  width: 75%;
+  width: 70%;
   padding: 10px;
   border: none;
   border-radius: 20px;

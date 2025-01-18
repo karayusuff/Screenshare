@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import db, User
+from app.models import db, User, Follow
 
 user_routes = Blueprint('users', __name__)
 
@@ -25,6 +25,15 @@ def user(id):
         return {"error": "User not found."}, 404
 
     return user.to_dict()
+
+
+@user_routes.route('/top-5')
+def get_top_users():
+    """
+    Returns the top 5 users with the most followers
+    """
+    top_users = User.query.outerjoin(Follow, Follow.following_id == User.id).group_by(User.id).order_by(db.func.count(Follow.id).desc()).limit(5).all()
+    return jsonify([user.to_dict() for user in top_users]), 200
 
 
 @user_routes.route('/<int:id>/status', methods=['PUT'])
