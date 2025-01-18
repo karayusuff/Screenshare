@@ -1,0 +1,123 @@
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  color: #ffffff;
+  padding: 25px 50px;
+}
+
+.slogan {
+  font-size: 4rem;
+}
+
+.landing-page h1 {
+  font-size: 2.5rem;
+  margin-bottom: 5px;
+  background-color: #181818;
+  width: 500px;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.movie-details {
+  text-align: center;
+  width: 500px;
+  background-color: #181818;
+  border-radius: 8px;
+  border-bottom: 1px solid #333333;
+  margin-bottom: 5px;
+}
+
+.movie-details img {
+  width: auto;
+  height: 400px;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.movie-details h2 {
+  font-size: 1.6rem;
+  margin-top: 15px;
+}
+
+.movie-details p {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.recent-reviews {
+  background-color: #181818;
+  border-radius: 8px;
+  width: 500px;
+  text-align: center;
+  border-bottom: 1px solid #333333;
+  margin-bottom: 5px;
+}
+
+.recent-reviews ul {
+  list-style: none;
+  padding: 0;
+}
+
+.recent-reviews li {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #333333;
+}
+
+.recent-reviews li:last-child {
+  border-bottom: none;
+}
+
+.recent-lists {
+  background-color: #181818;
+  border-radius: 8px;
+  width: 500px;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.recent-lists ul {
+  list-style: none;
+  padding: 0;
+}
+
+.recent-lists li {
+  border-bottom: 1px solid #333333;
+  padding-bottom: 5px;
+}
+
+.recent-lists li:last-child {
+  border-bottom: none;
+}
+
+.leaderboard {
+  width: 500px;
+  background-color: #181818;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.leaderboard-container {
+  display: flex;
+  padding: 10px;
+}
+
+.leaderboard-section {
+  flex: 1;
+}
+
+.leaderboard-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.leaderboard-section li {
+  border-bottom: 1px solid #333333;
+  padding-bottom: 5px;
+}
+
+.leaderboard-section li:last-child {
+  border-bottom: none;
+}

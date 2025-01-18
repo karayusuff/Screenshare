@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #383838;
+  background-color: #181818;
   padding: 8px 35px;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .nav-search-bar {
-  width: 75%;
+  width: 70%;
   padding: 10px;
   border: none;
   border-radius: 20px;
@@ -42,8 +42,8 @@
 .profile-dropdown {
   position: absolute;
   top: 60px;
-  color: #FAFFD8;
-  border: 1px solid #FAFFD8;
+  color: #ffffff;
+  border: 1px solid #ffffff;
   border-radius: 5px;
   padding: 30px;
   cursor: pointer;
