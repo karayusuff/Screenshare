@@ -1,0 +1,66 @@
+.movie-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+  color: #ffffff;
+}
+
+.movie-details {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 80%;
+  margin-bottom: 30px;
+}
+
+.movie-poster {
+  width: auto;
+  height: 600px;
+  border-radius: 10px;
+}
+
+.movie-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.movie-info h1 {
+  margin-bottom: 10px;
+  color: #b92020;
+}
+
+.movie-info p {
+  margin: 5px;
+}
+
+.movie-description {
+  font-style: italic;
+  color: #4eb23c;
+}
+
+.movie-reviews {
+  width: 80%;
+}
+
+.movie-reviews h2 {
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 5px;
+  color: #8172c0;
+}
+
+.review-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.review-item p {
+  margin: 5px;
+}
+
+.review-item strong {
+  color: #badf7f;
+}

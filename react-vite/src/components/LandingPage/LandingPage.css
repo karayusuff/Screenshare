@@ -18,7 +18,7 @@
   border-radius: 8px;
 }
 
-.movie-details {
+.movie-details-landing {
   text-align: center;
   width: 500px;
   background-color: #181818;
@@ -27,7 +27,7 @@
   margin-bottom: 5px;
 }
 
-.movie-details img {
+.movie-details-landing img {
   width: auto;
   height: 400px;
   display: block;
@@ -35,14 +35,15 @@
   object-fit: cover;
   border-radius: 5px;
   margin-top: 5px;
+  cursor: pointer;
 }
 
-.movie-details h2 {
+.movie-details-landing h2 {
   font-size: 1.6rem;
   margin-top: 15px;
 }
 
-.movie-details p {
+.movie-details-landing p {
   font-size: 1.1rem;
   line-height: 1.5;
 }
