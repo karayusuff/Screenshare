@@ -57,7 +57,7 @@ export const thunkGetMovies = (page = 1, limit = 8) => async (dispatch) => {
     const response = await fetch(`/api/movies?page=${page}&limit=${limit}`);
     if (response.ok) {
       const data = await response.json();
-      dispatch(setMovies(data));
+      dispatch(setMovies(data.Movies));
     } else {
       const errorData = await response.json();
       console.error(errorData.error);
