@@ -9,13 +9,24 @@ from sqlalchemy.orm import joinedload
 movie_routes = Blueprint('movies', __name__)
 
 
+# @movie_routes.route('/')
+# def get_all_movies():
+#     """
+#     Returns all movies
+#     """
+#     movies = Movie.query.all()
+#     return jsonify([movie.to_dict() for movie in movies]), 200
+
+
 @movie_routes.route('/')
 def get_all_movies():
     """
-    Returns all movies
+    Adds query filters to get all movies
     """
-    movies = Movie.query.all()
-    return jsonify([movie.to_dict() for movie in movies]), 200
+    page = request.args.get('page', default=1, type=int)
+    limit = request.args.get('limit', default=20, type=int)
+    movies = Movie.query.paginate(page=page, per_page=limit, error_out=False)
+    return jsonify([movie.to_dict() for movie in movies.items]), 200
 
 
 @movie_routes.route('/<int:movie_id>')

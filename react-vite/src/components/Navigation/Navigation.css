@@ -8,23 +8,26 @@
 
 .nav-left {
   flex: 1;
+  border: 1px solid #00ff4c;
 }
 
 .nav-logo {
   height: 45px;
+  border: 1px solid #00ff4c;
 }
 
 .nav-center {
   flex: 2;
   display: flex;
   justify-content: center;
+  border: 1px solid #00ff4c;
 }
 
 .nav-search-bar {
   width: 70%;
   padding: 10px;
-  border: none;
   border-radius: 20px;
+  border: 1px solid #00ff4c;
 }
 
 .nav-search-bar::placeholder {
@@ -37,20 +40,22 @@
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  border: 1px solid #00ff4c;
 }
 
 .profile-dropdown {
   position: absolute;
   top: 60px;
   color: #ffffff;
-  border: 1px solid #ffffff;
   border-radius: 5px;
   padding: 30px;
   cursor: pointer;
   list-style: none;
+  border: 1px solid #00ff4c;
 }
 
 .profile-button {
   font-size: 25px;
   cursor: pointer;
+  border: 1px solid #00ff4c;
 }
