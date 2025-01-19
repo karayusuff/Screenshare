@@ -18,6 +18,17 @@ def get_all_movies():
     return jsonify([movie.to_dict() for movie in movies]), 200
 
 
+@movie_routes.route('/<int:movie_id>')
+def get_movie(movie_id):
+    """
+    Returns a movie by id
+    """
+    movie = Movie.query.get(movie_id)
+    if not movie:
+        return jsonify({"error": "Movie not found."}), 404
+    return jsonify(movie.to_dict()), 200
+
+
 last_selected_time = None
 current_movie = None
 

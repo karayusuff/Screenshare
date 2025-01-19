@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { thunkGetMovieOfTheDay } from "../../redux/movies";
 import { thunkGetReviewsByMovie } from "../../redux/reviews";
 import { thunkGetRecentLists } from "../../redux/lists";
@@ -9,6 +10,7 @@ import './LandingPage.css'
 
 export default function LandingPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const movieOfTheDay = useSelector((state) => state.movies.movieOfTheDay);
   const reviews = useSelector((state) => state.reviews.reviews);
   const recentLists = useSelector((state) => state.lists.recentLists);
@@ -54,8 +56,13 @@ export default function LandingPage() {
     <div className="landing-page">
       <span className="slogan">Lights, Camera, Socialize!</span>
       <h1>Movie of the Day</h1>
-      <div className="movie-details">
-        <img src={movieOfTheDay.poster_url} title={movieOfTheDay.title} alt={movieOfTheDay.title} />
+      <div className="movie-details-landing">
+        <img
+          src={movieOfTheDay.poster_url}
+          title={movieOfTheDay.title}
+          alt={movieOfTheDay.title}
+          onClick={() => navigate(`/movies/${movieOfTheDay.id}`)}
+        />
         <h2>{movieOfTheDay.title}</h2>
         <p>{movieOfTheDay.description}</p>
       </div>
