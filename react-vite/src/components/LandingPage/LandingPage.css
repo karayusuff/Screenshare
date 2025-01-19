@@ -3,16 +3,18 @@
   flex-direction: column;
   color: #ffffff;
   padding: 25px 50px;
+  border:2px solid #000000;
 }
 
 .slogan {
   font-size: 4rem;
+  border:2px solid #000000;
 }
 
 .landing-page h1 {
   font-size: 2.5rem;
   margin-bottom: 5px;
-  background-color: #181818;
+  border:2px solid #000000;
   width: 500px;
   text-align: center;
   border-radius: 8px;
@@ -21,9 +23,8 @@
 .movie-details-landing {
   text-align: center;
   width: 500px;
-  background-color: #181818;
+  border:2px solid #000000;
   border-radius: 8px;
-  border-bottom: 1px solid #333333;
   margin-bottom: 5px;
 }
 
@@ -41,38 +42,41 @@
 .movie-details-landing h2 {
   font-size: 1.6rem;
   margin-top: 15px;
+  border:2px solid #000000;
 }
 
 .movie-details-landing p {
   font-size: 1.1rem;
   line-height: 1.5;
+  border:2px solid #000000;
 }
 
 .recent-reviews {
-  background-color: #181818;
+  border:2px solid #000000;
   border-radius: 8px;
   width: 500px;
   text-align: center;
-  border-bottom: 1px solid #333333;
   margin-bottom: 5px;
 }
 
 .recent-reviews ul {
   list-style: none;
-  padding: 0;
+  padding: 10px 10px;
+  border:2px solid #000000;
 }
 
 .recent-reviews li {
   margin-bottom: 15px;
-  border-bottom: 1px solid #333333;
+  border:2px solid #000000;
 }
 
 .recent-reviews li:last-child {
   border-bottom: none;
+  border:2px solid #000000;
 }
 
 .recent-lists {
-  background-color: #181818;
+  border:2px solid #000000;
   border-radius: 8px;
   width: 500px;
   text-align: center;
@@ -81,21 +85,23 @@
 
 .recent-lists ul {
   list-style: none;
-  padding: 0;
+  padding: 10px 10px;
+  border:2px solid #000000;
 }
 
 .recent-lists li {
-  border-bottom: 1px solid #333333;
+  border:2px solid #000000;
   padding-bottom: 5px;
 }
 
 .recent-lists li:last-child {
   border-bottom: none;
+  border:2px solid #000000;
 }
 
 .leaderboard {
   width: 500px;
-  background-color: #181818;
+  border:2px solid #000000;
   border-radius: 8px;
   text-align: center;
 }
@@ -103,22 +109,26 @@
 .leaderboard-container {
   display: flex;
   padding: 10px;
+  border:2px solid #000000;
 }
 
 .leaderboard-section {
   flex: 1;
+  border:2px solid #000000;
 }
 
 .leaderboard-section ul {
   list-style: none;
-  padding: 0;
+  padding: 10px 10px;
+  border:2px solid #000000;
 }
 
 .leaderboard-section li {
-  border-bottom: 1px solid #333333;
+  border:2px solid #000000;
   padding-bottom: 5px;
 }
 
 .leaderboard-section li:last-child {
   border-bottom: none;
+  border:2px solid #000000;
 }
