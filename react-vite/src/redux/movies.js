@@ -1,6 +1,6 @@
 const SET_MOVIE_OF_THE_DAY = "movies/SET_MOVIE_OF_THE_DAY";
 const SET_MOVIE = "movies/SET_MOVIE";
-const CLEAR_MOVIE = "movies/CLEAR_MOVIE"
+const CLEAR_MOVIE = "movies/CLEAR_MOVIE";
 const SET_MOVIES = "movies/SET_MOVIES";
 
 const setMovieOfTheDay = (movie) => ({

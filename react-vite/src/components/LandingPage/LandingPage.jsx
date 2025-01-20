@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigateTo } from "../../utils/navigation";
 import { thunkGetMovieOfTheDay } from "../../redux/movies";
 import { thunkGetReviewsByMovie } from "../../redux/reviews";
 import { thunkGetRecentLists } from "../../redux/lists";
@@ -8,9 +8,11 @@ import { thunkGetTopUsers, thunkGetTopScorers } from "../../redux/users";
 import { thunkGetFollowersCount } from "../../redux/follows";
 import './LandingPage.css'
 
-export default function LandingPage() {
+const LandingPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigateToMovie = useNavigateTo('movies');
+  const navigateToList = useNavigateTo('lists');
+  const navigateToUser = useNavigateTo('users');
   const movieOfTheDay = useSelector((state) => state.movies.movieOfTheDay);
   const reviews = useSelector((state) => state.reviews.reviews);
   const recentLists = useSelector((state) => state.lists.recentLists);
@@ -44,7 +46,7 @@ export default function LandingPage() {
     }
   }, [topUsers, dispatch]);
 
-  if (!movieOfTheDay) return <h2>Loading...</h2>;
+  if (!movieOfTheDay) return <div>Loading...</div>;
 
   return (
     <div className="landing-page">
@@ -56,13 +58,12 @@ export default function LandingPage() {
               src={movieOfTheDay.poster_url}
               title={movieOfTheDay.title}
               alt={movieOfTheDay.title}
-              onClick={() => navigate(`/movies/${movieOfTheDay.id}`)}
+              onClick={() => navigateToMovie(movieOfTheDay.id)}
             />
             <h2>{movieOfTheDay.title}</h2>
             <p>{movieOfTheDay.description}</p>
           </div>
           <div className="recent-reviews">
-            <h3>Recent Reviews</h3>
             {reviews.length > 0 ? (
               <ul>
                 {reviews.map((review) => (
@@ -84,7 +85,20 @@ export default function LandingPage() {
               <ul>
                 {recentLists.map((list) => (
                   <li key={list.id}>
-                    <p><strong>{list.name}</strong> by {list.username}</p>
+                    <p><strong onClick={() => navigateToList(list.id)}>{list.name}</strong> by {list.username}</p>
+                    <div className="list-movies">
+                      {list.movies.slice(0, 5).map((movie) => (
+                        <img 
+                        key={movie.id} 
+                        src={movie.poster_url} 
+                        title={movie.title} 
+                        alt={movie.title}
+                        onClick={() => navigateToMovie(movie.id)} />
+                      ))}
+                      {list.movies.length > 5 && (
+                        <button onClick={() => navigateToList(list.id)}>See All</button>
+                      )}
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -101,7 +115,7 @@ export default function LandingPage() {
                   <ul>
                     {topUsers.map((user) => (
                       <li key={user.id}>
-                        <p><strong>{user.username}</strong> ({followersCount[user.id]} followers)</p>
+                        <p><strong onClick={() => navigateToUser(user.username)}>{user.username}</strong> ({followersCount[user.id]} followers)</p>
                       </li>
                     ))}
                   </ul>
@@ -115,7 +129,7 @@ export default function LandingPage() {
                   <ul>
                     {topScorers.map((user) => (
                       <li key={user.id}>
-                        <p><strong>{user.username}</strong> {user.badge} ({user.total_points} points)</p>
+                        <p><strong onClick={() => navigateToUser(user.username)}>{user.username}</strong> {user.badge} ({user.total_points} points)</p>
                       </li>
                     ))}
                   </ul>
@@ -130,3 +144,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
+export default LandingPage;

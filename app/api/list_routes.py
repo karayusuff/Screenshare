@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required
-from app.models import db, List, ListMovie, Movie
+from app.models import db, List, ListMovie, Movie, User
 from app.forms import ListForm
 from sqlalchemy.orm import joinedload
 
@@ -19,14 +19,27 @@ def get_all_lists():
 @list_routes.route('/recent')
 def get_recent_lists():
     """
-    Returns recent 5 custom lists
+    Returns recent 5 custom lists along with their movies
     """
-    lists = List.query.options(joinedload(List.user)).filter_by(list_type="Custom").order_by(List.created_at.desc()).limit(5).all()
-    return jsonify({"Lists": [{**list.to_dict(), "username": list.user.username} for list in lists]}), 200
+    lists = List.query.options(
+        joinedload(List.user),
+        joinedload(List.list_movies).joinedload(ListMovie.movie)
+    ).filter_by(list_type="Custom").order_by(List.created_at.desc()).limit(5).all()
+
+    return jsonify({
+        "Lists": [{
+            **list.to_dict(),
+            "username": list.user.username,
+            "movies": [{
+                "id": list_movie.movie.id,
+                "title": list_movie.movie.title,
+                "poster_url": list_movie.movie.poster_url
+            } for list_movie in list.list_movies]
+        }  for list in lists]
+    }), 200
 
 
 @list_routes.route('/<int:list_id>')
-@login_required
 def get_list_details(list_id):
     """
     Returns a list along with its movies
@@ -34,9 +47,15 @@ def get_list_details(list_id):
     list = List.query.get(list_id)
     if not list:
         return jsonify({"error": "List not found"}), 404
+    
+    user = User.query.get(list.user_id)
 
     list_movies = ListMovie.query.filter_by(list_id=list_id).all()
-    movies = {list_movie.movie_id: list_movie.movie.title for list_movie in list_movies}
+    movies = [{
+        "id": list_movie.movie_id,
+        "title": list_movie.movie.title,
+        "poster_url": list_movie.movie.poster_url
+    } for list_movie in list_movies]
 
     return jsonify({
         "id": list.id,
@@ -44,6 +63,7 @@ def get_list_details(list_id):
         "name": list.name,
         "list_type": list.list_type,
         "movies": movies,
+        "username": user.username,
         "created_at": list.created_at,
         "updated_at": list.updated_at
     }), 200

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useNavigateTo } from "../../utils/navigation";
 import { thunkGetMovieById, clearMovie } from "../../redux/movies";
 import { thunkGetReviewsByMovie } from "../../redux/reviews";
 import "./MoviePage.css";
@@ -8,6 +9,7 @@ import "./MoviePage.css";
 const MoviePage = () => {
   const { movieId } = useParams();
   const dispatch = useDispatch();
+  const navigateToUser = useNavigateTo('users')
   const movie = useSelector((state) => state.movies.movie);
   const reviews = useSelector((state) => state.reviews.reviews);
 
@@ -46,7 +48,7 @@ const MoviePage = () => {
         {reviews.length > 0 ? (
           reviews.map((review) => (
             <div key={review.id} className="review-item">
-              <p><strong>{review.username}</strong>: {review.review_text}</p>
+              <p><strong onClick={() => navigateToUser(review.username)}>{review.username}</strong>: {review.review_text}</p>
               <p>Rating: {review.rating}/10</p>
             </div>
           ))

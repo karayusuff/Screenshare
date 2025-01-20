@@ -2,9 +2,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #000000;
+  background-color: #1a1a1a;
   padding: 8px 35px;
-  border: 1px solid #00ff4c;
+  /* border: 1px solid #00ff4c; */
 }
 
 .nav-left {

@@ -1,5 +1,6 @@
 const SET_RECENT_LISTS = "lists/SET_RECENT_LISTS";
 const SET_USER_LISTS = "lists/SET_USER_LISTS";
+const SET_LIST_DETAILS = "lists/SET_LIST_DETAILS";
 
 const setRecentLists = (lists) => ({
   type: SET_RECENT_LISTS,
@@ -9,6 +10,11 @@ const setRecentLists = (lists) => ({
 const setUserLists = (lists) => ({
   type: SET_USER_LISTS,
   payload: lists
+});
+
+const setListDetails = (list) => ({
+  type: SET_LIST_DETAILS,
+  payload: list
 });
 
 export const thunkGetRecentLists = () => async (dispatch) => {
@@ -41,7 +47,22 @@ export const thunkGetUserLists = (userId) => async (dispatch) => {
   }
 };
 
-const initialState = { recentLists: [], userLists: [] };
+export const thunkGetListDetails = (listId) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/lists/${listId}`);
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setListDetails(data));
+    } else {
+      const errorData = await response.json();
+      console.error(errorData.error);
+    }
+  } catch (error) {
+    console.error("Error fetching list details:", error);
+  }
+};
+
+const initialState = { recentLists: [], userLists: [], listDetails: null };
 
 const listsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -49,6 +70,8 @@ const listsReducer = (state = initialState, action) => {
       return { ...state, recentLists: action.payload };
     case SET_USER_LISTS:
       return { ...state, userLists: action.payload };
+    case SET_LIST_DETAILS:
+      return { ...state, listDetails: action.payload };  
     default:
       return state;
   }

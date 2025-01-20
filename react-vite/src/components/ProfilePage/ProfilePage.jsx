@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useNavigateTo } from "../../utils/navigation";
 import { thunkGetUserReviews } from "../../redux/reviews";
 import { thunkGetUserLists } from "../../redux/lists";
 import { thunkGetFollowers, thunkGetFollowing } from "../../redux/follows";
@@ -10,6 +11,7 @@ import "./ProfilePage.css";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
+  const navigateToList = useNavigateTo('lists')
   const { username } = useParams();
   const currentUser = useSelector((state) => state.session.user);
   const profileUser = useSelector((state) => state.users.userByUsername);
@@ -22,25 +24,25 @@ const ProfilePage = () => {
   useEffect(() => {
     if (username) {
       dispatch(thunkGetUserByUsername(username));
-    }
+      }
   }, [dispatch, username]);
-
+  
   useEffect(() => {
     if (profileUser) {
       dispatch(thunkGetUserReviews(profileUser.id));
       dispatch(thunkGetUserLists(profileUser.id));
       dispatch(thunkGetFollowers(profileUser.id));
       dispatch(thunkGetFollowing(profileUser.id));
-
+      
       if (profileUser.welcome_movie_id) {
         dispatch(thunkGetMovieById(profileUser.welcome_movie_id));
       }
     }
   }, [dispatch, profileUser]);
-
+  
   if (username === "admin") return <div>Not Found</div>;
   if (!profileUser) return <div>Loading...</div>;
-
+  
   return (
     <div className="profile-page">
       <div className="left-section">
@@ -106,9 +108,11 @@ const ProfilePage = () => {
                 </p>
                 <div className="list-movies">
                   {list.movies.slice(0, 5).map((movie) => (
-                    <img key={movie.id} src={movie.poster_url} alt={movie.title} />
+                    <img key={movie.id} src={movie.poster_url} title={movie.title} alt={movie.title} />
                   ))}
-                  {list.movies.length > 5 && <button>See All</button>}
+                  {list.movies.length > 5 && (
+                    <button onClick={() => navigateToList(list.id)}>See All</button>
+                  )}
                 </div>
               </div>
             ))}
