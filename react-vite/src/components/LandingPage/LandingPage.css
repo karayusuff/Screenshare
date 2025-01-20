@@ -3,18 +3,19 @@
   flex-direction: column;
   color: #ffffff;
   padding: 25px 50px;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
 }
 
 .slogan {
   font-size: 4rem;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
+  color: #ffffff;
 }
 
 .landing-page h1 {
   font-size: 2.5rem;
   margin-bottom: 5px;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
   width: 500px;
   text-align: center;
   border-radius: 8px;
@@ -23,7 +24,7 @@
 .movie-details-landing {
   text-align: center;
   width: 500px;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
   border-radius: 8px;
   margin-bottom: 5px;
 }
@@ -42,17 +43,17 @@
 .movie-details-landing h2 {
   font-size: 1.6rem;
   margin-top: 15px;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
 }
 
 .movie-details-landing p {
   font-size: 1.1rem;
   line-height: 1.5;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
 }
 
 .recent-reviews {
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
   border-radius: 8px;
   width: 500px;
   text-align: center;
@@ -62,21 +63,21 @@
 .recent-reviews ul {
   list-style: none;
   padding: 10px 10px;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
 }
 
 .recent-reviews li {
   margin-bottom: 15px;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
 }
 
 .recent-reviews li:last-child {
   border-bottom: none;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
 }
 
 .recent-lists {
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
   border-radius: 8px;
   width: 500px;
   text-align: center;
@@ -86,22 +87,22 @@
 .recent-lists ul {
   list-style: none;
   padding: 10px 10px;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
 }
 
 .recent-lists li {
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
   padding-bottom: 5px;
 }
 
 .recent-lists li:last-child {
   border-bottom: none;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
 }
 
 .leaderboard {
   width: 500px;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
   border-radius: 8px;
   text-align: center;
 }
@@ -109,26 +110,26 @@
 .leaderboard-container {
   display: flex;
   padding: 10px;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
 }
 
 .leaderboard-section {
   flex: 1;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
 }
 
 .leaderboard-section ul {
   list-style: none;
   padding: 10px 10px;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
 }
 
 .leaderboard-section li {
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
   padding-bottom: 5px;
 }
 
 .leaderboard-section li:last-child {
   border-bottom: none;
-  border:2px solid #000000;
+  border:1px solid #00ff4c;
 }
