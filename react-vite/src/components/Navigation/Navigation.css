@@ -4,6 +4,7 @@
   align-items: center;
   background-color: #000000;
   padding: 8px 35px;
+  border: 1px solid #00ff4c;
 }
 
 .nav-left {
