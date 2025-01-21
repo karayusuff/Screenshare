@@ -1,48 +1,122 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNavigateTo } from "../../utils/navigation";
-import { thunkGetUserReviews } from "../../redux/reviews";
-import { thunkGetUserLists } from "../../redux/lists";
-import { thunkGetFollowers, thunkGetFollowing } from "../../redux/follows";
-import { thunkGetUserByUsername } from "../../redux/users";
-import { thunkGetMovieById } from "../../redux/movies";
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const navigateToList = useNavigateTo('lists')
+  const navigateToList = useNavigateTo('lists');
   const { username } = useParams();
   const currentUser = useSelector((state) => state.session.user);
-  const profileUser = useSelector((state) => state.users.userByUsername);
-  const reviews = useSelector((state) => state.reviews.userReviews);
-  const lists = useSelector((state) => state.lists.userLists);
-  const followers = useSelector((state) => state.follows.followers);
-  const following = useSelector((state) => state.follows.following);
-  const welcomeMovie = useSelector((state) => state.movies.movie);
+  const [profileUser, setProfileUser] = useState(null);
+  const [reviews, setReviews] = useState([]);
+  const [lists, setLists] = useState([]);
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+  const [welcomeMovie, setWelcomeMovie] = useState(null);
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    const fetchUserByUsername = () => {
+      fetch(`/api/users/${username}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setProfileUser(data); 
+          setIsLoading(false);
+        })  
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data && data.error) {
+            setErrors((prevErrors) => ({ ...prevErrors, profileUser: data.error }));
+          }
+          setIsLoading(false);
+        });
+    };
+
     if (username) {
-      dispatch(thunkGetUserByUsername(username));
-      }
-  }, [dispatch, username]);
-  
+      fetchUserByUsername();
+    }
+  }, [username]);
+
   useEffect(() => {
     if (profileUser) {
-      dispatch(thunkGetUserReviews(profileUser.id));
-      dispatch(thunkGetUserLists(profileUser.id));
-      dispatch(thunkGetFollowers(profileUser.id));
-      dispatch(thunkGetFollowing(profileUser.id));
-      
-      if (profileUser.welcome_movie_id) {
-        dispatch(thunkGetMovieById(profileUser.welcome_movie_id));
-      }
+      const fetchUserReviews = () => {
+        fetch(`/api/users/${profileUser.id}/reviews`)
+          .then((res) => res.json())
+          .then((data) => setReviews(data.Reviews))
+          .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.error) {
+              setErrors((prevErrors) => ({ ...prevErrors, reviews: data.error }));
+            }
+          });
+      };
+      const fetchUserLists = () => {
+        fetch(`/api/users/${profileUser.id}/lists`)
+          .then((res) => res.json())
+          .then((data) => setLists(data.Lists))
+          .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.error) {
+              setErrors((prevErrors) => ({ ...prevErrors, lists: data.error }));
+            }
+          });
+      };
+      const fetchFollowers = () => {
+        fetch(`/api/users/${profileUser.id}/followers`)
+          .then((res) => res.json())
+          .then((data) => setFollowers(data.Followers))
+          .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.error) {
+              setErrors((prevErrors) => ({ ...prevErrors, followers: data.error }));
+            }
+          });
+      };
+      const fetchFollowing = () => {
+        fetch(`/api/users/${profileUser.id}/following`)
+          .then((res) => res.json())
+          .then((data) => setFollowing(data.Following))
+          .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.error) {
+              setErrors((prevErrors) => ({ ...prevErrors, following: data.error }));
+            }
+          });
+      };
+      const fetchWelcomeMovie = () => {
+        fetch(`/api/movies/${profileUser.welcome_movie_id}`)
+          .then((res) => res.json())
+          .then((data) => setWelcomeMovie(data))
+          .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.error) {
+              setErrors((prevErrors) => ({ ...prevErrors, welcomeMovie: data.error }));
+            }
+          });
+      };
+      fetchUserReviews();
+      fetchUserLists();
+      fetchFollowers();
+      fetchFollowing();
+      fetchWelcomeMovie();
     }
-  }, [dispatch, profileUser]);
-  
+  }, [profileUser, dispatch]);
+
   if (username === "admin") return <div>Not Found</div>;
-  if (!profileUser) return <div>Loading...</div>;
-  
+  if (isLoading) return <div>Loading...</div>;
+  if (Object.values(errors).length > 0) {
+    return (
+      <div>
+        {Object.entries(errors).map(([key, message]) => (
+          <p key={key}>{message}</p>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="profile-page">
       <div className="left-section">
@@ -123,11 +197,11 @@ const ProfilePage = () => {
         </div>
       </div>
       <div className="reviews-section">
-      {currentUser && currentUser.id === profileUser.id ? (
-            <h3>Your recent reviews</h3>
-          ) : (
-            <h3>{profileUser.username}&apos;s recent reviews</h3>
-          )}
+        {currentUser && currentUser.id === profileUser.id ? (
+          <h3>Your recent reviews</h3>
+        ) : (
+          <h3>{profileUser.username}&apos;s recent reviews</h3>
+        )}
         <div className="reviews-list">
           {!reviews.length ? (
             <p>No reviews yet.</p>
