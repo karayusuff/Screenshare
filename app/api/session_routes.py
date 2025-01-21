@@ -156,7 +156,7 @@ def create_list():
 @login_required
 def get_user_reviews():
     """
-    Get all the reviews created by the current user.
+    Returns all the reviews created by the current user.
     """
     reviews = Review.query.filter_by(user_id=current_user.id).order_by(Review.created_at.desc()).all()
 
