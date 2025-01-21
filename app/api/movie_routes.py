@@ -50,7 +50,7 @@ def get_random_movie():
     """
     global last_selected_time, current_movie
     now = datetime.now(timezone.utc)
-    if not last_selected_time or now - last_selected_time > timedelta(minutes=1):
+    if not last_selected_time or now - last_selected_time > timedelta(seconds=15):
         current_movie = Movie.query.order_by(func.random()).first()
         last_selected_time = now
     if not current_movie:

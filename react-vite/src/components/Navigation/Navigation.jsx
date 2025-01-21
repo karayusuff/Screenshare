@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
+import CreateListButton from "../CreateListModal/CreateListButton";
 import logo from "../../../../images/screenshare-logo-transparent.png"
 import "./Navigation.css";
 
@@ -21,6 +22,7 @@ function Navigation() {
       </div>
 
       <div className="nav-right">
+        <CreateListButton />
         <ProfileButton />
       </div>
     </nav>
