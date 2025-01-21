@@ -105,6 +105,8 @@ def delete_list(list_id):
     list = List.query.get(list_id)
     if not list:
         return jsonify({"error": "List not found."}), 404
+    if list.list_type != "Custom":
+        return jsonify({"error": "You cannot delete a default list."}), 403
     
     if current_user.id != list.user_id:
         return jsonify({"error": "Unauthorized."}), 401

@@ -178,7 +178,7 @@ const ProfilePage = () => {
           <div className="default-lists">
             {lists.filter((list) => list.list_type === "Default").map((list) => (
               <div className="list-card" key={list.id}>
-                <p>
+                <p onClick={() => navigateToList(list.id)}>
                   {list.name} ({list.movies.length})
                 </p>
                 <div className="list-movies">
