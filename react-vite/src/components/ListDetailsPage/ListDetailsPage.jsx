@@ -1,52 +1,87 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useNavigateTo } from "../../utils/navigation";
 import { thunkGetListDetails } from "../../redux/lists";
-import { useModal } from "../../context/Modal";
 import "./ListDetailsPage.css";
 
 const ListDetailsPage = () => {
   const { listId } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const navigateToMovie = useNavigateTo("movies");
   const currentUser = useSelector((state) => state.session.user);
   const listDetails = useSelector((state) => state.lists.listDetails);
-  const { setModalContent, closeModal } = useModal();
+
+  const [isEditingMovies, setIsEditingMovies] = useState(false);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [editedName, setEditedName] = useState("");
+  const [updatedMovies, setUpdatedMovies] = useState([]);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (listId) {
-      dispatch(thunkGetListDetails(listId));
+      dispatch(thunkGetListDetails(listId))
+        .catch((error) => setErrors((prev) => ({ ...prev, fetch: error })));
     }
   }, [dispatch, listId]);
 
-  const handleDelete = async () => {
+  useEffect(() => {
+    if (listDetails) {
+      setEditedName(listDetails.name);
+      setUpdatedMovies(listDetails.movies);
+    }
+  }, [listDetails]);
+
+  const handleEditNameToggle = () => {
+    setIsEditingName(true);
+  };
+
+  const handleSaveName = async () => {
     try {
       const response = await fetch(`/api/lists/${listId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: editedName }),
+      });
+
+      if (response.ok) {
+        setIsEditingName(false);
+        dispatch(thunkGetListDetails(listId));
+      } else {
+        const data = await response.json();
+        setErrors((prev) => ({ ...prev, saveName: data.error }));
+      }
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, saveName: error }));
+    }
+  };
+
+  const handleCancelEditName = () => {
+    setIsEditingName(false);
+    setEditedName(listDetails.name);
+  };
+
+  const handleEditMoviesToggle = () => {
+    setIsEditingMovies(!isEditingMovies);
+  };
+
+  const handleRemoveMovie = async (movieId) => {
+    try {
+      const response = await fetch(`/api/lists/${listId}/movies/${movieId}`, {
         method: "DELETE",
       });
 
       if (response.ok) {
-        closeModal();
-        navigate(-1); // Bir önceki sayfaya yönlendir
+        setUpdatedMovies((prev) => prev.filter((movie) => movie.id !== movieId));
       } else {
         const data = await response.json();
-        alert(data.error || "An error occurred.");
+        setErrors((prev) => ({ ...prev, removeMovie: data.error }));
       }
     } catch (error) {
-      alert("Failed to delete the list.");
+      setErrors((prev) => ({ ...prev, removeMovie: error }));
     }
-  };
-
-  const openDeleteModal = () => {
-    setModalContent(
-      <div>
-        <h3>Are you sure you want to delete this list?</h3>
-        <button onClick={handleDelete}>Yes, Delete</button>
-        <button onClick={closeModal}>No, Cancel</button>
-      </div>
-    );
   };
 
   if (!listDetails) return <div>Loading...</div>;
@@ -54,24 +89,51 @@ const ListDetailsPage = () => {
   return (
     <div className="list-detail-page">
       <div className="list-header">
-        <h1>{listDetails.name}</h1>
+        {isEditingName ? (
+          <div>
+            <input
+              type="text"
+              value={editedName}
+              onChange={(e) => setEditedName(e.target.value)}
+            />
+            <button onClick={handleSaveName}>Save Changes</button>
+            <button onClick={handleCancelEditName}>Cancel</button>
+            {errors.saveName && <p className="error-message">{errors.saveName}</p>}
+          </div>
+        ) : (
+          <h1>{listDetails.name}</h1>
+        )}
         <p>Created by: {listDetails.username}</p>
-        {currentUser && currentUser.id === listDetails.user_id && 
-        listDetails.list_type === "Custom" && (
-          <button onClick={openDeleteModal}>Delete List</button>
+        {currentUser && currentUser.id === listDetails.user_id && (
+          <div>
+            {listDetails.list_type === "Custom" && !isEditingName && !isEditingMovies && (
+              <button onClick={handleEditNameToggle}>Edit List Name</button>
+            )}
+            <button
+              onClick={handleEditMoviesToggle}
+              disabled={updatedMovies.length === 0}
+            >
+              {isEditingMovies ? "Done Editing" : "Edit List Movies"}
+            </button>
+          </div>
         )}
       </div>
       <div className="list-movies">
-        {Object.entries(listDetails.movies).length > 0 ? (
+        {updatedMovies.length > 0 ? (
           <ul>
-            {listDetails.movies.map((movie) => (
+            {updatedMovies.map((movie) => (
               <li key={movie.id}>
                 <p>{movie.title}</p>
-                <img 
-                src={movie.poster_url} 
-                title={movie.title} 
-                alt={movie.title}
-                onClick={() => navigateToMovie(movie.id)} />
+                <img
+                  src={movie.poster_url}
+                  title={movie.title}
+                  alt={movie.title}
+                  className={isEditingMovies ? "editing-disabled" : ""}
+                  onClick={!isEditingMovies ? () => navigateToMovie(movie.id) : undefined}
+                />
+                {isEditingMovies && (
+                  <button onClick={() => handleRemoveMovie(movie.id)}>-</button>
+                )}
               </li>
             ))}
           </ul>
