@@ -184,3 +184,16 @@
 .custom-lists button:hover {
   background-color: #0056b3;
 }
+
+.clickable {
+  cursor: pointer;
+  color: #2196f3;
+}
+
+.clickable:hover {
+  text-decoration: underline;
+}
+
+.follow-button {
+  margin-top: 10px;
+}

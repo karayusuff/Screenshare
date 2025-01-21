@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNavigateTo } from "../../utils/navigation";
+import { useModal } from "../../context/Modal";
+import EditProfileModal from "../EditProfile";
+import FollowListModal from "../FollowListModal";
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
@@ -18,6 +21,7 @@ const ProfilePage = () => {
   const [welcomeMovie, setWelcomeMovie] = useState(null);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const { setModalContent } = useModal();
 
   useEffect(() => {
     const fetchUserByUsername = () => {
@@ -106,6 +110,33 @@ const ProfilePage = () => {
     }
   }, [profileUser, dispatch]);
 
+  const handleEditProfile = () => {
+    setModalContent(<EditProfileModal />);
+  };
+
+  const handleFollow = (userId) => {
+    fetch(`/api/follows/${userId}`, {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then(() => {
+        setFollowers((prevFollowers) => [...prevFollowers, { id: currentUser.id }]);
+      })
+      .catch((err) => console.error("Failed to follow user:", err));
+  };
+  
+  const handleUnfollow = (userId) => {
+    fetch(`/api/follows/${userId}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then(() => {
+        setFollowers((prevFollowers) => prevFollowers.filter((f) => f.id !== currentUser.id));
+      })
+      .catch((err) => console.error("Failed to unfollow user:", err));
+  };
+
+
   if (username === "admin") return <div>Not Found</div>;
   if (isLoading) return <div>Loading...</div>;
   if (Object.values(errors).length > 0) {
@@ -139,7 +170,8 @@ const ProfilePage = () => {
             <div className="profile-header">
               <h2>@{profileUser.username}</h2>
               {currentUser && currentUser.id === profileUser.id ? (
-                <button>Edit Profile</button>
+                // <button>Edit Profile</button>
+                <button onClick={handleEditProfile}>Edit Profile</button>
               ) : currentUser && currentUser.is_admin ? (
                 <select>
                   <option value="active">Active</option>
@@ -147,9 +179,9 @@ const ProfilePage = () => {
                   <option value="deactivated">Deactivated</option>
                 </select>
               ) : currentUser && followers.some((follower) => follower.id === currentUser.id) ? (
-                <button>Unfollow</button>
+                <button onClick={() => handleUnfollow(profileUser.id)}>Unfollow</button>
               ) : (
-                <button>Follow</button>
+                <button onClick={() => handleFollow(profileUser.id)}>Follow</button>
               )}
             </div>
             <div className="profile-details">
@@ -158,8 +190,12 @@ const ProfilePage = () => {
                 {lists.filter((list) => list.list_type === "Custom").length}{" "}
                 {lists.filter((list) => list.list_type === "Custom").length <= 1 ? "list" : "lists"}
               </p>
-              <p>{following.length} following</p>
-              <p>{followers.length} {followers.length <= 1 ? "follower" : "followers"}</p>
+              <p onClick={() => setModalContent(<FollowListModal type="following" userId={profileUser.id} />)}>
+                {following.length} following
+              </p>
+              <p onClick={() => setModalContent(<FollowListModal type="followers" userId={profileUser.id} />)}>
+                {followers.length} {followers.length <= 1 ? "follower" : "followers"}
+              </p>
             </div>
           </div>
           {profileUser.welcome_movie_id && welcomeMovie && (

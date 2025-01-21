@@ -126,23 +126,28 @@ def add_movie_to_list(list_id, movie_id):
     """
     list = List.query.get(list_id)
     if not list:
-        return jsonify({"error": "List not found"}), 404
+        return jsonify({"error": "List not found", "list_id": list_id}), 404
 
     if list.user_id != current_user.id:
-        return jsonify({"error": "Unauthorized"}), 401
+        return jsonify({"error": "Unauthorized", "user_id": current_user.id}), 401
 
     movie = Movie.query.get(movie_id)
     if not movie:
-        return jsonify({"error": "Movie not found"}), 404
+        return jsonify({"error": "Movie not found", "movie_id": movie_id}), 404
 
     existing_movie = ListMovie.query.filter_by(list_id=list_id, movie_id=movie_id).first()
     if existing_movie:
-        return jsonify({"error": "Movie already in the list"}), 400
+        return jsonify({
+            "error": "Movie already in the list",
+            "list_id": list_id,
+            "movie_id": movie_id
+        }), 400
 
     new_list_movie = ListMovie(list_id=list_id, movie_id=movie_id)
     db.session.add(new_list_movie)
     db.session.commit()
     return jsonify({"message": f"\"{movie.title}\" is added to \"{list.name}\" successfully."}), 200
+
 
 
 @list_routes.route('/<int:list_id>/movies/<int:movie_id>', methods=['DELETE'])

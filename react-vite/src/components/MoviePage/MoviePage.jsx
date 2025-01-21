@@ -4,12 +4,15 @@ import { useParams } from "react-router-dom";
 import { useNavigateTo } from "../../utils/navigation";
 import { thunkGetMovieById, clearMovie } from "../../redux/movies";
 import { thunkGetReviewsByMovie } from "../../redux/reviews";
+import { useModal } from "../../context/Modal";
+import AddToListModal from "../AddToList/AddToListModal";
 import "./MoviePage.css";
 
 const MoviePage = () => {
   const { movieId } = useParams();
   const dispatch = useDispatch();
-  const navigateToUser = useNavigateTo('users')
+  const navigateToUser = useNavigateTo("users");
+  const { setModalContent } = useModal();
   const movie = useSelector((state) => state.movies.movie);
   const reviews = useSelector((state) => state.reviews.reviews);
 
@@ -18,6 +21,10 @@ const MoviePage = () => {
     dispatch(thunkGetReviewsByMovie(movieId));
     return () => dispatch(clearMovie());
   }, [dispatch, movieId]);
+
+  const openAddToListModal = () => {
+    setModalContent(<AddToListModal movieId={movieId} />);
+  };
 
   if (!movie) {
     return <div>Loading...</div>;
@@ -41,6 +48,9 @@ const MoviePage = () => {
           <p><strong>Stars:</strong> {movie.stars || "N/A"}</p>
           <p><strong>Average Rating:</strong> {averageRating()}</p>
           <p className="movie-description">{movie.description}</p>
+          <button onClick={openAddToListModal} className="add-to-list-button">
+            Add to Your List
+          </button>
         </div>
       </div>
       <div className="movie-reviews">

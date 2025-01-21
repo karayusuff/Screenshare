@@ -1,0 +1,38 @@
+.admin-add-movie-modal {
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+}
+
+.admin-add-movie-modal h2 {
+  margin-bottom: 15px;
+}
+
+.admin-add-movie-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-add-movie-modal input,
+.admin-add-movie-modal textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.admin-add-movie-modal button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.admin-add-movie-modal .error-message {
+  color: red;
+  font-size: 14px;
+}

@@ -8,6 +8,7 @@ import "./ListDetailsPage.css";
 const ListDetailsPage = () => {
   const { listId } = useParams();
   const dispatch = useDispatch();
+  const navigateToUserLists = useNavigateTo("users");
   const navigateToMovie = useNavigateTo("movies");
   const currentUser = useSelector((state) => state.session.user);
   const listDetails = useSelector((state) => state.lists.listDetails);
@@ -17,6 +18,7 @@ const ListDetailsPage = () => {
   const [editedName, setEditedName] = useState("");
   const [updatedMovies, setUpdatedMovies] = useState([]);
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     if (listId) {
@@ -48,6 +50,7 @@ const ListDetailsPage = () => {
 
       if (response.ok) {
         setIsEditingName(false);
+        setSuccessMessage("List name updated successfully.");
         dispatch(thunkGetListDetails(listId));
       } else {
         const data = await response.json();
@@ -84,6 +87,24 @@ const ListDetailsPage = () => {
     }
   };
 
+  const handleDeleteList = async () => {
+    try {
+      const response = await fetch(`/api/lists/${listId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        setSuccessMessage("List deleted successfully.");
+        setTimeout(() => navigateToUserLists(currentUser.username, "/lists"), 1000);
+      } else {
+        const data = await response.json();
+        setErrors((prev) => ({ ...prev, deleteList: data.error }));
+      }
+    } catch (error) {
+      setErrors((prev) => ({ ...prev, deleteList: error.message }));
+    }
+  };
+
   if (!listDetails) return <div>Loading...</div>;
 
   return (
@@ -115,6 +136,11 @@ const ListDetailsPage = () => {
             >
               {isEditingMovies ? "Done Editing" : "Edit List Movies"}
             </button>
+            {listDetails.list_type === "Custom" && (
+              <button onClick={handleDeleteList} className="delete-list-button">
+                Delete List
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -141,6 +167,8 @@ const ListDetailsPage = () => {
           <p>No movies in this list.</p>
         )}
       </div>
+      {successMessage && <p className="success-message">{successMessage}</p>}
+      {errors.deleteList && <p className="error-message">{errors.deleteList}</p>}
     </div>
   );
 };

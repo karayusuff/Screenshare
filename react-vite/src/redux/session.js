@@ -1,5 +1,6 @@
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+const UPDATE_USER = 'session/updateUser'
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -8,6 +9,11 @@ const setUser = (user) => ({
 
 const removeUser = () => ({
   type: REMOVE_USER
+});
+
+const updateUser = (user) => ({
+  type: UPDATE_USER,
+  payload: user
 });
 
 export const thunkAuthenticate = () => async (dispatch) => {
@@ -63,6 +69,29 @@ export const thunkLogout = () => async (dispatch) => {
   dispatch(removeUser());
 };
 
+export const thunkUpdateProfile = (updatedProfile) => async (dispatch) => {
+  try {
+    const response = await fetch("/api/session/update-profile", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedProfile),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(updateUser(data));
+      return data;
+    } else {
+      const errorData = await response.json();
+      return { error: errorData };
+    }
+  } catch (error) {
+    return { error: "Something went wrong. Please try again later." };
+  }
+};
+
 const initialState = { user: null };
 
 function sessionReducer(state = initialState, action) {
@@ -71,6 +100,8 @@ function sessionReducer(state = initialState, action) {
       return { ...state, user: action.payload };
     case REMOVE_USER:
       return { ...state, user: null };
+    case UPDATE_USER:
+      return { ...state, user: action.payload };
     default:
       return state;
   }

@@ -5,6 +5,7 @@ from app.forms import MovieForm, ReviewForm
 from datetime import datetime, timedelta, timezone
 from sqlalchemy.sql import func
 from sqlalchemy.orm import joinedload
+from app.s3_helpers import upload_file_to_s3, get_unique_filename, remove_file_from_s3
 
 movie_routes = Blueprint('movies', __name__)
 
@@ -57,7 +58,6 @@ def get_random_movie():
         return jsonify({"error": "No movies found."}), 404
     return current_movie.to_dict(), 200
 
-
 @movie_routes.route('/', methods=['POST'])
 @login_required
 def add_movie():
@@ -71,18 +71,26 @@ def add_movie():
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
+        poster = form.poster.data
+        poster.filename = get_unique_filename(poster.filename)
+        upload = upload_file_to_s3(poster)
+        
+        if "url" not in upload:
+            return {"errors": "Failed to upload image"}, 400
+
         new_movie = Movie(
-            title = form.title.data,
-            poster_url = form.poster_url.data,
-            description = form.description.data,
-            release_date = form.release_date.data,
-            genres = form.genres.data,
-            director = form.director.data,
-            writer = form.writer.data,
-            producer = form.producer.data,
-            stars = form.stars.data,
-            platforms = form.platforms.data
-        )        
+            title=form.title.data,
+            poster_url=upload["url"],
+            description=form.description.data,
+            release_date=form.release_date.data,
+            genres=form.genres.data,
+            director=form.director.data,
+            writer=form.writer.data,
+            producer=form.producer.data,
+            stars=form.stars.data,
+            platforms=form.platforms.data
+        )
+        
         db.session.add(new_movie)
         db.session.commit()
         return new_movie.to_dict(), 201
@@ -93,9 +101,6 @@ def add_movie():
 @movie_routes.route('/<int:movie_id>', methods=['PUT'])
 @login_required
 def update_movie(movie_id):
-    """
-    Updates an existing movie (admin only)
-    """
     if not current_user.is_admin:
         return {"error": "Unauthorized access."}, 403
 
@@ -107,22 +112,33 @@ def update_movie(movie_id):
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        movie.title = form.title.data or movie.title
-        movie.poster_url = form.poster_url.data or movie.poster_url
-        movie.description = form.description.data or movie.description
-        movie.release_date = form.release_date.data or movie.release_date
-        movie.genres = form.genres.data or movie.genres
-        movie.director = form.director.data or movie.director
-        movie.writer = form.writer.data or movie.writer
-        movie.producer = form.producer.data or movie.producer
-        movie.stars = form.stars.data or movie.stars
-        movie.platforms = form.platforms.data or movie.platforms
+        poster = form.poster.data
+        if poster:
+            if movie.poster_url:
+                remove_file_from_s3(movie.poster_url)
+            
+            poster.filename = get_unique_filename(poster.filename)
+            upload = upload_file_to_s3(poster)
+            
+            if "url" not in upload:
+                return {"errors": "Failed to upload image"}, 400
+                
+            movie.poster_url = upload["url"]
+
+        movie.title = form.title.data
+        movie.description = form.description.data
+        movie.release_date = form.release_date.data
+        movie.genres = form.genres.data
+        movie.director = form.director.data
+        movie.writer = form.writer.data
+        movie.producer = form.producer.data
+        movie.stars = form.stars.data
+        movie.platforms = form.platforms.data
 
         db.session.commit()
         return movie.to_dict(), 200
 
     return {"errors": form.errors}, 400
-
 
 @movie_routes.route('/<int:movie_id>', methods=['DELETE'])
 @login_required

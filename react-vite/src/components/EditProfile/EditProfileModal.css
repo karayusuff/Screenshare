@@ -1,0 +1,75 @@
+.edit-profile-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  background-color: #000000;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.edit-profile-modal h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.edit-profile-modal form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-profile-modal label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #555;
+}
+
+.edit-profile-modal input,
+.edit-profile-modal textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.edit-profile-modal input:focus,
+.edit-profile-modal textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
+}
+
+.edit-profile-modal button {
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.edit-profile-modal button:hover {
+  background-color: #0056b3;
+}
+
+.edit-profile-modal .error-message {
+  font-size: 12px;
+  color: red;
+  margin-top: -10px;
+}
+
+.edit-profile-modal .cancel-button {
+  background-color: #6c757d;
+}
+
+.edit-profile-modal .cancel-button:hover {
+  background-color: #5a6268;
+}

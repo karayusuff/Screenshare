@@ -1,6 +1,8 @@
 const SET_FOLLOWERS_COUNT = "follows/SET_FOLLOWERS_COUNT";
 const SET_FOLLOWING = "follows/SET_FOLLOWING";
 const SET_FOLLOWERS = "follows/SET_FOLLOWERS";
+const FOLLOW_USER = "follows/FOLLOW_USER";
+const UNFOLLOW_USER = "follows/UNFOLLOW_USER";
 
 const setFollowersCount = (followersCount) => ({
   type: SET_FOLLOWERS_COUNT,
@@ -9,12 +11,22 @@ const setFollowersCount = (followersCount) => ({
 
 const setFollowing = (following) => ({
   type: SET_FOLLOWING,
-  payload: following,
+  payload: following
 });
 
 const setFollowers = (followers) => ({
   type: SET_FOLLOWERS,
-  payload: followers,
+  payload: followers
+});
+
+const followUser = (userId) => ({
+  type: FOLLOW_USER,
+  payload: userId
+});
+
+const unfollowUser = (userId) => ({
+  type: UNFOLLOW_USER,
+  payload: userId
 });
 
 export const thunkGetFollowersCount = (topUsers) => async (dispatch) => {
@@ -66,6 +78,46 @@ export const thunkGetFollowers = (userId) => async (dispatch) => {
   }
 };
 
+export const thunkFollowUser = (userId) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/follows/${userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      dispatch(followUser(userId));
+    } else {
+      const errorData = await response.json();
+      console.error(errorData.error);
+    }
+  } catch (error) {
+    console.error("Error following user:", error);
+  }
+};
+
+export const thunkUnfollowUser = (userId) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/follows/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      dispatch(unfollowUser(userId));
+    } else {
+      const errorData = await response.json();
+      console.error(errorData.error);
+    }
+  } catch (error) {
+    console.error("Error unfollowing user:", error);
+  }
+};
+
 const initialState = { followersCount: {}, followers: [], following: [] };
 
 const followsReducer = (state = initialState, action) => {
@@ -75,7 +127,17 @@ const followsReducer = (state = initialState, action) => {
     case SET_FOLLOWERS:
       return { ...state, followers: action.payload };
     case SET_FOLLOWING:
-      return { ...state, following: action.payload };  
+      return { ...state, following: action.payload }; 
+    case FOLLOW_USER:
+      return {
+        ...state,
+        following: [...state.following, { id: action.payload }],
+      };
+    case UNFOLLOW_USER:
+      return {
+        ...state,
+        following: state.following.filter((user) => user.id !== action.payload),
+      };   
     default:
       return state;
   }
