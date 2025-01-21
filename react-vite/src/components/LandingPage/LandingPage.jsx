@@ -85,7 +85,7 @@ const LandingPage = () => {
               <ul>
                 {recentLists.map((list) => (
                   <li key={list.id}>
-                    <p><strong onClick={() => navigateToList(list.id)}>{list.name}</strong> by {list.username}</p>
+                    <p><strong onClick={() => navigateToList(list.id)}>{list.name}</strong> by <span onClick={() => navigateToUser(list.username)}>{list.username}</span></p>
                     <div className="list-movies">
                       {list.movies.slice(0, 5).map((movie) => (
                         <img 

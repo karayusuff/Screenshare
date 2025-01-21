@@ -7,6 +7,7 @@ import "./ProfilePage.css";
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigateToList = useNavigateTo('lists');
+  const navigateToUserLists = useNavigateTo('users');
   const { username } = useParams();
   const currentUser = useSelector((state) => state.session.user);
   const [profileUser, setProfileUser] = useState(null);
@@ -192,7 +193,7 @@ const ProfilePage = () => {
             ))}
           </div>
           <div className="custom-lists">
-            <button>See Custom Lists</button>
+            <button onClick={() => navigateToUserLists(profileUser.username, "/lists")}>See Custom Lists</button>
           </div>
         </div>
       </div>
