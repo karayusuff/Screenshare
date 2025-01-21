@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import CreateListButton from "../CreateListModal/CreateListButton";
@@ -8,7 +8,8 @@ import "./Navigation.css";
 
 function Navigation() {
   const currentUser = useSelector((state) => state.session.user);
-  
+  const navigate = useNavigate();
+
   return (
     <nav className="nav-bar">
       <div className="nav-left">
@@ -22,13 +23,19 @@ function Navigation() {
         </NavLink>
       </div>
 
-      {/* <div className="nav-center">
+      <div className="nav-center">
         <input
           type="text"
           placeholder="Search..."
           className="nav-search-bar"
         />
-      </div> */}
+        <button className="nav-button">
+          Users
+        </button>
+        <button className="nav-button" onClick={() => navigate('/movies')}>
+          Movies
+        </button>
+      </div>
 
       <div className="nav-right">
         <CreateListButton />
