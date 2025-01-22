@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
-from wtforms.validators import DataRequired, Email, ValidationError, URL, Optional
-from flask_wtf.file import FileRequired, FileField, FileAllowed
+from wtforms.validators import DataRequired, Email, ValidationError, Optional
+from flask_wtf.file import FileField, FileAllowed
 from app.models import User
 from app.s3_helpers import ALLOWED_EXTENSIONS
 

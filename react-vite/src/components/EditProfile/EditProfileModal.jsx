@@ -17,7 +17,7 @@ const EditProfileModal = () => {
   const [lastName, setLastName] = useState(currentUser.last_name || "");
   const [username, setUsername] = useState(currentUser.username || "");
   const [email, setEmail] = useState(currentUser.email || "");
-  const [profilePicUrl, setProfilePicUrl] = useState(currentUser.profile_pic_url || "");
+  const [profilePic, setProfilePic] = useState(currentUser.profile_pic_url || "");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
@@ -28,25 +28,21 @@ const EditProfileModal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const updatedProfile = {
-      first_name: firstName,
-      last_name: lastName,
-      username,
-      email,
-      profile_pic_url: profilePicUrl,
-      password: password || undefined
-    };
+    const formData = new FormData();
+    formData.append("first_name", firstName);
+    formData.append("last_name", lastName);
+    formData.append("username", username);
+    formData.append("email", email);
+    if (password) formData.append("password", password);
+    if (profilePic) formData.append("profile_pic", profilePic);
 
-    try {
-      const result = await dispatch(thunkUpdateProfile(updatedProfile));
-      if (result?.error) {
-        setErrors(result.error);
-      } else {
-        closeModal();
-        navigateToUser(username);
-      }
-    } catch (err) {
-      setErrors((prev) => ({ ...prev, server: "An error occurred. Please try again." }));
+    const result = await dispatch(thunkUpdateProfile(formData));
+
+    if (result.error) {
+      setErrors(result.error);
+    } else {
+      closeModal();
+      navigateToUser(username);
     }
   };
 
@@ -63,16 +59,16 @@ const EditProfileModal = () => {
           <input value={lastName} onChange={(e) => setLastName(e.target.value)} />
         </div>
         <div>
+          <label>Profile Picture</label>
+          <input type="file" accept="image/*" onChange={(e) => setProfilePic(e.target.files[0])} />
+        </div>
+        <div>
           <label>Username</label>
           <input value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
         <div>
           <label>Email</label>
           <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </div>
-        <div>
-          <label>Profile Picture URL</label>
-          <input value={profilePicUrl} onChange={(e) => setProfilePicUrl(e.target.value)} />
         </div>
         <div>
           <label>New Password</label>

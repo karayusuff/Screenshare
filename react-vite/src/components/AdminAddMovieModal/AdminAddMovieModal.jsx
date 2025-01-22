@@ -51,7 +51,7 @@ const AdminAddMovieModal = () => {
   return (
     <div className="admin-add-movie-modal">
       <h2>Add New Movie</h2>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
+      <form onSubmit={handleSubmit} >
         <input
           type="text"
           placeholder="Title"

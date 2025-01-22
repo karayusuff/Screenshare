@@ -24,10 +24,6 @@ const setUsers = (users) => ({
   payload: users
 })
 
-const deleteUser = () => ({
-  type: DELETE_USER
-})
-
 export const thunkGetTopUsers = () => async (dispatch) => {
   try {
     const response = await fetch("/api/users/top-users");

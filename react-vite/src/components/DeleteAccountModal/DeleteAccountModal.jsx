@@ -1,17 +1,20 @@
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkDeleteAccount } from "../../redux/session";
+import { useNavigate } from "react-router-dom";
 import "./DeleteAccountModal.css";
 
 const DeleteAccountModal = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { closeModal } = useModal();
 
   const handleDelete = async () => {
     const result = await dispatch(thunkDeleteAccount());
     if (!result?.error) {
       closeModal();
-      window.location.href = "/";
+      // window.location.href = "/";
+      navigate('/')
     } else {
       console.error(result.error);
     }
