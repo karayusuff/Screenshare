@@ -120,6 +120,7 @@ export const thunkUpdateMovie = (movieId, formData) => async (dispatch) => {
     } else {
       const errorData = await response.json();
       return { error: errorData };
+      // return { error: errorData.errors || "An unexpected error occurred." };
     }
   } catch (error) {
     console.error("Error updating movie:", error);

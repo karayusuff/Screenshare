@@ -101,6 +101,9 @@ def add_movie():
 @movie_routes.route('/<int:movie_id>', methods=['PUT'])
 @login_required
 def update_movie(movie_id):
+    """
+    Updates a movie's info
+    """
     if not current_user.is_admin:
         return {"error": "Unauthorized access."}, 403
 

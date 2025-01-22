@@ -1,0 +1,74 @@
+.edit-movie-modal {
+  background-color: #333;
+  padding: 20px;
+  width: 400px;
+}
+
+.edit-movie-modal h2 {
+  text-align: center;
+}
+
+.edit-movie-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-movie-modal label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+
+.edit-movie-modal input,
+.edit-movie-modal textarea {
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 5px;
+  background-color: #222;
+  color: #fff;
+}
+
+.edit-movie-modal textarea {
+  resize: none;
+  height: 100px;
+}
+
+.edit-movie-modal .modal-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit-movie-modal .submit-button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-movie-modal .submit-button:hover {
+  background-color: #45a049;
+}
+
+.edit-movie-modal .cancel-button {
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.edit-movie-modal .cancel-button:hover {
+  background-color: #e53935;
+}
+
+.edit-movie-modal .error-message {
+  color: #f44336;
+  font-size: 14px;
+  text-align: center;
+}
