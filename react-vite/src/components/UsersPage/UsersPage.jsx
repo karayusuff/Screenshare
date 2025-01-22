@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetAllUsers, thunkGetTopUsers, thunkGetTopScorers } from "../../redux/users";
+import { useNavigateTo } from "../../utils/navigation";
 import "./UsersPage.css";
 
 const UsersPage = () => {
   const dispatch = useDispatch();
+  const navigateTo = useNavigateTo("users");
   const [activeTab, setActiveTab] = useState("all");
 
   const allUsers = useSelector((state) => state.users.users);
@@ -25,9 +27,10 @@ const UsersPage = () => {
     return (
       <div className="users-list">
         {users.map((user) => (
-          <div key={user.id} className="user-card">
+          <div key={user.id} className="user-card" onClick={() => navigateTo(user.username)}>
             <img src={user.avatar_url || "https://screenshare-app-images.s3.eu-north-1.amazonaws.com/no+pp+image.png"} alt={user.username} className="user-avatar" />
             <h3 className="user-name">{user.username}</h3>
+            <h4 className="user-badge">{user.badge}</h4>
           </div>
         ))}
       </div>

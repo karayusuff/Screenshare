@@ -83,3 +83,10 @@ h1 {
   color: #333;
   text-align: center;
 }
+
+.user-badge {
+  font-size: 0.9rem;
+  color: #6a1cc2;
+  text-align: center;
+}
+

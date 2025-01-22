@@ -11,7 +11,7 @@ def users():
     """
     Query for all users and returns them in a list of user dictionaries
     """
-    users = User.query.order_by(User.created_at.desc()).all()
+    users = User.query.filter(User.is_admin == False).order_by(User.created_at.desc()).all()
     return jsonify({"Users": [user.to_dict() for user in users]}), 200
 
 
@@ -33,7 +33,9 @@ def get_top_users():
     """
     Returns top users with most followers
     """
-    users = User.query.outerjoin(Follow, Follow.following_id == User.id).group_by(User.id).order_by(db.func.count(Follow.id).desc()).all()
+    users = User.query.filter(User.is_admin == False)\
+        .outerjoin(Follow, Follow.following_id == User.id)\
+        .group_by(User.id).order_by(db.func.count(Follow.id).desc()).all()
     return jsonify({"TopUsers": [user.to_dict() for user in users]}), 200
 
 
@@ -42,7 +44,7 @@ def get_top_scorers():
     """
     Returns top users with most points
     """
-    users = User.query.order_by(User.total_points.desc()).all()
+    users = User.query.filter(User.is_admin == False).order_by(User.total_points.desc()).all()
     return jsonify({"TopScorers": [user.to_dict() for user in users]}), 200
 
 
