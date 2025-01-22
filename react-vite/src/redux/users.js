@@ -2,6 +2,7 @@ const SET_TOP_USERS = "users/SET_TOP_USERS";
 const SET_TOP_SCORERS = "users/SET_TOP_SCORERS";
 const SET_USER_BY_USERNAME = "users/SET_USER_BY_USERNAME";
 const SET_USERS = "users/SET_USERS";
+const DELETE_USER = "users/DELETE_USER";
 
 const setTopUsers = (users) => ({
   type: SET_TOP_USERS,
@@ -21,6 +22,10 @@ const setUserByUsername = (user) => ({
 const setUsers = (users) => ({
   type: SET_USERS,
   payload: users
+})
+
+const deleteUser = () => ({
+  type: DELETE_USER
 })
 
 export const thunkGetTopUsers = () => async (dispatch) => {
@@ -83,6 +88,7 @@ export const thunkGetAllUsers = () => async (dispatch) => {
   }
 };
 
+
 const initialState = { topUsers: [], topScorers: [], userByUsername: null, users: [] };
 
 const usersReducer = (state = initialState, action) => {
@@ -94,7 +100,9 @@ const usersReducer = (state = initialState, action) => {
     case SET_USER_BY_USERNAME:
       return { ...state, userByUsername: action.payload };
     case SET_USERS:
-      return { ...state, users: action.payload }
+      return { ...state, users: action.payload };
+    case DELETE_USER:
+      return { ...state, user: null }
     default:
       return state;
   }

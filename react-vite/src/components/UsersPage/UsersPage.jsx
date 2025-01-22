@@ -28,7 +28,7 @@ const UsersPage = () => {
       <div className="users-list">
         {users.map((user) => (
           <div key={user.id} className="user-card" onClick={() => navigateTo(user.username)}>
-            <img src={user.avatar_url || "https://screenshare-app-images.s3.eu-north-1.amazonaws.com/no+pp+image.png"} alt={user.username} className="user-avatar" />
+            <img src={user.profile_pic_url || "https://screenshare-app-images.s3.eu-north-1.amazonaws.com/no+pp+image.png"} alt={user.username} className="user-avatar" />
             <h3 className="user-name">{user.username}</h3>
             <h4 className="user-badge">{user.badge}</h4>
           </div>

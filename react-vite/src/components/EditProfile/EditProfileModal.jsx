@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkUpdateProfile } from "../../redux/session";
 import { useNavigateTo } from "../../utils/navigation";
+import DeleteAccountModal from "../DeleteAccountModal";
 import './EditProfileModal.css'
 
 const EditProfileModal = () => {
@@ -10,6 +11,7 @@ const EditProfileModal = () => {
   const { closeModal } = useModal();
   const currentUser = useSelector((state) => state.session.user);
   const navigateToUser = useNavigateTo("users");
+  const { setModalContent } = useModal();
 
   const [firstName, setFirstName] = useState(currentUser.first_name || "");
   const [lastName, setLastName] = useState(currentUser.last_name || "");
@@ -18,6 +20,10 @@ const EditProfileModal = () => {
   const [profilePicUrl, setProfilePicUrl] = useState(currentUser.profile_pic_url || "");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+
+  const openDeleteModal = () => {
+    setModalContent(<DeleteAccountModal />);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +34,7 @@ const EditProfileModal = () => {
       username,
       email,
       profile_pic_url: profilePicUrl,
-      password: password || undefined, // Boşsa güncelleme yapılmasın
+      password: password || undefined
     };
 
     try {
@@ -82,6 +88,9 @@ const EditProfileModal = () => {
         <button type="submit">Save Changes</button>
       </form>
       <button onClick={closeModal} className="cancel-button">Cancel</button>
+      <p className="delete-profile-link" onClick={openDeleteModal}>
+        Delete Profile
+      </p>
     </div>
   );
 };

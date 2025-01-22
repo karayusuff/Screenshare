@@ -10,7 +10,7 @@ function SignupFormModal() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [profilePicUrl, setProfilePicUrl] = useState("");
+  const [profilePic, setProfilePic] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -26,16 +26,17 @@ function SignupFormModal() {
       });
     }
 
-    const serverResponse = await dispatch(
-      thunkSignup({
-        first_name: firstName,
-        last_name: lastName,
-        email,
-        username,
-        profile_pic_url: profilePicUrl,
-        password
-      })
-    );
+    const formData = new FormData();
+    formData.append("first_name", firstName);
+    formData.append("last_name", lastName);
+    formData.append("email", email);
+    formData.append("username", username);
+    formData.append("password", password);
+    if (profilePic) {
+      formData.append("profile_pic_url", profilePic);
+    }
+
+    const serverResponse = await dispatch(thunkSignup(formData));
 
     if (serverResponse) {
       setErrors(serverResponse);
@@ -90,11 +91,11 @@ function SignupFormModal() {
         </label>
         {errors.username && <p>{errors.username}</p>}
         <label>
-          Profile Picture URL
+          Profile Picture
           <input
-            type="text"
-            value={profilePicUrl}
-            onChange={(e) => setProfilePicUrl(e.target.value)}
+            type="file"
+            accept="image/*"
+            onChange={(e) => setProfilePic(e.target.files[0])}
           />
         </label>
         {errors.profile_pic_url && <p>{errors.profile_pic_url}</p>}

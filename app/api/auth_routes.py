@@ -3,6 +3,7 @@ from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+from app.s3_helpers import upload_file_to_s3, get_unique_filename
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -52,6 +53,18 @@ def sign_up():
     """
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+
+    profile_pic_url = None
+    if 'profile_pic_url' in request.files:  # Eğer dosya gönderildiyse
+        file = request.files['profile_pic_url']
+        file.filename = get_unique_filename(file.filename)
+        upload = upload_file_to_s3(file)
+
+        if "url" not in upload:
+            return {"errors": "Failed to upload profile picture."}, 400
+
+        profile_pic_url = upload["url"]  # Dosya URL'sini al
+
     if form.validate_on_submit():
         user = User(
             first_name=form.data['first_name'],
@@ -59,7 +72,7 @@ def sign_up():
             username=form.data['username'],
             email=form.data['email'],
             password=form.data['password'],
-            profile_pic_url=form.data['profile_pic_url'],
+            profile_pic_url=profile_pic_url,
             is_admin=False,
             status='active',
             total_points=0,
