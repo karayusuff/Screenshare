@@ -29,7 +29,7 @@ function Navigation() {
           placeholder="Search..."
           className="nav-search-bar"
         />
-        <button className="nav-button">
+        <button className="nav-button" onClick={() => navigate('/users')}>
           Users
         </button>
         <button className="nav-button" onClick={() => navigate('/movies')}>

@@ -5,6 +5,7 @@ import MoviesPage from '../components/MoviesPage/MoviesPage';
 import ProfilePage from '../components/ProfilePage/ProfilePage';
 import ListDetailsPage from '../components/ListDetailsPage';
 import UserListsPage from '../components/UserListsPage';
+import UsersPage from '../components/UsersPage';
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
       {
         path: "/users/:username/lists",
         element: <UserListsPage />,
+      },
+      {
+        path: "/users",
+        element: <UsersPage />,
       },
     ],
   },
