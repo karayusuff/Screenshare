@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNavigateTo } from "../../utils/navigation";
 import { thunkGetMovieById, clearMovie } from "../../redux/movies";
-import { thunkGetReviewsByMovie } from "../../redux/reviews";
+import { thunkGetReviewsByMovie, thunkDeleteReview } from "../../redux/reviews";
 import { useModal } from "../../context/Modal";
 import AddToListModal from "../AddToList/AddToListModal";
 import AdminEditMovieModal from "../AdminEditMovieModal/AdminEditMovieModal";
 import AdminDeleteMovieModal from "../AdminDeleteMovieModal/AdminDeleteMovieModal";
+import AddReviewModal from "../AddReviewModal/AddReviewModal";
+import EditReviewModal from "../EditReviewModal";
 import { FaCog } from "react-icons/fa";
 import "./MoviePage.css";
 
@@ -19,6 +21,7 @@ const MoviePage = () => {
   const movie = useSelector((state) => state.movies.movie);
   const reviews = useSelector((state) => state.reviews.reviews);
   const currentUser = useSelector((state) => state.session.user);
+  const userReview = reviews.find((review) => review.user_id === currentUser?.id);
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -42,6 +45,15 @@ const MoviePage = () => {
 
   const openDeleteMovieModal = () => {
     setModalContent(<AdminDeleteMovieModal movieId={movie.id} movieTitle={movie.title} />);
+  };
+
+  const openEditReviewModal = () => {
+    setModalContent(<EditReviewModal review={userReview} movieId={movie.id} />);
+  };
+
+  const handleDeleteReview = async () => {
+    await dispatch(thunkDeleteReview(userReview.id));
+    dispatch(thunkGetReviewsByMovie(movie.id));
   };
 
   const toggleMenu = (e) => {
@@ -101,20 +113,47 @@ const MoviePage = () => {
               Add to Your List
             </button>
           )}
+          {!userReview && currentUser && (
+            <button
+              onClick={() => setModalContent(<AddReviewModal movieId={movie.id} />)}
+              className="add-review-button"
+            >
+              Add Review
+            </button>
+          )}
         </div>
       </div>
       <div className="movie-reviews">
         <h2>Reviews</h2>
-        {reviews.length > 0 ? (
-          reviews.map((review) => (
+        {userReview && (
+          <div className="user-review">
+            <div className="user-review-header">
+              <p>Your Review:</p>
+              <div className="settings-container">
+                <FaCog className="settings-icon" />
+                <ul className="dropdown-menu">
+                  <li onClick={openEditReviewModal}>Edit</li>
+                  <li onClick={handleDeleteReview}>Delete</li>
+                </ul>
+              </div>
+            </div>
+            <p>{userReview.review_text}</p>
+            <p>Rating: {userReview.rating}/10</p>
+          </div>
+        )}
+        {reviews
+          .filter((review) => review.user_id !== currentUser?.id)
+          .map((review) => (
             <div key={review.id} className="review-item">
-              <p><strong onClick={() => navigateToUser(review.username)}>{review.username}</strong>: {review.review_text}</p>
+              <p>
+                <strong onClick={() => navigateToUser(review.username)}>
+                  {review.username}
+                </strong>
+                : {review.review_text}
+              </p>
               <p>Rating: {review.rating}/10</p>
             </div>
-          ))
-        ) : (
-          <p>No reviews yet. Be the first to review!</p>
-        )}
+          ))}
       </div>
     </div>
   );
