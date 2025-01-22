@@ -87,7 +87,7 @@ export const thunkGetMovies = (page = 1, limit = 8) => async (dispatch) => {
 
 export const thunkCreateMovie = (formData) => async (dispatch) => {
   try {
-    const response = await fetch(`/api/movies`, {
+    const response = await fetch(`/api/movies/`, {
       method: "POST",
       body: formData
     });

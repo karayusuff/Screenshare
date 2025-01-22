@@ -43,6 +43,7 @@ const AdminAddMovieModal = () => {
 
     if (result?.error) {
       setErrors(result.error);
+      // setErrors(JSON.stringify(result.error));
     } else {
       closeModal();
     }
@@ -57,12 +58,14 @@ const AdminAddMovieModal = () => {
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-        />
+          />
+          {errors.title && <p className="error-message">{errors.title}</p>}
         <input
           type="file"
           accept="image/*"
           onChange={(e) => setPoster(e.target.files[0])}
         />
+        {errors.poster && <p className="error-message">{errors.poster}</p>}
         <textarea
           placeholder="Description"
           value={description}
@@ -73,6 +76,7 @@ const AdminAddMovieModal = () => {
           value={releaseDate}
           onChange={(e) => setReleaseDate(e.target.value)}
         />
+        {errors.release_date && <p className="error-message">{errors.release_date}</p>}
         <input
           type="text"
           placeholder="Genres"
@@ -109,11 +113,11 @@ const AdminAddMovieModal = () => {
           value={platforms}
           onChange={(e) => setPlatforms(e.target.value)}
         />
-        {Object.values(errors).map((err, idx) => (
+        {/* {Object.values(errors).map((err, idx) => (
           <p key={idx} className="error-message">
             {err}
           </p>
-        ))}
+        ))} */}
         <button type="submit" disabled={loading}>
           {loading ? "Loading..." : "Add Movie"}
         </button>
