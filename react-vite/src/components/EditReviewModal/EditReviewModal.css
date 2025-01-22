@@ -1,15 +1,14 @@
 .edit-review-modal {
   padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background-color: #1e1e1e;
   max-width: 500px;
   margin: 0 auto;
+  color: #ffffff;
 }
 
 .edit-review-modal h2 {
   font-size: 1.5rem;
-  color: #333;
+  color: #ffffff;
   margin-bottom: 15px;
   text-align: center;
 }
@@ -22,7 +21,7 @@
 
 .edit-review-modal label {
   font-size: 0.9rem;
-  color: #555;
+  color: #cccccc;
   margin-bottom: 5px;
 }
 
@@ -31,10 +30,11 @@
   height: 100px;
   resize: none;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #3a3a3a;
   border-radius: 5px;
   font-size: 0.9rem;
-  color: #333;
+  color: #ffffff;
+  background-color: #2e2e2e;
 }
 
 .edit-review-modal textarea:focus {
@@ -45,15 +45,17 @@
 .edit-review-modal input[type="number"] {
   width: 60px;
   padding: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #3a3a3a;
   border-radius: 5px;
   font-size: 0.9rem;
   text-align: center;
+  color: #ffffff;
+  background-color: #2e2e2e;
 }
 
 .edit-review-modal .error-messages {
-  background-color: #ffe6e6;
-  color: #cc0000;
+  background-color: #3a1c1c;
+  color: #ff4d4d;
   padding: 10px;
   border-radius: 5px;
   font-size: 0.85rem;
@@ -69,12 +71,12 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .edit-review-modal button[type="submit"] {
   background-color: #007bff;
-  color: #fff;
-  transition: background-color 0.3s ease;
+  color: #ffffff;
 }
 
 .edit-review-modal button[type="submit"]:hover {
@@ -82,10 +84,10 @@
 }
 
 .edit-review-modal button[type="button"] {
-  background-color: #ccc;
-  color: #333;
+  background-color: #444444;
+  color: #ffffff;
 }
 
 .edit-review-modal button[type="button"]:hover {
-  background-color: #bbb;
+  background-color: #555555;
 }

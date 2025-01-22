@@ -1,40 +1,52 @@
 .delete-account-modal {
   text-align: center;
+  background-color: #1e1e1e;
+  color: #ffffff;
+  padding: 20px;
+  max-width: 400px;
+  margin: auto;
 }
 
 .delete-account-modal h2 {
   margin-bottom: 10px;
+  color: #ffffff;
 }
 
 .delete-account-modal p {
   margin-bottom: 20px;
+  color: #cccccc;
 }
 
 .modal-actions {
   display: flex;
   justify-content: space-around;
+  gap: 15px;
 }
 
 .delete-button {
-  background-color: red;
-  color: white;
+  background-color: #ff4d4d;
+  color: #ffffff;
   padding: 10px 20px;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
-}
-
-.cancel-button {
-  background-color: gray;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .delete-button:hover {
-  background-color: darkred;
+  background-color: #e53935;
+}
+
+.cancel-button {
+  background-color: #444444;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .cancel-button:hover {
-  background-color: darkgray;
+  background-color: #555555;
 }

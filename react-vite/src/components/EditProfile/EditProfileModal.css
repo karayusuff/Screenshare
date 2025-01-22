@@ -5,15 +5,14 @@
   padding: 20px;
   width: 100%;
   max-width: 400px;
-  background-color: #000000;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: #1e1e1e;
+  color: #ffffff;
 }
 
 .edit-profile-modal h2 {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #333;
+  color: #ffffff;
 }
 
 .edit-profile-modal form {
@@ -26,7 +25,7 @@
 .edit-profile-modal label {
   font-size: 14px;
   font-weight: bold;
-  color: #555;
+  color: #cccccc;
 }
 
 .edit-profile-modal input,
@@ -34,8 +33,10 @@
   width: 100%;
   padding: 10px;
   font-size: 14px;
-  border: 1px solid #ddd;
+  border: 1px solid #3a3a3a;
   border-radius: 4px;
+  background-color: #2e2e2e;
+  color: #ffffff;
 }
 
 .edit-profile-modal input:focus,
@@ -48,38 +49,40 @@
 .edit-profile-modal button {
   padding: 10px 15px;
   font-size: 16px;
-  color: #fff;
+  color: #ffffff;
   background-color: #007bff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   margin-top: 10px;
+  transition: background-color 0.3s;
 }
 
 .edit-profile-modal button:hover {
   background-color: #0056b3;
 }
 
-.edit-profile-modal .error-message {
-  font-size: 12px;
-  color: red;
-  margin-top: -10px;
-}
-
 .edit-profile-modal .cancel-button {
-  background-color: #6c757d;
+  background-color: #444444;
 }
 
 .edit-profile-modal .cancel-button:hover {
-  background-color: #5a6268;
+  background-color: #555555;
+}
+
+.edit-profile-modal .error-message {
+  font-size: 12px;
+  color: #ff4d4d;
+  margin-top: -10px;
 }
 
 .delete-profile-link {
-  color: red;
+  color: #ff4d4d;
   cursor: pointer;
   margin-top: 20px;
   text-align: center;
   font-size: 0.9rem;
+  transition: text-decoration 0.3s;
 }
 
 .delete-profile-link:hover {

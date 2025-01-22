@@ -2,18 +2,23 @@
   padding: 20px;
   width: 100%;
   max-width: 500px;
+  background-color: #1e1e1e;
+  color: #ffffff;
 }
 
 .add-to-list-modal h2 {
   margin-bottom: 20px;
   text-align: center;
-  color: #333;
+  color: #ffffff;
 }
 
 .lists-container {
   max-height: 400px;
   overflow-y: auto;
   margin-bottom: 20px;
+  background-color: #2e2e2e;
+  border-radius: 4px;
+  padding: 10px;
 }
 
 .list-item {
@@ -21,13 +26,13 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #3a3a3a;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .list-item:hover {
-  background-color: #f5f5f5;
+  background-color: #444444;
 }
 
 .list-info {
@@ -39,12 +44,12 @@
 
 .list-name {
   font-size: 16px;
-  color: #333;
+  color: #ffffff;
 }
 
 .list-movie-count {
   font-size: 14px;
-  color: #666;
+  color: #cccccc;
 }
 
 .checkbox-wrapper {
@@ -65,8 +70,8 @@
 }
 
 .error-message {
-  background-color: #ffebee;
-  color: #c62828;
+  background-color: #3a1c1c;
+  color: #ff4d4d;
   padding: 10px;
   margin-bottom: 15px;
   border-radius: 4px;
@@ -76,8 +81,8 @@
 .close-button {
   width: 100%;
   padding: 12px;
-  background-color: #2196F3;
-  color: white;
+  background-color: #007bff;
+  color: #ffffff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -86,11 +91,11 @@
 }
 
 .close-button:hover {
-  background-color: #1976D2;
+  background-color: #0056b3;
 }
 
 .modal-content {
   padding: 20px;
   text-align: center;
-  color: #666;
+  color: #cccccc;
 }

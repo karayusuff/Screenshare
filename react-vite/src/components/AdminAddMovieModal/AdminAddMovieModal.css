@@ -1,11 +1,12 @@
 .admin-add-movie-modal {
   padding: 20px;
-  background: #fff;
-  border-radius: 10px;
+  background: #1e1e1e;
+  color: #ffffff;
 }
 
 .admin-add-movie-modal h2 {
   margin-bottom: 15px;
+  color: #ffffff;
 }
 
 .admin-add-movie-modal form {
@@ -18,21 +19,43 @@
 .admin-add-movie-modal textarea {
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #3a3a3a;
   border-radius: 5px;
+  background-color: #2e2e2e;
+  color: #ffffff;
+}
+
+.admin-add-movie-modal textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #3a3a3a;
+  border-radius: 5px;
+  background-color: #555151;
+  color: #ffffff;
+}
+
+.admin-add-movie-modal input:focus,
+.admin-add-movie-modal textarea:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
 .admin-add-movie-modal button {
   padding: 10px 15px;
   font-size: 16px;
   background: #007bff;
-  color: #fff;
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.admin-add-movie-modal button:hover {
+  background: #0056b3;
 }
 
 .admin-add-movie-modal .error-message {
-  color: red;
+  color: #ff4d4d;
   font-size: 14px;
 }

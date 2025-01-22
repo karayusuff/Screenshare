@@ -1,41 +1,44 @@
 .create-list-modal {
   padding: 20px;
-  background-color: #1a1a1a;
-  border-radius: 10px;
+  background-color: #1e1e1e;
   width: 100%;
   max-width: 400px;
   margin: auto;
   text-align: center;
-  border: 1px solid #00ff4c;
+  color: #ffffff;
 }
 
 .create-list-modal h2 {
   margin-bottom: 15px;
   font-size: 1.5rem;
-  border: 1px solid #00ff4c;
+  color: #ffffff;
 }
 
 .create-list-modal form {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  border: 1px solid #00ff4c;
 }
 
 .create-list-modal label {
   font-size: 1rem;
   text-align: left;
   display: block;
-  border: 1px solid #00ff4c;
+  color: #cccccc;
 }
 
 .create-list-modal input {
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #00ff4c;
-  background-color: #333333;
+  border: 1px solid #3a3a3a;
+  background-color: #2e2e2e;
   color: #ffffff;
   width: 100%;
+}
+
+.create-list-modal input:focus {
+  border-color: #007bff;
+  outline: none;
 }
 
 .create-list-modal button {
@@ -44,11 +47,9 @@
   border: none;
   cursor: pointer;
   font-size: 1rem;
-}
-
-.create-list-modal button {
   background-color: #1b7c38;
-  color: #1a1a1a;
+  color: #ffffff;
+  transition: background-color 0.3s;
 }
 
 .create-list-modal button:hover {

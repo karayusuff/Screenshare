@@ -2,143 +2,129 @@
   display: flex;
   flex-direction: column;
   color: #ffffff;
-  padding: 25px 50px;
-  border:1px solid #00ff4c;
+  background-color: #1e1e1e;
+  padding: 20px;
 }
 
-.main-content {
+.landing-page .main-content {
   display: flex;
   justify-content: space-between;
   gap: 20px;
 }
 
-.movie-section {
+.landing-page .movie-section {
   flex: 1;
-  padding: 20px;
-  border: 1px solid #00ff4c;
-  border-radius: 8px;
+  padding: 15px;
+  background-color: #2e2e2e;
+  border-radius: 4px;
 }
 
-.movie-section h1 {
-  font-size: 2.5rem;
-  margin-bottom: 5px;
-  border: 1px solid #00ff4c;
-  width: 100%;
+.landing-page .movie-section h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
   text-align: center;
-  border-radius: 8px;
+  color: #ffffff;
 }
 
-.movie-details-landing {
-  text-align: center;
-  width: 100%;
-  border: 1px solid #00ff4c;
-  border-radius: 8px;
-  margin-bottom: 5px;
-}
-
-.movie-details-landing img {
-  width: auto;
-  height: 400px;
-  display: block;
-  margin: 0 auto;
+.list-movies img {
+  height: 125px;
+  width: 90px;
   object-fit: cover;
-  border-radius: 5px;
-  margin-top: 5px;
+}
+
+.recent-lists span {
   cursor: pointer;
 }
 
-.movie-details-landing h2 {
-  font-size: 1.6rem;
-  margin-top: 15px;
-  border: 1px solid #00ff4c;
-}
-
-.movie-details-landing p {
-  font-size: 1.1rem;
-  line-height: 1.5;
-  border: 1px solid #00ff4c;
-}
-
-.recent-reviews {
-  border: 1px solid #00ff4c;
-  border-radius: 8px;
-  width: 100%;
+.landing-page .movie-details-landing {
   text-align: center;
-  margin-top: 20px;
-}
-
-.recent-reviews ul {
-  list-style: none;
-  padding: 10px 10px;
-  border: 1px solid #00ff4c;
-}
-
-.recent-reviews li {
   margin-bottom: 15px;
-  border: 1px solid #00ff4c;
 }
 
-.recent-reviews li:last-child {
-  border: 1px solid #00ff4c;
+.landing-page .movie-details-landing img {
+  width: auto;
+  max-height: 550px;
+  object-fit: cover;
+  cursor: pointer;
+  border-radius: 4px;
 }
 
-.right-section {
+.landing-page .movie-details-landing h2 {
+  font-size: 1.5rem;
+  margin-top: 10px;
+  color: #cccccc;
+}
+
+.landing-page .movie-details-landing p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #aaaaaa;
+}
+
+.landing-page .recent-reviews {
+  margin-top: 20px;
+  background-color: #2e2e2e;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.landing-page .recent-reviews ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.landing-page .recent-reviews li {
+  margin-bottom: 10px;
+  color: #bbbbbb;
+}
+
+.landing-page .right-section {
   flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.recent-lists {
-  border: 1px solid #00ff4c;
-  border-radius: 8px;
-  width: 100%;
-  text-align: center;
-}
-
-.recent-lists ul {
-  list-style: none;
-  padding: 10px 10px;
-  border: 1px solid #00ff4c;
-}
-
-.recent-lists li {
-  border: 1px solid #00ff4c;
-  padding-bottom: 5px;
-}
-
-.recent-lists li:last-child {
-  border-bottom: none;
-}
-
-.leaderboard {
-  width: 100%;
-  border: 1px solid #00ff4c;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.leaderboard-container {
-  display: flex;
+.landing-page .recent-lists {
+  background-color: #2e2e2e;
+  border-radius: 4px;
   padding: 10px;
 }
 
-.leaderboard-section {
-  flex: 1;
-  border: 1px solid #00ff4c;
-}
-
-.leaderboard-section ul {
+.landing-page .recent-lists ul {
   list-style: none;
-  padding: 10px 10px;
-  border: 1px solid #00ff4c;
+  padding: 0;
 }
 
-.leaderboard-section li {
-  border: 1px solid #00ff4c;
-  padding-bottom: 5px;
+.landing-page .recent-lists li {
+  margin-bottom: 10px;
+  color: #bbbbbb;
 }
 
-.leaderboard-section li:last-child {
-  border: 1px solid #00ff4c;
+.landing-page .leaderboard {
+  background-color: #2e2e2e;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.landing-page .leaderboard-container {
+  display: flex;
+  gap: 10px;
+}
+
+.landing-page .leaderboard-section {
+  flex: 1;
+  color: #cccccc;
+}
+
+.landing-page .leaderboard-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.landing-page .leaderboard-section li {
+  margin-bottom: 10px;
+  color: #bbbbbb;
 }

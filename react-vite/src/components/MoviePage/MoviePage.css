@@ -4,114 +4,112 @@
   align-items: center;
   margin: 20px;
   color: #ffffff;
-  border: 1px solid #00ff4c;
+  background-color: #1e1e1e;
+  padding: 20px;
 }
 
-.movie-details {
+.movie-page .movie-details {
   display: flex;
   flex-direction: row;
   gap: 20px;
   width: 80%;
   margin-bottom: 30px;
-  border: 1px solid #00ff4c;
+  background-color: #2e2e2e;
+  border-radius: 4px;
+  padding: 15px;
 }
 
-.movie-poster {
+.movie-page .movie-poster {
   width: auto;
-  height: 600px;
-  border-radius: 10px;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 4px;
 }
 
-.movie-info {
+.movie-page .movie-info {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  border: 1px solid #00ff4c;
+  justify-content: space-between;
+  color: #cccccc;
 }
 
-.movie-info h1 {
+.movie-page .movie-info h1 {
+  font-size: 1.8rem;
   margin-bottom: 10px;
-  color: #b92020;
-  border: 1px solid #00ff4c;
+  color: white
 }
 
-.movie-info p {
-  margin: 5px;
-  border: 1px solid #00ff4c;
+.movie-page .movie-info p {
+  font-size: 1rem;
+  margin: 5px 0;
 }
 
-.movie-description {
+.movie-page .movie-description {
   font-style: italic;
-  color: #b23c93;
-  border: 1px solid #00ff4c;
+  color: #aaaaaa;
 }
 
-.movie-reviews {
+.movie-page .movie-reviews {
   width: 80%;
-  border: 1px solid #00ff4c;
+  margin-top: 20px;
+  background-color: #2e2e2e;
+  border-radius: 4px;
+  padding: 15px;
 }
 
-.movie-reviews h2 {
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 5px;
-  color: #8172c0;
-  border: 1px solid #00ff4c;
+.movie-page .movie-reviews h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  color: #cccccc;
 }
 
-.review-item {
+.movie-page .movie-review-item {
   padding: 10px;
   margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  border: 1px solid #00ff4c;
+  background-color: #3a3a3a;
+  border-radius: 4px;
 }
 
-.review-item p {
-  margin: 5px;
-  border: 1px solid #00ff4c;
+.movie-page .movie-review-item p {
+  margin: 5px 0;
+  color: #bbbbbb;
 }
 
-.review-item strong {
-  color: #badf7f;
-  border: 1px solid #00ff4c;
+.movie-page .movie-review-item strong {
+  color: #dddddd;
 }
 
-.settings-container {
+.movie-page .settings-container {
   position: relative;
   display: inline-block;
-  margin-left: 10px;
+}
+
+.movie-page .settings-icon {
+  font-size: 20px;
+  color: #cccccc;
   cursor: pointer;
 }
 
-.settings-icon {
-  font-size: 24px;
-  color: #ffffff;
-  transition: color 0.3s;
-}
-
-.settings-icon:hover {
-  color: #00ff4c;
-}
-
-.dropdown-menu {
+.movie-page .settings-container .dropdown-menu {
   position: absolute;
   top: 30px;
   right: 0;
-  background-color: #333333;
+  background-color: #1e1e1e;
   color: #ffffff;
-  border: 1px solid #00ff4c;
-  border-radius: 5px;
-  padding: 10px;
+  border: 1px solid #3a3a3a;
+  border-radius: 4px;
   list-style: none;
-  z-index: 1000;
+  padding: 5px 0;
+  min-width: 150px;
 }
 
-.dropdown-menu li {
-  padding: 5px 10px;
+.movie-page .settings-container .dropdown-menu li {
+  padding: 10px;
+  font-size: 0.9rem;
   cursor: pointer;
+  text-align: left;
 }
 
-.dropdown-menu li:hover {
-  background-color: #00ff4c;
-  color: #000000;
+.movie-page .settings-container .dropdown-menu li:hover {
+  background-color: #444444;
 }
