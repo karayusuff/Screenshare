@@ -4,10 +4,9 @@ from wtforms import StringField, TextAreaField, DateField
 from wtforms.validators import DataRequired
 from app.s3_helpers import ALLOWED_EXTENSIONS
 
-class MovieForm(FlaskForm):
+class EditMovieForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     poster = FileField('Poster', validators=[
-        FileRequired(),
         FileAllowed(list(ALLOWED_EXTENSIONS))
     ])
     description = TextAreaField('Description')

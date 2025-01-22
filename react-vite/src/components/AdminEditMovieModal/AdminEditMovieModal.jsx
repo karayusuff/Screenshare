@@ -4,7 +4,7 @@ import { thunkUpdateMovie } from "../../redux/movies";
 import { useModal } from "../../context/Modal";
 import "./AdminEditMovieModal.css";
 
-const AdminEditMovieModal = ({ movie }) => {
+const AdminEditMovieModal = ({ movie, onEditSuccess }) => {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [title, setTitle] = useState(movie.title || "");
@@ -13,6 +13,7 @@ const AdminEditMovieModal = ({ movie }) => {
   const [genres, setGenres] = useState(movie.genres || "");
   const [director, setDirector] = useState(movie.director || "");
   const [stars, setStars] = useState(movie.stars || "");
+  const [poster, setPoster] = useState(null);
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -25,6 +26,9 @@ const AdminEditMovieModal = ({ movie }) => {
     formData.append("genres", genres);
     formData.append("director", director);
     formData.append("stars", stars);
+    if (poster) {
+      formData.append("poster", poster);
+    }
 
     const result = await dispatch(thunkUpdateMovie(movie.id, formData));
 
@@ -33,6 +37,7 @@ const AdminEditMovieModal = ({ movie }) => {
       setError(JSON.stringify(result.error));
     } else {
       closeModal();
+      onEditSuccess();
     }
   };
 
@@ -48,6 +53,14 @@ const AdminEditMovieModal = ({ movie }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
+          />
+        </label>
+        <label>
+          Poster
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setPoster(e.target.files[0])}
           />
         </label>
         <label>

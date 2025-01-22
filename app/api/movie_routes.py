@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from app.models import db, Movie, Review
-from app.forms import MovieForm, ReviewForm
+from app.forms import MovieForm, ReviewForm, EditMovieForm
 from datetime import datetime, timedelta, timezone
 from sqlalchemy.sql import func
 from sqlalchemy.orm import joinedload
@@ -58,6 +58,7 @@ def get_random_movie():
         return jsonify({"error": "No movies found."}), 404
     return current_movie.to_dict(), 200
 
+
 @movie_routes.route('/', methods=['POST'])
 @login_required
 def add_movie():
@@ -106,12 +107,12 @@ def update_movie(movie_id):
     """
     if not current_user.is_admin:
         return {"error": "Unauthorized access."}, 403
-
+    
     movie = Movie.query.get(movie_id)
     if not movie:
         return {"error": "Movie not found."}, 404
 
-    form = MovieForm()
+    form = EditMovieForm()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
@@ -125,9 +126,9 @@ def update_movie(movie_id):
             
             if "url" not in upload:
                 return {"errors": "Failed to upload image"}, 400
-                
+            
             movie.poster_url = upload["url"]
-
+        
         movie.title = form.title.data
         movie.description = form.description.data
         movie.release_date = form.release_date.data
@@ -143,6 +144,7 @@ def update_movie(movie_id):
 
     return {"errors": form.errors}, 400
 
+
 @movie_routes.route('/<int:movie_id>', methods=['DELETE'])
 @login_required
 def delete_movie(movie_id):
@@ -155,6 +157,9 @@ def delete_movie(movie_id):
     movie = Movie.query.get(movie_id)
     if not movie:
         return {"error": "Movie not found."}, 404
+
+    if movie.poster_url:
+        remove_file_from_s3(movie.poster_url)
     
     db.session.delete(movie)
     db.session.commit()

@@ -8,8 +8,8 @@ import { useModal } from "../../context/Modal";
 import AddToListModal from "../AddToList/AddToListModal";
 import AdminEditMovieModal from "../AdminEditMovieModal/AdminEditMovieModal";
 import AdminDeleteMovieModal from "../AdminDeleteMovieModal/AdminDeleteMovieModal";
-import "./MoviePage.css";
 import { FaCog } from "react-icons/fa";
+import "./MoviePage.css";
 
 const MoviePage = () => {
   const { movieId } = useParams();
@@ -22,6 +22,10 @@ const MoviePage = () => {
 
   const [showMenu, setShowMenu] = useState(false);
 
+  const onEditSuccess = () => {
+    dispatch(thunkGetMovieById(movieId));
+  };
+
   useEffect(() => {
     dispatch(thunkGetMovieById(movieId));
     dispatch(thunkGetReviewsByMovie(movieId));
@@ -33,7 +37,7 @@ const MoviePage = () => {
   };
 
   const openEditMovieModal = () => {
-    setModalContent(<AdminEditMovieModal movie={movie} />);
+    setModalContent(<AdminEditMovieModal movie={movie} onEditSuccess={onEditSuccess} />);
   };
 
   const openDeleteMovieModal = () => {
@@ -48,7 +52,7 @@ const MoviePage = () => {
   useEffect(() => {
     if (!showMenu) return;
 
-    const closeMenu = (e) => {
+    const closeMenu = () => {
       setShowMenu(false);
     };
 

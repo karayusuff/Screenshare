@@ -1,10 +1,12 @@
 import { useDispatch } from "react-redux";
 import { thunkDeleteMovie } from "../../redux/movies";
 import { useModal } from "../../context/Modal";
+import { useNavigate } from "react-router-dom";
 import "./AdminDeleteMovieModal.css";
 
 const AdminDeleteMovieModal = ({ movieId, movieTitle }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { closeModal } = useModal();
 
   const handleDelete = async () => {
@@ -12,6 +14,7 @@ const AdminDeleteMovieModal = ({ movieId, movieTitle }) => {
 
     if (!result?.error) {
       closeModal();
+      navigate('/movies')
     } else {
       alert("Failed to delete the movie. Please try again.");
     }
