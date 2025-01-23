@@ -10,8 +10,6 @@ const AddToListModal = ({ movieId }) => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  // HATA 1: 'dispatch' gereksiz bir şekilde tanımlanmıştı, bu satır kaldırıldı.
-
   useEffect(() => {
     const fetchUserLists = () => {
       fetch(`/api/users/${currentUser.id}/lists`)
@@ -25,7 +23,7 @@ const AddToListModal = ({ movieId }) => {
           setIsLoading(false);
         })
         .catch(async (res) => {
-          const data = await res.json(); // HATA 2: `data` kullanılamıyordu, çünkü sadece hata mesajları ekleniyordu.
+          const data = await res.json();
           if (data && data.error) {
             setErrors((prevErrors) => ({
               ...prevErrors,
@@ -60,7 +58,6 @@ const AddToListModal = ({ movieId }) => {
           );
         } else {
           return res.json().then((data) => {
-            // HATA 2: `data` kullanılabilir hale getirildi.
             if (data && data.error) {
               setErrors((prevErrors) => ({
                 ...prevErrors,
@@ -119,7 +116,7 @@ const AddToListModal = ({ movieId }) => {
                   type="checkbox"
                   checked={list.isInList}
                   onChange={() => handleToggleList(list.id, list.isInList)}
-                  disabled={list.list_type === "Default" && !list.isInList}
+                  // disabled={list.list_type === "Default" && !list.isInList}
                 />
               </div>
             </label>
