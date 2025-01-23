@@ -9,7 +9,7 @@ import SignupFormModal from "../SignupFormModal";
 
 function ProfileButton() {
   const dispatch = useDispatch();
-  const navigateToUser = useNavigateTo("users")
+  const navigateToUser = useNavigateTo("users");
   const [showMenu, setShowMenu] = useState(false);
   const user = useSelector((store) => store.session.user);
   const ulRef = useRef();
@@ -35,6 +35,12 @@ function ProfileButton() {
 
   const closeMenu = () => setShowMenu(false);
 
+  const goProfile = (e) => {
+    e.preventDefault();
+    navigateToUser(user.username)
+    closeMenu();
+  };
+
   const logout = (e) => {
     e.preventDefault();
     dispatch(thunkLogout());
@@ -50,10 +56,20 @@ function ProfileButton() {
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li onClick={() => navigateToUser(user.username)}>{user.username}</li>
-              <li>{user.email}</li>
               <li>
-                <button onClick={logout}>Log Out</button>
+                <img
+                  src={user.profile_pic_url || "https://screenshare-app-images.s3.eu-north-1.amazonaws.com/no+pp+image.png"}
+                  alt="Profile"
+                  className="profile-pic"
+                />
+              </li>
+              <li>{user.username}</li>
+              <li>{user.email}</li>
+              <li onClick={goProfile} className="go-to-profile">
+                Go to your profile
+              </li>
+              <li onClick={logout} className="logout">
+                Log Out
               </li>
             </>
           ) : (

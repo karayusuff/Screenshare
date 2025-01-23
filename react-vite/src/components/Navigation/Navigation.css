@@ -75,13 +75,15 @@
 .profile-dropdown li {
   padding: 8px 10px;
   color: #cccccc;
-  cursor: pointer;
   transition: background-color 0.3s;
+  cursor: default;
 }
 
-.profile-dropdown li:hover {
+.profile-dropdown .go-to-profile:hover,
+.profile-dropdown .logout:hover {
   background-color: #444444;
   color: #ffffff;
+  cursor: pointer;
 }
 
 .profile-button {
@@ -98,4 +100,12 @@
 .profile-button:hover {
   background-color: #444444;
   color: #ffffff;
+}
+
+.profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
 }
