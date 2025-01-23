@@ -85,7 +85,7 @@ const LandingPage = () => {
               <ul>
                 {recentLists.map((list) => (
                   <li key={list.id}>
-                    <p><strong onClick={() => navigateToList(list.id)}>{list.name}</strong> by {list.username}</p>
+                    <p><strong onClick={() => navigateToList(list.id)}>{list.name}</strong> by <span onClick={() => navigateToUser(list.username)}>{list.username}</span></p>
                     <div className="list-movies">
                       {list.movies.slice(0, 5).map((movie) => (
                         <img 
@@ -113,7 +113,7 @@ const LandingPage = () => {
                 <h4>Top Users</h4>
                 {topUsers.length > 0 ? (
                   <ul>
-                    {topUsers.map((user) => (
+                    {topUsers.slice(0, 5).map((user) => (
                       <li key={user.id}>
                         <p><strong onClick={() => navigateToUser(user.username)}>{user.username}</strong> ({followersCount[user.id]} followers)</p>
                       </li>
@@ -127,7 +127,7 @@ const LandingPage = () => {
                 <h4>Top Scorers</h4>
                 {topScorers.length > 0 ? (
                   <ul>
-                    {topScorers.map((user) => (
+                    {topScorers.slice(0, 5).map((user) => (
                       <li key={user.id}>
                         <p><strong onClick={() => navigateToUser(user.username)}>{user.username}</strong> {user.badge} ({user.total_points} points)</p>
                       </li>

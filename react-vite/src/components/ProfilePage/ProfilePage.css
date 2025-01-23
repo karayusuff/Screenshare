@@ -3,36 +3,36 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 20px;
-  border: 1px solid #00ff4c;
+  background-color: #1e1e1e;
   gap: 50px;
 }
 
-.left-section {
+.profile-page .left-section {
   display: flex;
   flex-direction: column;
   flex: 2;
 }
 
-.reviews-section {
+.profile-page .reviews-section {
   display: flex;
   flex-direction: column;
   flex: 1;
   border-radius: 8px;
   padding: 20px;
-  border: 1px solid #00ff4c;
+  background-color: #2e2e2e;
 }
 
-.profile-card {
+.profile-page .profile-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid #00ff4c;
+  background-color: #3a3a3a;
   border-radius: 8px;
   padding: 20px;
   margin-bottom: 20px;
 }
 
-.profile-photo img {
+.profile-page .profile-photo img {
   width: auto;
   height: 120px;
   border-radius: 50%;
@@ -40,147 +40,154 @@
   margin-bottom: 10px;
 }
 
-.profile-stats {
+.profile-page .profile-stats {
   display: flex;
   justify-content: space-between;
   text-align: center;
   margin-bottom: 15px;
-  border: 1px solid #00ff4c;
   width: 125px;
 }
 
-.profile-info {
+.profile-page .profile-info {
   width: 50%;
   padding: 10px;
-  border: 1px solid #00ff4c;
 }
 
-.profile-header {
+.profile-page .profile-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-  border: 1px solid #00ff4c;
 }
 
-.profile-header h2 {
+.profile-page .profile-header h2 {
   font-size: 1.5rem;
   font-weight: bold;
   margin: 0;
-  border: 1px solid #00ff4c;
+  color: #ffffff;
 }
 
-.profile-header button,
-.profile-header select {
+.profile-page .profile-header button,
+.profile-page .profile-header select {
   padding: 5px 10px;
   border-radius: 5px;
-  background-color: #fff;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
   cursor: pointer;
-  border: 1px solid #00ff4c;
 }
 
-.profile-details p {
+.profile-page .profile-details p {
   margin: 5px 0;
   font-size: 1rem;
-  border: 1px solid #00ff4c;
+  color: #cccccc;
 }
 
-.welcome-movie {
+.profile-page .welcome-movie {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   margin-top: 20px;
-  border: 1px solid #00ff4c;
   width: 90%;
-  gap: 20px
+  gap: 20px;
 }
 
-.welcome-movie img {
+.profile-page .welcome-movie img {
   width: auto;
   height: 200px;
   object-fit: cover;
-  margin-right: 20px;
-  border: 1px solid #00ff4c;
 }
 
-.reviews-list {
+.profile-page .reviews-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  border: 1px solid #00ff4c;
 }
 
-.review-card {
+.profile-page .review-card {
   display: flex;
   justify-content: flex-end;
   gap: 15px;
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid #00ff4c;
+  background-color: #3a3a3a;
 }
 
-.review-movie-poster img {
+.profile-page .review-movie-poster img {
   width: auto;
   height: 120px;
   object-fit: cover;
-  border: 1px solid #00ff4c;
 }
 
-.review-content p {
+.profile-page .review-content p {
   margin: 5px 0;
   font-size: 1rem;
-  border: 1px solid #00ff4c;
+  color: #bbbbbb;
 }
 
-.lists-section {
+.profile-page .lists-section {
   border-radius: 8px;
   padding: 20px;
-  border: 1px solid #00ff4c;
+  background-color: #2e2e2e;
 }
 
-.default-lists {
+.profile-page .default-lists {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  border: 1px solid #00ff4c;
 }
 
-.list-card {
+.profile-page .list-card {
   border-radius: 5px;
   padding: 0 10px;
-  border: 1px solid #00ff4c;
+  background-color: #3a3a3a;
 }
 
-.list-movies {
+.profile-page .list-card p {
+  cursor: pointer;
+}
+
+.profile-page .list-movies {
   display: flex;
   gap: 5px;
-  border: 1px solid #00ff4c;
   margin: 10px 0px;
 }
 
-.list-movies img {
+.profile-page .list-movies img {
   width: auto;
   height: 80px;
   object-fit: cover;
   border-radius: 3px;
-  border: 1px solid #00ff4c;
 }
 
-.custom-lists {
+.profile-page .custom-lists {
   display: flex;
   justify-content: center;
 }
 
-.custom-lists button {
+.profile-page .custom-lists button {
   margin-top: 10px;
   padding: 10px;
   background-color: #007bff;
-  color: #fff;
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.custom-lists button:hover {
+.profile-page .custom-lists button:hover {
   background-color: #0056b3;
+}
+
+.profile-page .clickable {
+  cursor: pointer;
+  color: #2196f3;
+}
+
+.profile-page .clickable:hover {
+  text-decoration: underline;
+}
+
+.profile-page .follow-button {
+  margin-top: 10px;
 }

@@ -1,0 +1,14 @@
+.add-movie-button {
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.add-movie-button:hover {
+  background-color: #0056b3;
+}

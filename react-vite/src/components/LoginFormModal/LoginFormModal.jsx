@@ -28,8 +28,38 @@ function LoginFormModal() {
     }
   };
 
+  const handleDemoLogin = async () => {
+    const serverResponse = await dispatch(
+      thunkLogin({
+        credential: "Demo",
+        password: "password",
+      })
+    );
+
+    if (serverResponse) {
+      setErrors(serverResponse);
+    } else {
+      closeModal();
+    }
+  };
+
+  const handleAdminLogin = async () => {
+    const serverResponse = await dispatch(
+      thunkLogin({
+        credential: "admin",
+        password: "adminpassword",
+      })
+    );
+
+    if (serverResponse) {
+      setErrors(serverResponse);
+    } else {
+      closeModal();
+    }
+  };
+
   return (
-    <>
+    <div className="login-modal">
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
         <label>
@@ -54,7 +84,11 @@ function LoginFormModal() {
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
       </form>
-    </>
+      <div className="login-buttons">
+        <button onClick={handleDemoLogin}>Demo Login</button>
+        <button onClick={handleAdminLogin}>Admin Login</button>
+      </div>
+    </div>
   );
 }
 

@@ -4,7 +4,7 @@ from sqlalchemy.sql import text
 def seed_lists():
     seed_data = [
         List(
-            user_id=1,
+            user_id=2,
             name="Favourites",
             list_type="Default"
         ),
@@ -19,7 +19,7 @@ def seed_lists():
             list_type="Default"
         ),
         List(
-            user_id=1,
+            user_id=2,
             name="Best Action Movies",
             list_type="Custom"
         ),

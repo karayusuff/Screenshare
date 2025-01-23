@@ -1,12 +1,11 @@
 from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required, logout_user
 from app.models import db, Follow, List, Review
-from app.forms import ListForm
+from app.forms import ListForm, EditProfileForm
+from app.s3_helpers import remove_file_from_s3, upload_file_to_s3, get_unique_filename
 
 session_routes = Blueprint('session', __name__)
 
-
-# Profile Endpoints
 
 @session_routes.route('/update-profile', methods=['PUT'])
 @login_required
@@ -14,24 +13,34 @@ def update_profile():
     """
     Update the profile information of the current user.
     """
-    data = request.get_json()
-    valid_fields = ['first_name', 'last_name', 'username', 'email', 'password', 'profile_pic_url']
+    form = EditProfileForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
 
-    for field in data.keys():
-        if field not in valid_fields:
-            return {"error": f"Invalid field: {field}"}, 400
+    if form.validate_on_submit():
+        if 'profile_pic' in request.files:
+            profile_pic = request.files['profile_pic']
+            profile_pic.filename = get_unique_filename(profile_pic.filename)
+            
+            if current_user.profile_pic_url:
+                remove_file_from_s3(current_user.profile_pic_url)
+            
+            upload = upload_file_to_s3(profile_pic)
+            if "url" not in upload:
+                return {"error": "Failed to upload profile picture"}, 400
 
-    current_user.first_name = data.get('first_name', current_user.first_name)
-    current_user.last_name = data.get('last_name', current_user.last_name)
-    current_user.username = data.get('username', current_user.username)
-    current_user.email = data.get('email', current_user.email)
-    current_user.profile_pic_url = data.get('profile_pic_url', current_user.profile_pic_url)
+            current_user.profile_pic_url = upload["url"]
 
-    if 'password' in data and data['password']:
-        current_user.password = data['password']
+        current_user.first_name = form.data['first_name']
+        current_user.last_name = form.data['last_name']
+        current_user.username = form.data['username']
+        current_user.email = form.data['email']
+        if form.data['password']:
+            current_user.password = form.data['password']
 
-    db.session.commit()
-    return current_user.to_dict(), 200
+        db.session.commit()
+        return current_user.to_dict(), 200
+
+    return {"errors": form.errors}, 400
 
 
 @session_routes.route('/update-profile-movie', methods=['PUT'])
@@ -62,6 +71,9 @@ def delete_account():
     """
     if current_user.is_admin:
         return jsonify({"error": "Admin account cannot be deleted."}), 401
+    
+    if current_user.profile_pic_url:
+        remove_file_from_s3(current_user.profile_pic_url)
 
     db.session.delete(current_user)
     db.session.commit()

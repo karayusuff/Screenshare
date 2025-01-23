@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField
-from wtforms.validators import DataRequired, Email, ValidationError, URL
+from wtforms.validators import DataRequired, Email, ValidationError, Optional
+from flask_wtf.file import FileField, FileAllowed
 from app.models import User
+from app.s3_helpers import ALLOWED_EXTENSIONS
 
 
 def user_exists(form, field):
@@ -26,9 +28,12 @@ def is_not_alpha(form, field):
 
 
 class SignUpForm(FlaskForm):
+    profile_pic_url = FileField('Profile Picture', validators=[
+        Optional(), 
+        FileAllowed(list(ALLOWED_EXTENSIONS))
+    ])
     first_name = StringField('First Name', validators=[DataRequired(), is_not_alpha])
     last_name = StringField('Last Name', validators=[DataRequired(), is_not_alpha])
     username = StringField('Username', validators=[DataRequired(), username_exists])
     email = StringField('Email', validators=[DataRequired(), Email(), user_exists])
     password = PasswordField('Password', validators=[DataRequired()])
-    profile_pic_url = StringField('Profile Picture URL', validators=[URL()])

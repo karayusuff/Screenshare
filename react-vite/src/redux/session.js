@@ -1,5 +1,6 @@
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
+const UPDATE_USER = 'session/updateUser';
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -8,6 +9,11 @@ const setUser = (user) => ({
 
 const removeUser = () => ({
   type: REMOVE_USER
+});
+
+const updateUser = (user) => ({
+  type: UPDATE_USER,
+  payload: user
 });
 
 export const thunkAuthenticate = () => async (dispatch) => {
@@ -40,11 +46,10 @@ export const thunkLogin = (credentials) => async dispatch => {
   }
 };
 
-export const thunkSignup = (user) => async (dispatch) => {
+export const thunkSignup = (formData) => async (dispatch) => {
   const response = await fetch("/api/auth/signup", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user)
+    body: formData
   });
 
   if(response.ok) {
@@ -63,6 +68,46 @@ export const thunkLogout = () => async (dispatch) => {
   dispatch(removeUser());
 };
 
+export const thunkUpdateProfile = (formData) => async (dispatch) => {
+  try {
+    const response = await fetch("/api/session/update-profile", {
+      method: "PUT",
+      body: formData
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(updateUser(data));
+      return data;
+    } else {
+      const errorData = await response.json();
+      return { error: errorData };
+    }
+  } catch (error) {
+    return { error: "Something went wrong. Please try again later." };
+  }
+};
+
+export const thunkDeleteAccount = () => async (dispatch) => {
+  try {
+    const response = await fetch("/api/session/delete-account", {
+      method: "DELETE"
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setUser(null));
+      return data;
+    } else {
+      const errorData = await response.json();
+      return { error: errorData.error };
+    }
+  } catch (error) {
+    console.error("Error deleting account:", error);
+    return { error: "Something went wrong. Please try again." };
+  }
+};
+
 const initialState = { user: null };
 
 function sessionReducer(state = initialState, action) {
@@ -71,6 +116,8 @@ function sessionReducer(state = initialState, action) {
       return { ...state, user: action.payload };
     case REMOVE_USER:
       return { ...state, user: null };
+    case UPDATE_USER:
+      return { ...state, user: action.payload };
     default:
       return state;
   }

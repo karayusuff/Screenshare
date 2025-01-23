@@ -1,0 +1,93 @@
+.edit-review-modal {
+  padding: 20px;
+  background-color: #1e1e1e;
+  max-width: 500px;
+  margin: 0 auto;
+  color: #ffffff;
+}
+
+.edit-review-modal h2 {
+  font-size: 1.5rem;
+  color: #ffffff;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.edit-review-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.edit-review-modal label {
+  font-size: 0.9rem;
+  color: #cccccc;
+  margin-bottom: 5px;
+}
+
+.edit-review-modal textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  padding: 10px;
+  border: 1px solid #3a3a3a;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  color: #ffffff;
+  background-color: #2e2e2e;
+}
+
+.edit-review-modal textarea:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.edit-review-modal input[type="number"] {
+  width: 60px;
+  padding: 5px;
+  border: 1px solid #3a3a3a;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  text-align: center;
+  color: #ffffff;
+  background-color: #2e2e2e;
+}
+
+.edit-review-modal .error-messages {
+  background-color: #3a1c1c;
+  color: #ff4d4d;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 0.85rem;
+}
+
+.edit-review-modal .error-messages p {
+  margin: 0;
+}
+
+.edit-review-modal button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-review-modal button[type="submit"] {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.edit-review-modal button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.edit-review-modal button[type="button"] {
+  background-color: #444444;
+  color: #ffffff;
+}
+
+.edit-review-modal button[type="button"]:hover {
+  background-color: #555555;
+}

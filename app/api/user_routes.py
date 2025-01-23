@@ -11,8 +11,8 @@ def users():
     """
     Query for all users and returns them in a list of user dictionaries
     """
-    users = User.query.all()
-    return {'Users': [user.to_dict() for user in users]}
+    users = User.query.filter(User.is_admin == False).order_by(User.created_at.desc()).all()
+    return jsonify({"Users": [user.to_dict() for user in users]}), 200
 
 
 @user_routes.route('/<int:id>')
@@ -31,18 +31,20 @@ def user(id):
 @user_routes.route('/top-users')
 def get_top_users():
     """
-    Returns top 5 users with most followers
+    Returns top users with most followers
     """
-    users = User.query.outerjoin(Follow, Follow.following_id == User.id).group_by(User.id).order_by(db.func.count(Follow.id).desc()).limit(5).all()
+    users = User.query.filter(User.is_admin == False)\
+        .outerjoin(Follow, Follow.following_id == User.id)\
+        .group_by(User.id).order_by(db.func.count(Follow.id).desc()).all()
     return jsonify({"TopUsers": [user.to_dict() for user in users]}), 200
 
 
 @user_routes.route('/top-scorers')
 def get_top_scorers():
     """
-    Returns top 5 users with most points
+    Returns top users with most points
     """
-    users = User.query.order_by(User.total_points.desc()).limit(5).all()
+    users = User.query.filter(User.is_admin == False).order_by(User.total_points.desc()).all()
     return jsonify({"TopScorers": [user.to_dict() for user in users]}), 200
 
 
@@ -95,20 +97,61 @@ def delete_user_account(user_id):
 @user_routes.route('/<int:user_id>/followers')
 def get_user_followers(user_id):
     """
-    Returns a spesific user's followers
+    Returns a specific user's followers with profile_pic_url
+    """
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found."}), 404
+
+    followers = Follow.query.filter_by(following_id=user_id).order_by(Follow.created_at.desc()).all()
+
+    current_user_following = []
+    if current_user.is_authenticated:
+        current_user_following = [
+            follow.following_id for follow in Follow.query.filter_by(follower_id=current_user.id).all()
+        ]
+
+    followers_list = []
+    for follow in followers:
+        follower_user = follow.follower
+        followers_list.append({
+            'id': follower_user.id,
+            'username': follower_user.username,
+            'profile_pic_url': follower_user.profile_pic_url,
+            'isFollowed': follower_user.id in current_user_following
+        })
+
+    return jsonify({"Followers": followers_list}), 200
+
+
+@user_routes.route('/<int:user_id>/following')
+def get_user_following(user_id):
+    """
+    Returns the list of users a specific user is following with profile_pic_url
     """
     user = User.query.get(user_id)
     if not user:
         return jsonify({"error": "User not found."}), 404
     
-    followers = Follow.query.filter_by(following_id=user_id).order_by(Follow.created_at.desc()).all()
+    following = Follow.query.filter_by(follower_id=user_id).order_by(Follow.created_at.desc()).all()
 
-    return jsonify({
-        "Followers": [{
-            'id': user.follower.id,
-            'username': user.follower.username
-        } for user in followers]
-    }), 200
+    current_user_following = []
+    if current_user.is_authenticated:
+        current_user_following = [
+            follow.following_id for follow in Follow.query.filter_by(follower_id=current_user.id).all()
+        ]
+
+    following_list = []
+    for follow in following:
+        following_user = follow.following
+        following_list.append({
+            'id': following_user.id,
+            'username': following_user.username,
+            'profile_pic_url': following_user.profile_pic_url,
+            'isFollowed': following_user.id in current_user_following
+        })
+
+    return jsonify({"Following": following_list}), 200
 
 
 @user_routes.route('/<int:user_id>/followers-count')
@@ -173,25 +216,6 @@ def get_user_lists(user_id):
         })
 
     return jsonify({"Lists": user_lists}), 200
-
-
-@user_routes.route('/<int:user_id>/following')
-def get_user_following(user_id):
-    """
-    Returns the list of the users that a spesific user is following
-    """
-    user = User.query.get(user_id)
-    if not user:
-        return jsonify({"error": "User not found."}), 404
-    
-    following = Follow.query.filter_by(follower_id=user_id).order_by(Follow.created_at.desc()).all()
-
-    return jsonify({
-        "Following": [{
-            'id': user.following.id,
-            'username': user.following.username
-        } for user in following]
-    }), 200
 
 
 @user_routes.route('/<string:username>')

@@ -1,48 +1,154 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useNavigateTo } from "../../utils/navigation";
-import { thunkGetUserReviews } from "../../redux/reviews";
-import { thunkGetUserLists } from "../../redux/lists";
-import { thunkGetFollowers, thunkGetFollowing } from "../../redux/follows";
-import { thunkGetUserByUsername } from "../../redux/users";
-import { thunkGetMovieById } from "../../redux/movies";
+import { useModal } from "../../context/Modal";
+import EditProfileModal from "../EditProfile";
+import FollowListModal from "../FollowListModal";
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
-  const navigateToList = useNavigateTo('lists')
+  const navigateToList = useNavigateTo('lists');
+  const navigateToUserLists = useNavigateTo('users');
   const { username } = useParams();
   const currentUser = useSelector((state) => state.session.user);
-  const profileUser = useSelector((state) => state.users.userByUsername);
-  const reviews = useSelector((state) => state.reviews.userReviews);
-  const lists = useSelector((state) => state.lists.userLists);
-  const followers = useSelector((state) => state.follows.followers);
-  const following = useSelector((state) => state.follows.following);
-  const welcomeMovie = useSelector((state) => state.movies.movie);
+  const [profileUser, setProfileUser] = useState(null);
+  const [reviews, setReviews] = useState([]);
+  const [lists, setLists] = useState([]);
+  const [followers, setFollowers] = useState([]);
+  const [following, setFollowing] = useState([]);
+  const [welcomeMovie, setWelcomeMovie] = useState(null);
+  const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const { setModalContent } = useModal();
 
   useEffect(() => {
+    const fetchUserByUsername = () => {
+      fetch(`/api/users/${username}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setProfileUser(data); 
+          setIsLoading(false);
+        })  
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data && data.error) {
+            setErrors((prevErrors) => ({ ...prevErrors, profileUser: data.error }));
+          }
+          setIsLoading(false);
+        });
+    };
+
     if (username) {
-      dispatch(thunkGetUserByUsername(username));
-      }
-  }, [dispatch, username]);
-  
+      fetchUserByUsername();
+    }
+  }, [username]);
+
   useEffect(() => {
     if (profileUser) {
-      dispatch(thunkGetUserReviews(profileUser.id));
-      dispatch(thunkGetUserLists(profileUser.id));
-      dispatch(thunkGetFollowers(profileUser.id));
-      dispatch(thunkGetFollowing(profileUser.id));
-      
-      if (profileUser.welcome_movie_id) {
-        dispatch(thunkGetMovieById(profileUser.welcome_movie_id));
-      }
+      const fetchUserReviews = () => {
+        fetch(`/api/users/${profileUser.id}/reviews`)
+          .then((res) => res.json())
+          .then((data) => setReviews(data.Reviews))
+          .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.error) {
+              setErrors((prevErrors) => ({ ...prevErrors, reviews: data.error }));
+            }
+          });
+      };
+      const fetchUserLists = () => {
+        fetch(`/api/users/${profileUser.id}/lists`)
+          .then((res) => res.json())
+          .then((data) => setLists(data.Lists))
+          .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.error) {
+              setErrors((prevErrors) => ({ ...prevErrors, lists: data.error }));
+            }
+          });
+      };
+      const fetchFollowers = () => {
+        fetch(`/api/users/${profileUser.id}/followers`)
+          .then((res) => res.json())
+          .then((data) => setFollowers(data.Followers))
+          .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.error) {
+              setErrors((prevErrors) => ({ ...prevErrors, followers: data.error }));
+            }
+          });
+      };
+      const fetchFollowing = () => {
+        fetch(`/api/users/${profileUser.id}/following`)
+          .then((res) => res.json())
+          .then((data) => setFollowing(data.Following))
+          .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.error) {
+              setErrors((prevErrors) => ({ ...prevErrors, following: data.error }));
+            }
+          });
+      };
+      const fetchWelcomeMovie = () => {
+        fetch(`/api/movies/${profileUser.welcome_movie_id}`)
+          .then((res) => res.json())
+          .then((data) => setWelcomeMovie(data))
+          .catch(async (res) => {
+            const data = await res.json();
+            if (data && data.error) {
+              setErrors((prevErrors) => ({ ...prevErrors, welcomeMovie: data.error }));
+            }
+          });
+      };
+      fetchUserReviews();
+      fetchUserLists();
+      fetchFollowers();
+      fetchFollowing();
+      fetchWelcomeMovie();
     }
-  }, [dispatch, profileUser]);
+  }, [profileUser, dispatch]);
+
+  const handleEditProfile = () => {
+    setModalContent(<EditProfileModal />);
+  };
+
+  const handleFollow = (userId) => {
+    fetch(`/api/follows/${userId}`, {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then(() => {
+        setFollowers((prevFollowers) => [...prevFollowers, { id: currentUser.id }]);
+      })
+      .catch((err) => console.error("Failed to follow user:", err));
+  };
   
+  const handleUnfollow = (userId) => {
+    fetch(`/api/follows/${userId}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then(() => {
+        setFollowers((prevFollowers) => prevFollowers.filter((f) => f.id !== currentUser.id));
+      })
+      .catch((err) => console.error("Failed to unfollow user:", err));
+  };
+
+
   if (username === "admin") return <div>Not Found</div>;
-  if (!profileUser) return <div>Loading...</div>;
-  
+  if (isLoading) return <div>Loading...</div>;
+  if (Object.values(errors).length > 0) {
+    return (
+      <div>
+        {Object.entries(errors).map(([key, message]) => (
+          <p key={key}>{message}</p>
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="profile-page">
       <div className="left-section">
@@ -64,7 +170,8 @@ const ProfilePage = () => {
             <div className="profile-header">
               <h2>@{profileUser.username}</h2>
               {currentUser && currentUser.id === profileUser.id ? (
-                <button>Edit Profile</button>
+                // <button>Edit Profile</button>
+                <button onClick={handleEditProfile}>Edit Profile</button>
               ) : currentUser && currentUser.is_admin ? (
                 <select>
                   <option value="active">Active</option>
@@ -72,9 +179,9 @@ const ProfilePage = () => {
                   <option value="deactivated">Deactivated</option>
                 </select>
               ) : currentUser && followers.some((follower) => follower.id === currentUser.id) ? (
-                <button>Unfollow</button>
+                <button onClick={() => handleUnfollow(profileUser.id)}>Unfollow</button>
               ) : (
-                <button>Follow</button>
+                <button onClick={() => handleFollow(profileUser.id)}>Follow</button>
               )}
             </div>
             <div className="profile-details">
@@ -83,8 +190,12 @@ const ProfilePage = () => {
                 {lists.filter((list) => list.list_type === "Custom").length}{" "}
                 {lists.filter((list) => list.list_type === "Custom").length <= 1 ? "list" : "lists"}
               </p>
-              <p>{following.length} following</p>
-              <p>{followers.length} {followers.length <= 1 ? "follower" : "followers"}</p>
+              <p onClick={() => setModalContent(<FollowListModal type="following" userId={profileUser.id} />)}>
+                {following.length} following
+              </p>
+              <p onClick={() => setModalContent(<FollowListModal type="followers" userId={profileUser.id} />)}>
+                {followers.length} {followers.length <= 1 ? "follower" : "followers"}
+              </p>
             </div>
           </div>
           {profileUser.welcome_movie_id && welcomeMovie && (
@@ -103,7 +214,7 @@ const ProfilePage = () => {
           <div className="default-lists">
             {lists.filter((list) => list.list_type === "Default").map((list) => (
               <div className="list-card" key={list.id}>
-                <p>
+                <p onClick={() => navigateToList(list.id)}>
                   {list.name} ({list.movies.length})
                 </p>
                 <div className="list-movies">
@@ -118,16 +229,16 @@ const ProfilePage = () => {
             ))}
           </div>
           <div className="custom-lists">
-            <button>See Custom Lists</button>
+            <button onClick={() => navigateToUserLists(profileUser.username, "/lists")}>See Custom Lists</button>
           </div>
         </div>
       </div>
       <div className="reviews-section">
-      {currentUser && currentUser.id === profileUser.id ? (
-            <h3>Your recent reviews</h3>
-          ) : (
-            <h3>{profileUser.username}&apos;s recent reviews</h3>
-          )}
+        {currentUser && currentUser.id === profileUser.id ? (
+          <h3>Your recent reviews</h3>
+        ) : (
+          <h3>{profileUser.username}&apos;s recent reviews</h3>
+        )}
         <div className="reviews-list">
           {!reviews.length ? (
             <p>No reviews yet.</p>

@@ -1,0 +1,103 @@
+.follow-list-modal {
+  padding: 20px;
+  background-color: #1e1e1e;
+  width: 300px;
+  width: 100%;
+  color: #f9f9f9;
+}
+
+.follow-list-modal h2 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.user-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+.user-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #3a3a3a;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.user-info span {
+  font-size: 16px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status {
+  font-size: 14px;
+  color: #4caf50;
+  font-weight: 500;
+}
+
+.follow-button {
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.follow-button:hover {
+  background-color: #0056b3;
+}
+
+.unfollow-button {
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ff4d4d;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.unfollow-button:hover {
+  background-color: #e53935;
+}
+
+.close-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #444444;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  background-color: #555555;
+}
