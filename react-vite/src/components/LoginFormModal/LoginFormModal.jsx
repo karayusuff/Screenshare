@@ -84,20 +84,22 @@ function LoginFormModal() {
         </label>
         {errors.password && <p>{errors.password}</p>}
         <button type="submit">Log In</button>
+        <span>
+          <button onClick={handleDemoLogin}>Demo Login</button>
+          <button onClick={handleAdminLogin}>Admin Login</button>
+        </span>
+        <p className="signup-prompt">
+          Don&apos;t have an account?{" "}
+          <span
+            className="signup-link"
+            onClick={() => setModalContent(<SignupFormModal />)}
+          >
+            Sign up here!
+          </span>
+        </p>
       </form>
       <div className="login-buttons">
-        <button onClick={handleDemoLogin}>Demo Login</button>
-        <button onClick={handleAdminLogin}>Admin Login</button>
       </div>
-      <p className="signup-prompt">
-        Don&apos;t have an account?{" "}
-        <span
-          className="signup-link"
-          onClick={() => setModalContent(<SignupFormModal />)}
-        >
-          Sign up here!
-        </span>
-      </p>
     </div>
   );
 }

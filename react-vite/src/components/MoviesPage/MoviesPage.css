@@ -49,6 +49,11 @@
   transition: background-color 0.3s;
 }
 
+.movies-list img {
+  width: 200px;
+  height: 300px;
+}
+
 .movies-page .movie-card:hover {
   background-color: #444444;
 }

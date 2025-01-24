@@ -26,7 +26,7 @@ const LandingPage = () => {
     dispatch(thunkGetMovieOfTheDay());
     const interval = setInterval(() => {
       dispatch(thunkGetMovieOfTheDay());
-    }, 10000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [dispatch]);
 
@@ -54,7 +54,6 @@ const LandingPage = () => {
     <div className="landing-page">
       <div className="main-content">
         <div className="movie-section">
-          {/* <h1>Movie of the Day</h1> */}
           <div className="movie-details-landing">
             <img
               src={movieOfTheDay.poster_url}
@@ -71,7 +70,6 @@ const LandingPage = () => {
                 {reviews.map((review) => (
                   <li key={review.id}>
                     <p><strong onClick={() => navigateToUser(review.username)}>{review.username}:</strong> {review.review_text} <span>{review.rating}★</span></p>
-                    {/* <p>Rating: {review.rating}/10</p> */}
                   </li>
                 ))}
               </ul>

@@ -1,116 +1,121 @@
 .login-modal {
-  background-color: #121212;
-  margin: -40px auto;
-  font-family: Arial, sans-serif;
-}
-
-h1 {
+  background-color: #1e1e1e;
+  margin: -150px auto;
+  font-family: 'Lora', sans-serif;
+  max-width: 400px;
+  padding: -330px;
+ }
+ 
+ .login-modal h1 {
   text-align: center;
   font-size: 2rem;
   color: #ffffff;
-  margin-bottom: 20px;
-}
-
-form {
+  margin-bottom: 25px;
+ }
+ 
+ .login-modal form {
   display: flex;
   flex-direction: column;
   gap: 15px;
   background-color: #1e1e1e;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 400px;
-  margin: 50px auto;
+  padding: 25px;
+  border-radius: 10px;
   color: #ffffff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-form label {
-  font-size: 1rem;
+ }
+ 
+ .login-modal form label {
+  font-size: 0.9rem;
   color: #cccccc;
   display: flex;
   flex-direction: column;
-  gap: 5px;
-}
-
-form input {
-  padding: 10px;
+  gap: 7px;
+ }
+ 
+ .login-modal form input {
+  padding: 12px;
   border: 1px solid #3a3a3a;
-  border-radius: 5px;
+  border-radius: 6px;
   background-color: #2e2e2e;
   color: #ffffff;
-}
-
-form input:focus {
+  transition: border-color 0.3s ease;
+ }
+ 
+ .login-modal form input:focus {
   outline: none;
-  border-color: #007bff;
-}
-
-form button {
-  padding: 10px 15px;
+  border-color: #555555;
+ }
+ 
+ .login-modal form button {
+  padding: 12px 15px;
   border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #ffffff;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.3s;
-}
-
-form button:hover {
-  background-color: #0056b3;
-}
-
-.login-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.login-buttons button {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.login-buttons button:first-child {
+  border-radius: 6px;
   background-color: #444444;
   color: #ffffff;
-}
-
-.login-buttons button:first-child:hover {
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s, transform 0.1s;
+ }
+ 
+ .login-modal form button:hover {
   background-color: #555555;
-}
-
-.login-buttons button:last-child {
-  background-color: #4caf50;
-  color: #ffffff;
-}
-
-.login-buttons button:last-child:hover {
-  background-color: #388e3c;
-}
-
-form p {
+  transform: translateY(-2px);
+ }
+ 
+ .login-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+ }
+ 
+ .login-buttons button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
   font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+ }
+ 
+ .login-buttons button:first-child {
+  background-color: #444444;
+  color: #ffffff;
+ }
+ 
+ .login-buttons button:first-child:hover {
+  background-color: #555555;
+  transform: translateY(-2px);
+ }
+ 
+ .login-buttons button:last-child {
+  background-color: #444444;
+  color: #ffffff;
+ }
+ 
+ .login-buttons button:last-child:hover {
+  background-color: #555555;
+  transform: translateY(-2px);
+ }
+ 
+ .login-modal form p {
+  font-size: 0.8rem;
   color: #ff4d4d;
   margin: 0;
-}
-
-.signup-prompt {
+ }
+ 
+ .signup-prompt {
   margin-top: 20px;
   text-align: center;
-}
-
-.signup-link {
-  color: #007bff;
+  color: #cccccc;
+ }
+ 
+ .signup-link {
+  color: #666666;
   text-decoration: underline;
   cursor: pointer;
-}
-
-.signup-link:hover {
-  color: #0056b3;
-}
+  transition: color 0.3s;
+ }
+ 
+ .signup-link:hover {
+  color: #888888;
+ }
