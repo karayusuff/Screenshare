@@ -187,12 +187,13 @@ def add_review(movie_id):
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_review = Review(
-            review_text = form.review_text.data,
-            rating = form.rating.data,
-            user_id = user_id,
-            movie_id = movie_id
+            review_text=form.review_text.data,
+            rating=form.rating.data,
+            user_id=user_id,
+            movie_id=movie_id
         )
         db.session.add(new_review)
+        current_user.add_points_and_update_badge(points=10)
         db.session.commit()
         return jsonify(new_review.to_dict()), 201
     return form.errors, 400

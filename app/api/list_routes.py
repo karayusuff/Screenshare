@@ -100,7 +100,7 @@ def update_list(list_id):
 @login_required
 def delete_list(list_id):
     """
-    Deletes a list belogs to the current user.
+    Deletes a list belongs to the current user.
     """
     list = List.query.get(list_id)
     if not list:
@@ -112,6 +112,7 @@ def delete_list(list_id):
         return jsonify({"error": "Unauthorized."}), 401
     
     db.session.delete(list)
+    current_user.add_points_and_update_badge(points=-15)
     db.session.commit()
     return jsonify({"message": "List deleted successfully."}), 200
 

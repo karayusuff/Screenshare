@@ -90,7 +90,7 @@ function LoginFormModal() {
         <button onClick={handleAdminLogin}>Admin Login</button>
       </div>
       <p className="signup-prompt">
-        Don't have an account?{" "}
+        Don&apos;t have an account?{" "}
         <span
           className="signup-link"
           onClick={() => setModalContent(<SignupFormModal />)}

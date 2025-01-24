@@ -155,6 +155,7 @@ def create_list():
             user_id=current_user.id
         )
         db.session.add(new_list)
+        current_user.add_points_and_update_badge(points=15)
         db.session.commit()
         return jsonify(new_list.to_dict()), 201
 
