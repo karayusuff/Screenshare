@@ -53,6 +53,7 @@
   font-size: 1.5rem;
   margin-top: 10px;
   color: #cccccc;
+  cursor: pointer;
 }
 
 .landing-page .movie-details-landing p {
@@ -77,6 +78,10 @@
 .landing-page .recent-reviews li {
   margin-bottom: 10px;
   color: #bbbbbb;
+}
+
+.landing-page .recent-reviews li p strong {
+ cursor: pointer;
 }
 
 .landing-page .right-section {
