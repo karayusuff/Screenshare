@@ -24,9 +24,10 @@ def get_all_movies():
     """
     Adds query filters to get all movies
     """
+    query = request.args.get('q', default="", type=str).lower()
     page = request.args.get('page', default=1, type=int)
     limit = request.args.get('limit', default=20, type=int)
-    movies = Movie.query.paginate(page=page, per_page=limit, error_out=False)
+    movies = Movie.query.filter(Movie.title.ilike(f"%{query}%")).paginate(page=page, per_page=limit, error_out=False)
     return jsonify({"Movies": [movie.to_dict() for movie in movies.items]}), 200
 
 
@@ -51,7 +52,7 @@ def get_random_movie():
     """
     global last_selected_time, current_movie
     now = datetime.now(timezone.utc)
-    if not last_selected_time or now - last_selected_time > timedelta(seconds=15):
+    if not last_selected_time or now - last_selected_time > timedelta(seconds=10):
         current_movie = Movie.query.order_by(func.random()).first()
         last_selected_time = now
     if not current_movie:
@@ -187,12 +188,13 @@ def add_review(movie_id):
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_review = Review(
-            review_text = form.review_text.data,
-            rating = form.rating.data,
-            user_id = user_id,
-            movie_id = movie_id
+            review_text=form.review_text.data,
+            rating=form.rating.data,
+            user_id=user_id,
+            movie_id=movie_id
         )
         db.session.add(new_review)
+        current_user.add_points_and_update_badge(points=10)
         db.session.commit()
         return jsonify(new_review.to_dict()), 201
     return form.errors, 400
@@ -203,6 +205,6 @@ def get_reviews_by_movie(movie_id):
     """
     Returns all reviews for a movie
     """
-    reviews = Review.query.options(joinedload(Review.user)).filter_by(movie_id=movie_id).order_by(Review.created_at.desc()).all()
+    reviews = Review.query.options(joinedload(Review.user)).filter_by(movie_id=movie_id).order_by(Review.updated_at.desc()).all()
     
     return jsonify([{**review.to_dict(), 'username': review.user.username} for review in reviews]), 200

@@ -30,6 +30,12 @@ const MoviePage = () => {
   };
 
   useEffect(() => {
+    if (!currentUser) {
+      dispatch(thunkGetMovieById(movieId));
+    }
+  }, [currentUser, dispatch, movieId]);  
+
+  useEffect(() => {
     dispatch(thunkGetMovieById(movieId));
     dispatch(thunkGetReviewsByMovie(movieId));
     return () => dispatch(clearMovie());
@@ -113,7 +119,7 @@ const MoviePage = () => {
               Add to Your List
             </button>
           )}
-          {!userReview && currentUser && (
+          {!currentUser?.is_admin && !userReview && (
             <button
               onClick={() => setModalContent(<AddReviewModal movieId={movie.id} />)}
               className="add-review-button"
@@ -130,11 +136,13 @@ const MoviePage = () => {
             <div className="user-review-header">
               <p>Your Review:</p>
               <div className="settings-container">
-                <FaCog className="settings-icon" />
-                <ul className="dropdown-menu">
-                  <li onClick={openEditReviewModal}>Edit</li>
-                  <li onClick={handleDeleteReview}>Delete</li>
-                </ul>
+                <FaCog className="settings-icon" onClick={toggleMenu} />
+                {showMenu && (
+                  <ul className="dropdown-menu">
+                    <li onClick={openEditReviewModal}>Edit Review</li>
+                    <li onClick={handleDeleteReview}>Delete Review</li>
+                  </ul>
+                )}
               </div>
             </div>
             <p>{userReview.review_text}</p>

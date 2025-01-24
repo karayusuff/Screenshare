@@ -130,13 +130,10 @@ const ListDetailsPage = () => {
             {listDetails.list_type === "Custom" && !isEditingName && !isEditingMovies && (
               <button onClick={handleEditNameToggle}>Edit List Name</button>
             )}
-            <button
-              onClick={handleEditMoviesToggle}
-              disabled={updatedMovies.length === 0}
-            >
+            <button onClick={handleEditMoviesToggle}>
               {isEditingMovies ? "Done Editing" : "Edit List Movies"}
             </button>
-            {listDetails.list_type === "Custom" && (
+            {listDetails.list_type === "Custom" && !isEditingMovies && (
               <button onClick={handleDeleteList} className="delete-list-button">
                 Delete List
               </button>

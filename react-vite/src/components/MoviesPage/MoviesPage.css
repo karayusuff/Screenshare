@@ -13,6 +13,21 @@
   color: #ffffff;
 }
 
+.movies-page .movies-search-bar {
+  width: 60%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 20px;
+  border: 1px solid #3a3a3a;
+  background-color: #2e2e2e;
+  color: #ffffff;
+}
+
+.movies-page .movies-search-bar::placeholder {
+  color: #aaaaaa;
+  font-style: italic;
+}
+
 .movies-page .movies-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -31,6 +46,7 @@
   border-radius: 4px;
   cursor: pointer;
   padding: 10px;
+  transition: background-color 0.3s;
 }
 
 .movies-page .movie-card:hover {
@@ -67,6 +83,7 @@
   color: #ffffff;
   font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .movies-page .page-button:disabled {

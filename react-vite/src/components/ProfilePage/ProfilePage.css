@@ -33,7 +33,7 @@
 }
 
 .profile-page .profile-photo img {
-  width: auto;
+  width: 120px;
   height: 120px;
   border-radius: 50%;
   object-fit: cover;
@@ -190,4 +190,8 @@
 
 .profile-page .follow-button {
   margin-top: 10px;
+}
+
+.review-movie-poster img {
+  cursor: pointer;
 }

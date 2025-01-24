@@ -53,5 +53,6 @@ def delete_review(review_id):
         return jsonify({"error": "Unauthorized."}), 401
     
     db.session.delete(review)
+    current_user.add_points_and_update_badge(points=-10)
     db.session.commit()
     return jsonify({"message": "Review deleted successfully."}), 200

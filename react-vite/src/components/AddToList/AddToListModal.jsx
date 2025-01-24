@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
+import LoginFormModal from "../LoginFormModal";
 import "./AddToListModal.css";
 
 const AddToListModal = ({ movieId }) => {
-  const { closeModal } = useModal();
+  const { closeModal, setModalContent } = useModal();
   const currentUser = useSelector((state) => state.session.user);
   const [lists, setLists] = useState([]);
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  // HATA 1: 'dispatch' gereksiz bir şekilde tanımlanmıştı, bu satır kaldırıldı.
-
   useEffect(() => {
+    if (!currentUser) {
+      setModalContent(<LoginFormModal />);
+      return;
+    }
+
     const fetchUserLists = () => {
       fetch(`/api/users/${currentUser.id}/lists`)
         .then((res) => res.json())
@@ -25,7 +29,7 @@ const AddToListModal = ({ movieId }) => {
           setIsLoading(false);
         })
         .catch(async (res) => {
-          const data = await res.json(); // HATA 2: `data` kullanılamıyordu, çünkü sadece hata mesajları ekleniyordu.
+          const data = await res.json();
           if (data && data.error) {
             setErrors((prevErrors) => ({
               ...prevErrors,
@@ -36,10 +40,8 @@ const AddToListModal = ({ movieId }) => {
         });
     };
 
-    if (currentUser) {
-      fetchUserLists();
-    }
-  }, [currentUser, movieId]);
+    fetchUserLists();
+  }, [currentUser, movieId, setModalContent]);
 
   const handleToggleList = (listId, currentStatus) => {
     const method = currentStatus ? "DELETE" : "POST";
@@ -60,7 +62,6 @@ const AddToListModal = ({ movieId }) => {
           );
         } else {
           return res.json().then((data) => {
-            // HATA 2: `data` kullanılabilir hale getirildi.
             if (data && data.error) {
               setErrors((prevErrors) => ({
                 ...prevErrors,
@@ -80,10 +81,6 @@ const AddToListModal = ({ movieId }) => {
         }
       });
   };
-
-  if (!currentUser) {
-    return <div className="modal-content">Please log in to manage your lists.</div>;
-  }
 
   if (isLoading) {
     return <div className="modal-content">Loading your lists...</div>;
@@ -119,7 +116,6 @@ const AddToListModal = ({ movieId }) => {
                   type="checkbox"
                   checked={list.isInList}
                   onChange={() => handleToggleList(list.id, list.isInList)}
-                  disabled={list.list_type === "Default" && !list.isInList}
                 />
               </div>
             </label>

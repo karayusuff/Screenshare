@@ -14,8 +14,8 @@ def seed_users():
         total_points=0,
         status='active',
         badge='Admin',
-        welcome_movie_id=None,
-        welcome_movie_note=None
+        # welcome_movie_id=None,
+        # welcome_movie_note=None
     )
     demo = User(
         first_name='Demo',
@@ -23,13 +23,12 @@ def seed_users():
         username='Demo',
         email='demo@aa.io',
         password='password',
-        # profile_pic_url="https://example.com/demo.jpg",
         is_admin=False,
         total_points=10,
         status='active',
         badge='Newbie',
-        welcome_movie_id=1,
-        welcome_movie_note='This is one of my favorite movies!'
+        # welcome_movie_id=1,
+        # welcome_movie_note='This is one of my favorite movies!'
     )
     marnie = User(
         first_name='Marnie',
@@ -41,8 +40,8 @@ def seed_users():
         total_points=25,
         status='active',
         badge='Movie Enthusiast',
-        welcome_movie_id=None,
-        welcome_movie_note=None
+        # welcome_movie_id=None,
+        # welcome_movie_note=None
     )
     bobbie = User(
         first_name='Bobbie',
@@ -50,13 +49,12 @@ def seed_users():
         username='bobbie',
         email='bobbie@aa.io',
         password='password',
-        # profile_pic_url="https://example.com/bobbie.jpg",
         is_admin=False,
         total_points=55,
         status='active',
         badge='Movie Monster',
-        welcome_movie_id=2,
-        welcome_movie_note='A must-watch for everyone!'
+        # welcome_movie_id=2,
+        # welcome_movie_note='A must-watch for everyone!'
     )
     alex = User(
         first_name='Alex',
@@ -64,13 +62,12 @@ def seed_users():
         username='alex',
         email='alex@aa.io',
         password='password',
-        # profile_pic_url="https://example.com/alex.jpg",
         is_admin=False,
         total_points=0,
         status='active',
         badge='Newbie',
-        welcome_movie_id=None,
-        welcome_movie_note=None
+        # welcome_movie_id=None,
+        # welcome_movie_note=None
     )
     chris = User(
         first_name='Chris',
@@ -82,8 +79,8 @@ def seed_users():
         total_points=15,
         status='active',
         badge='Newbie',
-        welcome_movie_id=None,
-        welcome_movie_note='Cinema is my life!'
+        # welcome_movie_id=None,
+        # welcome_movie_note='Cinema is my life!'
     )
 
     db.session.add(admin)

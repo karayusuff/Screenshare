@@ -14,7 +14,7 @@ def seed_movies():
             stars="Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page",
             writer="Christopher Nolan",
             producer="Emma Thomas",
-            platforms={"HBO": "Unavailable", "Netflix": "2025-12-31", "Amazon Prime": "2025-11-30", "Disney+": "2025-10-15", "Apple TV": "Unavailable"}
+            # platforms={"HBO": "Unavailable", "Netflix": "2025-12-31", "Amazon Prime": "2025-11-30", "Disney+": "2025-10-15", "Apple TV": "Unavailable"}
         ),
         Movie(
             title="Interstellar",
@@ -26,7 +26,7 @@ def seed_movies():
             stars="Matthew McConaughey, Anne Hathaway, Jessica Chastain",
             writer="Jonathan Nolan, Christopher Nolan",
             producer="Emma Thomas",
-            platforms={"HBO": "2025-12-01", "Netflix": "2026-01-15", "Amazon Prime": "2025-09-30", "Disney+": "Unavailable", "Apple TV": "2025-08-20"}
+            # platforms={"HBO": "2025-12-01", "Netflix": "2026-01-15", "Amazon Prime": "2025-09-30", "Disney+": "Unavailable", "Apple TV": "2025-08-20"}
         ),
         Movie(
             title="The Dark Knight",
@@ -38,7 +38,7 @@ def seed_movies():
             stars="Christian Bale, Heath Ledger, Aaron Eckhart",
             writer="Jonathan Nolan, Christopher Nolan",
             producer="Emma Thomas",
-            platforms={"HBO": "2025-11-15", "Netflix": "2025-12-31", "Amazon Prime": "Unavailable", "Disney+": "2025-12-01", "Apple TV": "Unavailable"}
+            # platforms={"HBO": "2025-11-15", "Netflix": "2025-12-31", "Amazon Prime": "Unavailable", "Disney+": "2025-12-01", "Apple TV": "Unavailable"}
         ),
         Movie(
             title="Pulp Fiction",
@@ -50,7 +50,7 @@ def seed_movies():
             stars="John Travolta, Uma Thurman, Samuel L. Jackson",
             writer="Quentin Tarantino, Roger Avary",
             producer="Lawrence Bender",
-            platforms={"HBO": "2025-10-15", "Netflix": "2025-11-30", "Amazon Prime": "Unavailable", "Disney+": "Unavailable", "Apple TV": "2025-09-25"}
+            # platforms={"HBO": "2025-10-15", "Netflix": "2025-11-30", "Amazon Prime": "Unavailable", "Disney+": "Unavailable", "Apple TV": "2025-09-25"}
         ),
         Movie(
             title="The Godfather",
@@ -62,7 +62,7 @@ def seed_movies():
             stars="Marlon Brando, Al Pacino, James Caan",
             writer="Mario Puzo, Francis Ford Coppola",
             producer="Albert S. Ruddy",
-            platforms={"HBO": "2025-11-01", "Netflix": "Unavailable", "Amazon Prime": "2025-12-15", "Disney+": "Unavailable", "Apple TV": "2025-08-30"}
+            # platforms={"HBO": "2025-11-01", "Netflix": "Unavailable", "Amazon Prime": "2025-12-15", "Disney+": "Unavailable", "Apple TV": "2025-08-30"}
         ),
         Movie(
             title="The Shawshank Redemption",
@@ -74,7 +74,7 @@ def seed_movies():
             stars="Tim Robbins, Morgan Freeman, Bob Gunton",
             writer="Stephen King, Frank Darabont",
             producer="Niki Marvin",
-            platforms={"HBO": "Unavailable", "Netflix": "2026-01-01", "Amazon Prime": "2025-10-20", "Disney+": "2025-11-25", "Apple TV": "2025-12-10"}
+            # platforms={"HBO": "Unavailable", "Netflix": "2026-01-01", "Amazon Prime": "2025-10-20", "Disney+": "2025-11-25", "Apple TV": "2025-12-10"}
         ),
         Movie(
             title="Fight Club",
@@ -86,7 +86,7 @@ def seed_movies():
             stars="Brad Pitt, Edward Norton, Meat Loaf",
             writer="Chuck Palahniuk, Jim Uhls",
             producer="Art Linson",
-            platforms={"HBO": "2025-11-15", "Netflix": "2025-12-31", "Amazon Prime": "Unavailable", "Disney+": "2025-10-10", "Apple TV": "Unavailable"}
+            # platforms={"HBO": "2025-11-15", "Netflix": "2025-12-31", "Amazon Prime": "Unavailable", "Disney+": "2025-10-10", "Apple TV": "Unavailable"}
         ),
         Movie(
             title="Forrest Gump",
@@ -98,7 +98,7 @@ def seed_movies():
             stars="Tom Hanks, Robin Wright, Gary Sinise",
             writer="Winston Groom, Eric Roth",
             producer="Wendy Finerman",
-            platforms={"HBO": "Unavailable", "Netflix": "2025-12-15", "Amazon Prime": "2025-11-20", "Disney+": "2025-08-15", "Apple TV": "Unavailable"}
+            # platforms={"HBO": "Unavailable", "Netflix": "2025-12-15", "Amazon Prime": "2025-11-20", "Disney+": "2025-08-15", "Apple TV": "Unavailable"}
         ),
         Movie(
             title="The Matrix",
@@ -110,7 +110,7 @@ def seed_movies():
             stars="Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss",
             writer="The Wachowskis",
             producer="Joel Silver",
-            platforms={"HBO": "2025-12-20", "Netflix": "Unavailable", "Amazon Prime": "2025-11-10", "Disney+": "Unavailable", "Apple TV": "2025-09-15"}
+            # platforms={"HBO": "2025-12-20", "Netflix": "Unavailable", "Amazon Prime": "2025-11-10", "Disney+": "Unavailable", "Apple TV": "2025-09-15"}
         ),
         Movie(
             title="Parasite",
@@ -122,7 +122,7 @@ def seed_movies():
             stars="Kang-ho Song, Sun-kyun Lee, Yeo-jeong Cho",
             writer="Bong Joon Ho, Jin Won Han",
             producer="Kwak Sin-ae",
-            platforms={"HBO": "2025-11-30", "Netflix": "2025-10-05", "Amazon Prime": "Unavailable", "Disney+": "2025-09-01", "Apple TV": "2025-08-20"}
+            # platforms={"HBO": "2025-11-30", "Netflix": "2025-10-05", "Amazon Prime": "Unavailable", "Disney+": "2025-09-01", "Apple TV": "2025-08-20"}
         )
     ]
 

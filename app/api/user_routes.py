@@ -6,12 +6,21 @@ from sqlalchemy.orm import joinedload
 user_routes = Blueprint('users', __name__)
 
 
+# @user_routes.route('/')
+# def users():
+#     """
+#     Query for all users and returns them in a list of user dictionaries
+#     """
+#     users = User.query.filter(User.is_admin == False).order_by(User.created_at.desc()).all()
+#     return jsonify({"Users": [user.to_dict() for user in users]}), 200
+
 @user_routes.route('/')
-def users():
+def search_users():
     """
-    Query for all users and returns them in a list of user dictionaries
+    Adds query filters to get all users
     """
-    users = User.query.filter(User.is_admin == False).order_by(User.created_at.desc()).all()
+    query = request.args.get('q', default="", type=str).lower()
+    users = User.query.filter(User.is_admin == False, User.username.ilike(f"%{query}%")).all()
     return jsonify({"Users": [user.to_dict() for user in users]}), 200
 
 

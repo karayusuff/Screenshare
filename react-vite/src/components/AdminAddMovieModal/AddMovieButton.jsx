@@ -10,7 +10,7 @@ const AddMovieButton = () => {
       className="add-movie-button"
       onClick={() => setModalContent(<AdminAddMovieModal />)}
     >
-      Add Movie
+      + Add Movie
     </button>
   );
 };

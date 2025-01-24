@@ -3,6 +3,7 @@ const SET_TOP_SCORERS = "users/SET_TOP_SCORERS";
 const SET_USER_BY_USERNAME = "users/SET_USER_BY_USERNAME";
 const SET_USERS = "users/SET_USERS";
 const DELETE_USER = "users/DELETE_USER";
+const SET_SEARCH_RESULTS = "users/SET_SEARCH_RESULTS";
 
 const setTopUsers = (users) => ({
   type: SET_TOP_USERS,
@@ -23,6 +24,11 @@ const setUsers = (users) => ({
   type: SET_USERS,
   payload: users
 })
+
+const setSearchResults = (users) => ({
+  type: SET_SEARCH_RESULTS,
+  payload: users
+});
 
 export const thunkGetTopUsers = () => async (dispatch) => {
   try {
@@ -84,8 +90,22 @@ export const thunkGetAllUsers = () => async (dispatch) => {
   }
 };
 
+export const thunkSearchUsers = (query) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/users?q=${query}`);
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setSearchResults(data.Users)); // Arama sonuçlarını sakla
+    } else {
+      const errorData = await response.json();
+      console.error(errorData.error);
+    }
+  } catch (error) {
+    console.error("Error searching users:", error);
+  }
+};
 
-const initialState = { topUsers: [], topScorers: [], userByUsername: null, users: [] };
+const initialState = { topUsers: [], topScorers: [], userByUsername: null, users: [], searchResults: [] };
 
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -98,7 +118,9 @@ const usersReducer = (state = initialState, action) => {
     case SET_USERS:
       return { ...state, users: action.payload };
     case DELETE_USER:
-      return { ...state, user: null }
+      return { ...state, user: null };
+    case SET_SEARCH_RESULTS:
+      return { ...state, searchResults: action.payload };
     default:
       return state;
   }

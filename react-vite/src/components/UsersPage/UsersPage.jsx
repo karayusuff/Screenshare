@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { thunkGetAllUsers, thunkGetTopUsers, thunkGetTopScorers } from "../../redux/users";
 import { useNavigateTo } from "../../utils/navigation";
 import "./UsersPage.css";
@@ -7,7 +8,8 @@ import "./UsersPage.css";
 const UsersPage = () => {
   const dispatch = useDispatch();
   const navigateTo = useNavigateTo("users");
-  const [activeTab, setActiveTab] = useState("all");
+  const location = useLocation();
+  const [activeTab, setActiveTab] = useState(location.state?.activeTab || "all");
 
   const allUsers = useSelector((state) => state.users.users);
   const topUsers = useSelector((state) => state.users.topUsers);
