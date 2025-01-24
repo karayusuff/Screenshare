@@ -1,15 +1,24 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { thunkAddReview } from "../../redux/reviews";
 import { useModal } from "../../context/Modal";
-import './AddReviewModal.css'
+import LoginFormModal from "../LoginFormModal";
+import './AddReviewModal.css';
 
 const AddReviewModal = ({ movieId }) => {
   const dispatch = useDispatch();
-  const { closeModal } = useModal();
+  const { closeModal, setModalContent } = useModal();
+  const currentUser = useSelector((state) => state.session.user);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(0);
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    if (!currentUser) {
+      setModalContent(<LoginFormModal />);
+      return;
+    }
+  }, [currentUser, setModalContent]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,7 +54,6 @@ const AddReviewModal = ({ movieId }) => {
             required
           />
         </label>
-        {/* {errors && <p className="error">{errors}</p>} */}
         {errors && (
           <div className="error-messages">
             {Object.entries(errors).map(([key, message], idx) => (

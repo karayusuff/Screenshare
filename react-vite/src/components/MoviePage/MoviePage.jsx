@@ -30,6 +30,12 @@ const MoviePage = () => {
   };
 
   useEffect(() => {
+    if (!currentUser) {
+      dispatch(thunkGetMovieById(movieId));
+    }
+  }, [currentUser, dispatch, movieId]);  
+
+  useEffect(() => {
     dispatch(thunkGetMovieById(movieId));
     dispatch(thunkGetReviewsByMovie(movieId));
     return () => dispatch(clearMovie());
@@ -113,7 +119,7 @@ const MoviePage = () => {
               Add to Your List
             </button>
           )}
-          {!userReview && currentUser && (
+          {!currentUser?.is_admin && !userReview && (
             <button
               onClick={() => setModalContent(<AddReviewModal movieId={movie.id} />)}
               className="add-review-button"
