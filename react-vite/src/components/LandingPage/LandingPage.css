@@ -106,6 +106,7 @@
   padding: 0px 0px;
   box-shadow: 0px 0px 4px rgba(78, 78, 78, 0.3);
   border-radius: 4px;
+  margin-right: 10px;
 }
 
 .list-section img:hover {
