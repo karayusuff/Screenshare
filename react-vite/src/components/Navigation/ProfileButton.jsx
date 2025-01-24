@@ -56,21 +56,17 @@ function ProfileButton() {
         <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li>
+              <li className="profile-pic-container">
                 <img
                   src={user.profile_pic_url || "https://screenshare-app-images.s3.eu-north-1.amazonaws.com/no+pp+image.png"}
                   alt="Profile"
                   className="profile-pic"
                 />
               </li>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li onClick={goProfile} className="go-to-profile">
-                Go to your profile
-              </li>
-              <li onClick={logout} className="logout">
-                Log Out
-              </li>
+              <li className="exclude">{user.username}</li>
+              <li className="exclude">{user.email}</li>
+              <li onClick={goProfile}>Go to your profile</li>
+              <li onClick={logout}>Log Out</li>
             </>
           ) : (
             <>

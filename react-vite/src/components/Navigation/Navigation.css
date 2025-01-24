@@ -79,8 +79,7 @@
   cursor: default;
 }
 
-.profile-dropdown .go-to-profile:hover,
-.profile-dropdown .logout:hover {
+.profile-dropdown li:not(.exclude):not(.profile-pic-container):hover {
   background-color: #444444;
   color: #ffffff;
   cursor: pointer;
