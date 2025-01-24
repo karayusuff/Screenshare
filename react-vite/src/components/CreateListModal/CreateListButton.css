@@ -1,4 +1,4 @@
-.add-movie-button {
+.create-list-button {
   cursor: pointer !important;
   padding: 8px 15px;
   border: 1px solid #3a3a3a;
@@ -8,7 +8,7 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
-.add-movie-button:hover {
+.create-list-button:hover {
   background-color: #444444;
   color: #ffffff;
 }

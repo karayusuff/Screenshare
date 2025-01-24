@@ -108,3 +108,7 @@
   object-fit: cover;
   margin-bottom: 10px;
 }
+
+.create-list-button {
+  align-items: end;
+}

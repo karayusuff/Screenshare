@@ -38,7 +38,7 @@ function Navigation() {
       </div>
 
       <div className="nav-right">
-        <CreateListButton />
+        {!currentUser?.is_admin && <CreateListButton />}
         {currentUser?.is_admin && <AddMovieButton />}
         <ProfileButton />
       </div>

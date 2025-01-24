@@ -12,6 +12,7 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigateToList = useNavigateTo('lists');
   const navigateToUserLists = useNavigateTo('users');
+  const navigateToMovie = useNavigateTo('movies');
   const { username } = useParams();
   const currentUser = useSelector((state) => state.session.user);
   const [profileUser, setProfileUser] = useState(null);
@@ -222,7 +223,13 @@ const ProfilePage = () => {
                 </p>
                 <div className="list-movies">
                   {list.movies.slice(0, 5).map((movie) => (
-                    <img key={movie.id} src={movie.poster_url} title={movie.title} alt={movie.title} />
+                    <img 
+                      key={movie.id} 
+                      src={movie.poster_url} 
+                      title={movie.title} 
+                      alt={movie.title}
+                      onClick={() => navigateToMovie(movie.id)}
+                    />
                   ))}
                   {list.movies.length > 5 && (
                     <button onClick={() => navigateToList(list.id)}>See All</button>
@@ -253,7 +260,12 @@ const ProfilePage = () => {
                   <p>☆ {review.rating}/10</p>
                 </div>
                 <div className="review-movie-poster">
-                  <img src={review.movie_poster} title={review.movie_title} alt={review.movie_title} />
+                  <img 
+                    src={review.movie_poster} 
+                    title={review.movie_title} 
+                    alt={review.movie_title} 
+                    onClick={() => navigateToMovie(review.movie_id)}
+                  />
                 </div>
               </div>
             ))

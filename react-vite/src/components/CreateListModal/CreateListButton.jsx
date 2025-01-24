@@ -1,17 +1,28 @@
 import { useSelector } from "react-redux";
-import OpenModalButton from "../OpenModalButton";
+import { useModal } from "../../context/Modal";
 import CreateListModal from "./CreateListModal";
+import LoginFormModal from "../LoginFormModal";
+import './CreateListButton.css'
 
 const CreateListButton = () => {
   const user = useSelector((state) => state.session.user);
+  const { setModalContent } = useModal();
 
-  if (!user || user.username === "admin") return null;
+  const handleClick = () => {
+    if (!user) {
+      setModalContent(<LoginFormModal />);
+    } else {
+      setModalContent(<CreateListModal />);
+    }
+  };
 
   return (
-    <OpenModalButton
-      modalComponent={<CreateListModal />}
-      buttonText="+ Create List"
-    />
+    <button
+      className="create-list-button"
+      onClick={handleClick}
+    >
+      + Create List
+    </button>
   );
 };
 
