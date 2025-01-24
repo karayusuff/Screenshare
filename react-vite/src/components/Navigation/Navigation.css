@@ -46,7 +46,8 @@
   border: 1px solid #3a3a3a;
   background-color: #2e2e2e;
   color: #ffffff;
-  font-family: "Lora", serif;
+  /* font-family: "Lora", serif; */
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .nav-search-bar::placeholder {
@@ -96,7 +97,8 @@
   color: #cccccc;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
-  font-family: "Lora", serif;
+  /* font-family: "Lora", serif; */
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 0.8rem;
 }
 
@@ -258,7 +260,8 @@
 
 .search-type-dropdown {
   position: relative;
-  font-family: "Lora", serif;;
+  /* font-family: "Lora", serif; */
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .search-type-select {
