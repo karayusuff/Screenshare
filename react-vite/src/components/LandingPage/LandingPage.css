@@ -30,9 +30,10 @@
   height: 125px;
   width: 90px;
   object-fit: cover;
+  cursor: pointer;
 }
 
-.recent-lists span {
+.recent-lists strong {
   cursor: pointer;
 }
 
@@ -132,4 +133,12 @@
 .landing-page .leaderboard-section li {
   margin-bottom: 10px;
   color: #bbbbbb;
+}
+
+.landing-page .leaderboard-section strong {
+  cursor: pointer;
+}
+
+.clickable-title {
+  cursor: pointer;
 }

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigateTo } from "../../utils/navigation";
+import { useNavigate } from "react-router-dom";
 import { thunkGetMovieOfTheDay } from "../../redux/movies";
 import { thunkGetReviewsByMovie } from "../../redux/reviews";
 import { thunkGetRecentLists } from "../../redux/lists";
@@ -13,6 +14,7 @@ const LandingPage = () => {
   const navigateToMovie = useNavigateTo('movies');
   const navigateToList = useNavigateTo('lists');
   const navigateToUser = useNavigateTo('users');
+  const navigate = useNavigate();
   const movieOfTheDay = useSelector((state) => state.movies.movieOfTheDay);
   const reviews = useSelector((state) => state.reviews.reviews);
   const recentLists = useSelector((state) => state.lists.recentLists);
@@ -85,7 +87,7 @@ const LandingPage = () => {
               <ul>
                 {recentLists.map((list) => (
                   <li key={list.id}>
-                    <p><strong onClick={() => navigateToList(list.id)}>{list.name}</strong> by <span onClick={() => navigateToUser(list.username)}>{list.username}</span></p>
+                    <p><strong onClick={() => navigateToList(list.id)}>{list.name}</strong> by <strong onClick={() => navigateToUser(list.username)}>{list.username}</strong></p>
                     <div className="list-movies">
                       {list.movies.slice(0, 5).map((movie) => (
                         <img 
@@ -110,7 +112,7 @@ const LandingPage = () => {
             <h3>Leaderboard</h3>
             <div className="leaderboard-container">
               <div className="leaderboard-section">
-                <h4>Top Users</h4>
+                <h4 className="clickable-title" onClick={() => navigate("/users", { state: { activeTab: "top" } })}>Top Users</h4>
                 {topUsers.length > 0 ? (
                   <ul>
                     {topUsers.slice(0, 5).map((user) => (
@@ -124,7 +126,7 @@ const LandingPage = () => {
                 )}
               </div>
               <div className="leaderboard-section">
-                <h4>Top Scorers</h4>
+                <h4 className="clickable-title" onClick={() => navigate("/users", { state: { activeTab: "scorers" } })}>Top Scorers</h4>
                 {topScorers.length > 0 ? (
                   <ul>
                     {topScorers.slice(0, 5).map((user) => (
