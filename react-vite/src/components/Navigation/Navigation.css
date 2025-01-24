@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #1a1a1a;
+  background-color: #000000;
   padding: 8px 35px;
   position: relative;
   z-index: 10;
@@ -32,6 +32,7 @@
   border: 1px solid #3a3a3a;
   background-color: #2e2e2e;
   color: #ffffff;
+  font-family: "Lora", serif;
 }
 
 .nav-search-bar::placeholder {
@@ -75,12 +76,14 @@
 
 .nav-button {
   padding: 8px 15px;
-  border: 1px solid #3a3a3a;
+  border: 1px solid #111111;
   border-radius: 4px;
   background-color: #2e2e2e;
   color: #cccccc;
   cursor: pointer;
   transition: background-color 0.3s, color 0.3s;
+  font-family: "Lora", serif;
+  font-size: 0.8rem;
 }
 
 .nav-button:hover {
@@ -241,6 +244,7 @@
 
 .search-type-dropdown {
   position: relative;
+  font-family: "Lora", serif;
 }
 
 .search-type-select {
@@ -254,6 +258,7 @@
   color: #cccccc;
   cursor: pointer;
   transition: background-color 0.3s;
+  font-family: "Cinzel", serif;
 }
 
 .search-type-select:hover {

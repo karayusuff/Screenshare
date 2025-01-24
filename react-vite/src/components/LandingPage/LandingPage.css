@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   color: #ffffff;
-  background-color: #1e1e1e;
+  background-color: #111111;
   padding: 20px;
 }
 
@@ -15,7 +15,6 @@
 .landing-page .movie-section {
   flex: 1;
   padding: 15px;
-  background-color: #2e2e2e;
   border-radius: 4px;
 }
 
@@ -43,11 +42,12 @@
 }
 
 .landing-page .movie-details-landing img {
-  width: auto;
-  max-height: 550px;
+  width: 400px;
+  height: 600px;
   object-fit: cover;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 8px;
+  box-shadow: 10px 20px 100px rgba(78, 78, 78, 0.3);
 }
 
 .landing-page .movie-details-landing h2 {
@@ -55,6 +55,7 @@
   margin-top: 10px;
   color: #cccccc;
   cursor: pointer;
+  font-family: "Cinzel", serif;
 }
 
 .landing-page .movie-details-landing p {
@@ -64,8 +65,8 @@
 }
 
 .landing-page .recent-reviews {
+  text-align: center;
   margin-top: 20px;
-  background-color: #2e2e2e;
   border-radius: 4px;
   padding: 10px;
 }
@@ -85,6 +86,10 @@
  cursor: pointer;
 }
 
+.landing-page .recent-reviews li span {
+  color: #EF8354;
+ }
+
 .landing-page .right-section {
   flex: 1;
   display: flex;
@@ -93,9 +98,26 @@
 }
 
 .landing-page .recent-lists {
-  background-color: #2e2e2e;
   border-radius: 4px;
   padding: 10px;
+}
+
+.list-section img {
+  padding: 0px 0px;
+  box-shadow: 0px 0px 4px rgba(78, 78, 78, 0.3);
+  border-radius: 4px;
+}
+
+.list-section img:hover {
+  box-shadow: 4px 4px 10px rgba(78, 78, 78, 0.3);
+}
+
+.landing-page .recent-lists strong {
+  color: #BFC0C0;
+}
+
+.landing-page .recent-lists span {
+  color: #e4e4e4;
 }
 
 .landing-page .recent-lists ul {
@@ -109,7 +131,6 @@
 }
 
 .landing-page .leaderboard {
-  background-color: #2e2e2e;
   border-radius: 4px;
   padding: 10px;
 }
@@ -121,7 +142,7 @@
 
 .landing-page .leaderboard-section {
   flex: 1;
-  color: #cccccc;
+  color: #cccccc;;
 }
 
 .landing-page .leaderboard-section ul {
@@ -133,10 +154,12 @@
 .landing-page .leaderboard-section li {
   margin-bottom: 10px;
   color: #bbbbbb;
+  font-size: 0.95rem;
 }
 
 .landing-page .leaderboard-section strong {
   cursor: pointer;
+  font-size: 1rem;
 }
 
 .clickable-title {

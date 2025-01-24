@@ -70,8 +70,8 @@ const LandingPage = () => {
               <ul>
                 {reviews.map((review) => (
                   <li key={review.id}>
-                    <p><strong onClick={() => navigateToUser(review.username)}>{review.username}:</strong> {review.review_text}</p>
-                    <p>Rating: {review.rating}/10</p>
+                    <p><strong onClick={() => navigateToUser(review.username)}>{review.username}:</strong> {review.review_text} <span>{review.rating}★</span></p>
+                    {/* <p>Rating: {review.rating}/10</p> */}
                   </li>
                 ))}
               </ul>
@@ -86,8 +86,8 @@ const LandingPage = () => {
             {recentLists.length > 0 ? (
               <ul>
                 {recentLists.map((list) => (
-                  <li key={list.id}>
-                    <p><strong onClick={() => navigateToList(list.id)}>{list.name}</strong> by <strong onClick={() => navigateToUser(list.username)}>{list.username}</strong></p>
+                  <li className="list-section" key={list.id}>
+                    <p><strong onClick={() => navigateToList(list.id)}>{list.name}</strong> by <span onClick={() => navigateToUser(list.username)}>{list.username}</span></p>
                     <div className="list-movies">
                       {list.movies.slice(0, 5).map((movie) => (
                         <img 
@@ -117,7 +117,7 @@ const LandingPage = () => {
                   <ul>
                     {topUsers.slice(0, 5).map((user) => (
                       <li key={user.id}>
-                        <p><strong onClick={() => navigateToUser(user.username)}>{user.username}</strong> ({followersCount[user.id]} followers)</p>
+                        <p><strong onClick={() => navigateToUser(user.username)}>{user.username}</strong> | {followersCount[user.id]} followers</p>
                       </li>
                     ))}
                   </ul>
@@ -126,12 +126,12 @@ const LandingPage = () => {
                 )}
               </div>
               <div className="leaderboard-section">
-                <h4 className="clickable-title" onClick={() => navigate("/users", { state: { activeTab: "scorers" } })}>Top Scorers</h4>
+                <h4 className="clickable-title" onClick={() => navigate("/users", { state: { activeTab: "scorers" } })}>Top Gainers</h4>
                 {topScorers.length > 0 ? (
                   <ul>
                     {topScorers.slice(0, 5).map((user) => (
                       <li key={user.id}>
-                        <p><strong onClick={() => navigateToUser(user.username)}>{user.username}</strong> {user.badge} ({user.total_points} points)</p>
+                        <p><strong onClick={() => navigateToUser(user.username)}>{user.username}</strong> | {user.badge} | {user.total_points} points</p>
                       </li>
                     ))}
                   </ul>

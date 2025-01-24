@@ -6,6 +6,7 @@
   background-color: #2e2e2e;
   color: #cccccc;
   transition: background-color 0.3s, color 0.3s;
+  font-family: "Lora", serif;
 }
 
 .create-list-button:hover {
