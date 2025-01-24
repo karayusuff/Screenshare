@@ -130,11 +130,13 @@ const MoviePage = () => {
             <div className="user-review-header">
               <p>Your Review:</p>
               <div className="settings-container">
-                <FaCog className="settings-icon" />
-                <ul className="dropdown-menu">
-                  <li onClick={openEditReviewModal}>Edit</li>
-                  <li onClick={handleDeleteReview}>Delete</li>
-                </ul>
+                <FaCog className="settings-icon" onClick={toggleMenu} />
+                {showMenu && (
+                  <ul className="dropdown-menu">
+                    <li onClick={openEditReviewModal}>Edit Review</li>
+                    <li onClick={handleDeleteReview}>Delete Review</li>
+                  </ul>
+                )}
               </div>
             </div>
             <p>{userReview.review_text}</p>

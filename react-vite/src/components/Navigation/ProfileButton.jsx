@@ -65,7 +65,9 @@ function ProfileButton() {
               </li>
               <li className="exclude">{user.username}</li>
               <li className="exclude">{user.email}</li>
-              <li onClick={goProfile}>Go to your profile</li>
+              {!user.is_admin && (
+                <li onClick={goProfile}>Go to your profile</li>
+              )}
               <li onClick={logout}>Log Out</li>
             </>
           ) : (
