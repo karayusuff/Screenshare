@@ -17,7 +17,7 @@ const AdminAddMovieModal = () => {
   const [writer, setWriter] = useState("");
   const [producer, setProducer] = useState("");
   const [stars, setStars] = useState("");
-  const [platforms, setPlatforms] = useState("");
+  // const [platforms, setPlatforms] = useState("");
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -33,7 +33,7 @@ const AdminAddMovieModal = () => {
     formData.append("writer", writer);
     formData.append("producer", producer);
     formData.append("stars", stars);
-    formData.append("platforms", platforms);
+    // formData.append("platforms", platforms);
 
     setLoading(true);
 
@@ -107,12 +107,12 @@ const AdminAddMovieModal = () => {
           value={stars}
           onChange={(e) => setStars(e.target.value)}
         />
-        <input
+        {/* <input
           type="text"
           placeholder="Platforms"
           value={platforms}
           onChange={(e) => setPlatforms(e.target.value)}
-        />
+        /> */}
         {/* {Object.values(errors).map((err, idx) => (
           <p key={idx} className="error-message">
             {err}

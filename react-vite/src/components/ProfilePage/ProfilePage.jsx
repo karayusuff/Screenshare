@@ -5,6 +5,7 @@ import { useNavigateTo } from "../../utils/navigation";
 import { useModal } from "../../context/Modal";
 import EditProfileModal from "../EditProfile";
 import FollowListModal from "../FollowListModal";
+import LoginFormModal from "../LoginFormModal";
 import "./ProfilePage.css";
 
 const ProfilePage = () => {
@@ -180,8 +181,10 @@ const ProfilePage = () => {
                 </select>
               ) : currentUser && followers.some((follower) => follower.id === currentUser.id) ? (
                 <button onClick={() => handleUnfollow(profileUser.id)}>Unfollow</button>
-              ) : (
+              ) : currentUser ? (
                 <button onClick={() => handleFollow(profileUser.id)}>Follow</button>
+              ) : (
+                <button onClick={() => setModalContent(<LoginFormModal />)}>Follow</button>
               )}
             </div>
             <div className="profile-details">
