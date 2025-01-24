@@ -5,6 +5,7 @@ const SET_MOVIES = "movies/SET_MOVIES";
 const ADD_MOVIE = "movies/ADD_MOVIE";
 const UPDATE_MOVIE = "movies/UPDATE_MOVIE";
 const DELETE_MOVIE = "movies/DELETE_MOVIE";
+const SET_SEARCH_RESULTS = "movies/SET_SEARCH_RESULTS";
 
 const setMovieOfTheDay = (movie) => ({
   type: SET_MOVIE_OF_THE_DAY,
@@ -38,6 +39,11 @@ const updateMovie = (movie) => ({
 const deleteMovie = (movieId) => ({
   type: DELETE_MOVIE,
   payload: movieId
+});
+
+const setSearchResults = (movies) => ({
+  type: SET_SEARCH_RESULTS,
+  payload: movies
 });
 
 export const thunkGetMovieOfTheDay = () => async (dispatch) => {
@@ -146,7 +152,22 @@ export const thunkDeleteMovie = (movieId) => async (dispatch) => {
   }
 };
 
-const initialState = { movieOfTheDay: null, movie: null, movies: [] };
+export const thunkSearchMovies = (query) => async (dispatch) => {
+  try {
+    const response = await fetch(`/api/movies?q=${query}`);
+    if (response.ok) {
+      const data = await response.json();
+      dispatch(setSearchResults(data.Movies));
+    } else {
+      const errorData = await response.json();
+      console.error(errorData.error);
+    }
+  } catch (error) {
+    console.error("Error searching movies:", error);
+  }
+};
+
+const initialState = { movieOfTheDay: null, movie: null, movies: [], searchResults: [] };
 
 const moviesReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -172,6 +193,8 @@ const moviesReducer = (state = initialState, action) => {
         ...state,
         movies: state.movies.filter((movie) => movie.id !== action.payload),
       };
+    case SET_SEARCH_RESULTS:
+      return { ...state, searchResults: action.payload };
     default:
       return state;
   }

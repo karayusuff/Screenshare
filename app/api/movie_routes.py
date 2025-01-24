@@ -24,9 +24,10 @@ def get_all_movies():
     """
     Adds query filters to get all movies
     """
+    query = request.args.get('q', default="", type=str).lower()
     page = request.args.get('page', default=1, type=int)
     limit = request.args.get('limit', default=20, type=int)
-    movies = Movie.query.paginate(page=page, per_page=limit, error_out=False)
+    movies = Movie.query.filter(Movie.title.ilike(f"%{query}%")).paginate(page=page, per_page=limit, error_out=False)
     return jsonify({"Movies": [movie.to_dict() for movie in movies.items]}), 200
 
 
