@@ -46,6 +46,7 @@ function SignupFormModal() {
   };
   
   return (
+    
     <div className="signup-modal">
       <h1>Sign Up</h1>
       {errors.server && <p>{errors.server}</p>}

@@ -23,6 +23,20 @@ function Navigation() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchType, setSearchType] = useState("movies");
   const [showSearchTypeMenu, setShowSearchTypeMenu] = useState(false);
+  const [isShrunk, setIsShrunk] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsShrunk(true);
+      } else {
+        setIsShrunk(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleInputFocus = () => {
     setShowDropdown(true);
@@ -116,7 +130,7 @@ function Navigation() {
   };
 
   return (
-    <nav className="nav-bar">
+    <nav className={`nav-bar ${isShrunk ? 'shrink' : ''}`}>
       <div className="nav-left">
         <NavLink to="/">
           <img

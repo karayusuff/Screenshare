@@ -59,7 +59,7 @@ const UsersPage = () => {
           className={`tab-button ${activeTab === "scorers" ? "active" : ""}`}
           onClick={() => setActiveTab("scorers")}
         >
-          Top Scorers
+          Top Gainers
         </button>
       </div>
 
