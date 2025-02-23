@@ -194,10 +194,16 @@ const ProfilePage = () => {
                 {lists.filter((list) => list.list_type === "Custom").length}{" "}
                 {lists.filter((list) => list.list_type === "Custom").length <= 1 ? "list" : "lists"}
               </p>
-              <p onClick={() => setModalContent(<FollowListModal type="following" userId={profileUser.id} />)}>
+              <p onClick={() => currentUser 
+                ? setModalContent(<FollowListModal type="following" userId={profileUser.id} />) 
+                : setModalContent(<LoginFormModal />)}
+              >
                 {following.length} following
               </p>
-              <p onClick={() => setModalContent(<FollowListModal type="followers" userId={profileUser.id} />)}>
+              <p onClick={() => currentUser 
+                ? setModalContent(<FollowListModal type="followers" userId={profileUser.id} />) 
+                : setModalContent(<LoginFormModal />)}
+              >
                 {followers.length} {followers.length <= 1 ? "follower" : "followers"}
               </p>
             </div>
