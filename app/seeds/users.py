@@ -24,9 +24,9 @@ def seed_users():
         email='demo@aa.io',
         password='password',
         is_admin=False,
-        total_points=10,
+        total_points=70,
         status='active',
-        badge='Newbie',
+        badge='Movie Monster',
         # welcome_movie_id=1,
         # welcome_movie_note='This is one of my favorite movies!'
     )
@@ -37,9 +37,9 @@ def seed_users():
         email='marnie@aa.io',
         password='password',
         is_admin=False,
-        total_points=25,
+        total_points=10,
         status='active',
-        badge='Movie Enthusiast',
+        badge='Newbie',
         # welcome_movie_id=None,
         # welcome_movie_note=None
     )
@@ -50,9 +50,9 @@ def seed_users():
         email='bobbie@aa.io',
         password='password',
         is_admin=False,
-        total_points=55,
+        total_points=10,
         status='active',
-        badge='Movie Monster',
+        badge='Newbie',
         # welcome_movie_id=2,
         # welcome_movie_note='A must-watch for everyone!'
     )
@@ -63,7 +63,7 @@ def seed_users():
         email='alex@aa.io',
         password='password',
         is_admin=False,
-        total_points=0,
+        total_points=10,
         status='active',
         badge='Newbie',
         # welcome_movie_id=None,
@@ -76,7 +76,7 @@ def seed_users():
         email='chris@aa.io',
         password='password',
         is_admin=False,
-        total_points=15,
+        total_points=0,
         status='active',
         badge='Newbie',
         # welcome_movie_id=None,
